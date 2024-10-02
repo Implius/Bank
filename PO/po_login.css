@@ -1,0 +1,82 @@
+body {
+    background: linear-gradient(135deg, #BBB5E5 0%, #796ECD 100%);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.connectcard{
+    background-image: url("../images/Connexion Card.png");
+    background-size: 100% 100%;
+    width: 400px;
+    height: 600px;
+}
+
+.idconnexion{
+    margin-top: 50%;
+    margin-left: 10px;
+    width: 175px;
+    height: 20px;
+    border-width: 0px;
+    border-bottom-width: 3px;
+}
+
+.passwordconnexion{
+    margin-top: 10%;
+    margin-left: 10px;
+    width: 175px;
+    height: 20px;
+    border-width: 0px;
+    border-bottom-width: 3px;
+}
+
+.buttonconnexion{
+    margin-top: 25%;
+    margin-left: 31px;
+    width: 300px;
+    height: 50px;
+    border-radius: 150px;
+    font-size:x-large;
+    text-align: start;
+    color: #443B85;
+    border: #BBB5E5;
+    box-shadow: 5px 10px 5px #443B85;
+    transition: 0.3s;
+    padding-left: 25px;
+}
+
+.buttonconnexion:hover{
+    background-color: #9a95b9;
+    border: #8681a3;
+    box-shadow: 5px 5px 5px rgb(46, 40, 80);
+}
+.Large{
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.hidden{
+    display: none;
+}
+.checkmark{
+    position: absolute;
+    margin-top:40px;
+    margin-left: 10px;
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    background-image: url('../images/Eye open.png');
+}
+
+input[type="checkbox"]:checked + .checkmark {
+    background-image: url('../images/Eye close.png'); /* Couleur lorsque coché */
+}
+
+.error{
+    color: red;
+    font-family: Calibri, serif;
+    font-size: small;
+    margin-top: 10px;
+    margin-left: 10px;
+}
