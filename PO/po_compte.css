@@ -87,6 +87,7 @@ a {
 .Compte_tableau {
     margin-top: 200px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -133,4 +134,8 @@ tbody tr {
 
 .table-darkblue{
     background: linear-gradient(180deg, #44039E 0%, #3909E8 100%);
+}
+
+.sorting{
+    margin-bottom: 50px;
 }
