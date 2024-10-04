@@ -6,6 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="po.css">
   <title>JeFinance</title>
+    <script>
+    function sortTable() {
+      const select = document.getElementById('sort_by');
+      const selectedValue = select.value;
+      // Redirige vers la même page avec le paramètre de tri
+      window.location.href = `?sort_by=${selectedValue}`;
+    }
+  </script>
 </head>
 
 <body>
@@ -19,6 +27,15 @@
     <a class="deco" href="#"></a>
   </div>
   <div class="Compte_tableau">
+    <div class="sorting">
+      Trier par :
+      <select name="sort_by" id="sort_by" onchange="sortTable()">
+        <option value="montant du compte">Montant du compte</option>
+        <option value="nombre de remise">Nombre de remises</option>
+        <option value="montant des impayés">Montant des impayés</option>
+        <option value="Numéro SIREN">Numéro SIREN</option>
+      </select>
+    </div>
     <table class="tableau">
       <thead>
         <tr>
