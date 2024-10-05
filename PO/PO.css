@@ -169,3 +169,61 @@ tbody tr {
     margin-bottom: 50px;
     font-size: larger;
 }
+
+.formcrea {
+    display: flex;
+    background-color: #D9D9D9;
+    border-radius: 50px;
+    border: solid black;
+    border-width:3px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.forminput{
+    display: flex;
+    margin: 40px;
+    width: 175px;
+    height: 20px;
+    border-width: 0px;
+    border-bottom-width: 3px;
+    border-color: black;
+    background-color: #ffffff00;
+    font-size: 20px;
+    text-align: center;
+}
+
+.devise {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.devise select{
+    padding: 15px;
+    font-size: large;
+    text-align: center;
+}
+
+.buttoncreate {
+    background-color: #D9D9D9;
+    border-radius: 50px;
+    border: solid black;
+    border-width:3px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+    text-align: center;
+    width: 255px;
+    height: 100px;
+    font-size: x-large;
+    color: #443B85;
+    transition: background-color 0.15s;
+}
+
+.buttoncreate:hover{
+    color: #DDDBEE;
+    background-color: #686868;
+}
