@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="PO.css">
+  <title>JeFinance</title>
+  <script>
+    function sortTable() {
+      const select = document.getElementById('sort_by');
+      const selectedValue = select.value;
+      // Redirige vers la même page avec le paramètre de tri
+      window.location.href = `?sort_by=${selectedValue}`;
+    }
+  </script>
+</head>
+
+<body>
+  <div class="navbar">
+    <nav>
+      <a class="link" href="PO_compte.html">Compte</a>
+      <a class="link" href="PO_remise.html">Remise</a>
+      <a class="link" href="PO_impaye_tableau.html">Impayé</a>
+      <div class="onit">Création</div>
+    </nav>
+    <a class="deco" href="index.html"></a>
+  </div>
+  <div class="Compte_tableau">
+  </div>
+</body>
+
+</html>
