@@ -27,6 +27,27 @@
     <a class="deco" href="index.html"></a>
   </div>
   <div class="Compte_tableau">
+    <form>
+      <div class="formcrea">
+        <input class="forminput" type="text" id="Raison" name="Raison" placeholder="Raison social" required><br>
+      </div>
+      <div class="formcrea">
+        <input class="forminput" type="text" id="NumCompte" name="NumCompte" placeholder="Numéro du compte"
+          required><br>
+      </div>
+      <div class="formcrea">
+        <input class="forminput" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required><br>
+      </div>
+      <div class="devise">
+      <select name="money" id="money" required>
+        <option value="" disabled selected>Devise</option>
+        <option value="Euros">€</option>
+        <option value="Dollars">$</option>
+        <option value="Livre">£</option>
+      </select>
+    </div>
+      <button class="buttoncreate" type="submit">Créer le compte</button>
+    </form>
   </div>
 </body>
 
