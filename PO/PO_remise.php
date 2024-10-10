@@ -58,22 +58,22 @@
       </thead>
       <tbody>
         <tr>
-          <td class="white">
+          <td>
             0005
           </td>
-          <td class="grey">
+          <td>
             14/09/2024
           </td>
-          <td class="white">
+          <td>
             Vente de produit
           </td>
-          <td class="grey">
+          <td>
             E.Leclerc
           </td>
-          <td class="white">
+          <td >
             572 183 994
           </td>
-          <td class="grey montant">
+          <td>
             87152.09 €
           </td>
         </tr>
