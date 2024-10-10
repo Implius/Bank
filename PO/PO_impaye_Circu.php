@@ -18,18 +18,13 @@
 </head>
 
 <body>
-  <div class="navbar">
-    <nav>
-      <a class="link" href="PO_compte.html">Compte</a>
-      <a class="link" href="PO_remise.html">Remise</a>
-      <div class="onit">Impayé</div>
-      <a class="link" href="PO_creation.html">Création</a>
-    </nav>
-    <a class="deco" href="index.html"></a>
-  </div>
+<?php
+$onit = "Impaye";
+include("../include/po_navbar.inc.php"); // Navbar
+?>
   <div class="mini_navbar">
-    <a class="link" href="PO_impaye_tableau.html">Tableau</a>
-    <a class="link" href="PO_impaye_Histo.html">Histogramme</a>
+    <a class="link" href="PO_impaye_tableau.php">Tableau</a>
+    <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
     <div class="onit">Circulaire</div>
   </div>
   <div class="canva">

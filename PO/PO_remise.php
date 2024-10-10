@@ -1,7 +1,3 @@
-<?php
-global$cnx;
-include("../include/connexion.inc.php");
-?>
 <!doctype html>
 <html lang="en">
 
@@ -46,6 +42,12 @@ include("../include/connexion.inc.php");
           <th class="table-green">
             Date
           </th>
+          <th class="table-orange">
+            Émetteur
+          </th>
+          <th class="table-yellow">
+            N° SIREN Émetteur
+          </th>
           <th class="table-red">
             Objet
           </th>
@@ -56,53 +58,38 @@ include("../include/connexion.inc.php");
             N° SIREN Bénéficiaire
           </th>
           <th class="table-darkblue">
-            Montant
+            Montant du compte
           </th>
         </tr>
       </thead>
       <tbody>
-
-      <?php
-      $req = $cnx->query("SELECT * FROM remise");
-      while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
-          ?>
-          <tr>
-            <td class="white">
-                <?php echo $ligne->id_remise; // id remise ?>
-            </td>
-            <td class="white">
-                <?php echo $ligne->date_remise; // date remise ?>
-            </td>
-            <td class="white">
-                <?php echo $ligne->libelle; // objet libelle  ?>
-            </td>
-            <td class="white">
-                <?php
-                $join_query = $cnx->query("select raison_social from compte join remise on compte.num_siren = remise.num_siren;");
-
-                echo $join_query->fetch(PDO::FETCH_OBJ)->raison_social; // beneficiaire ?>
-            </td>
-            <td class="white">
-                <?php
-                $join_query = $cnx->query("select compte.num_siren from compte join remise on compte.num_siren = remise.num_siren;");
-
-                echo $join_query->fetch(PDO::FETCH_OBJ)->num_siren; // num siren beneficiaire ?>
-            </td>
-            <td class="white montant">
-                <?php
-                if ($ligne->sens == '-') {
-                    echo "<p class=\"red\">";
-                }
-                    echo $ligne->montant; // montant
-                if ($ligne->sens == '-') {
-                    echo "</p>";
-                }
-                ?>
-            </td>
-          </tr>
-          <?php
-      }
-      ?>
+        <tr>
+          <td class="white">
+            0005
+          </td>
+          <td class="grey">
+            14/09/2024
+          </td>
+          <td class="white">
+            Dupont
+          </td>
+          <td class="grey">
+            425 682 301
+          </td>
+          <td class="white">
+            Vente de produit
+          </td>
+          <td class="grey">
+            E.Leclerc
+          </td>
+          <td class="white">
+            572 183 994
+          </td>
+          <td class="grey montant">
+            87152.09 €
+          </td>
+        </tr>
+        <!--Mettre code PHP ici-->
       </tbody>
     </table>
   </div>
