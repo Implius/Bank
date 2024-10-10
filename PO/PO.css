@@ -82,7 +82,7 @@ a {
     display: flex;
     margin-left: 80%;
     margin-top: 100px;
-    background-image: url(Exit_1.svg);
+    background-image: url(../images/Exit_1.svg);
     background-size: 100% 100%;
     width: 115px;
     height: 115px;
@@ -90,7 +90,7 @@ a {
 }
 
 .deco:hover {
-    background-image: url(Exit_2.svg);
+    background-image: url(../images/Exit_2.svg);
     background-size: 100% 100%;
 }
 
