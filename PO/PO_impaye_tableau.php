@@ -17,16 +17,19 @@
 </head>
 
 <body>
-
-    <?php
-    $onit = "Impaye";
-    include("../include/po_navbar.inc.php"); // Navbar
-    ?>
-
-<div class="mini_navbar">
+  <div class="navbar">
+    <nav>
+      <a class="link" href="PO_compte.html">Compte</a>
+      <a class="link" href="PO_remise.html">Remise</a>
+      <div class="onit">Impayé</div>
+      <a class="link" href="PO_creation.html">Création</a>
+    </nav>
+    <a class="deco" href="index.html"></a>
+  </div>
+  <div class="mini_navbar">
       <div class="onit">Tableau</div>
-      <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
-      <a class="link" href="PO_impaye_Circu.php">Circulaire</a>
+      <a class="link" href="PO_impaye_Histo.html">Histogramme</a>
+      <a class="link" href="PO_impaye_Circu.html">Circulaire</a>
   </div>
   <div class="Compte_tableau">
     <div class="sorting">
@@ -44,22 +47,22 @@
           <th class="table-blue">
             Impayé N°
           </th>
-          <th class="table-green">
+          <th class="table-darkblue">
             Date
           </th>
-          <th class="table-orange">
+          <th class="table-blue">
             Autre parti
           </th>
-          <th class="table-yellow">
+          <th class="table-darkblue">
             N° SIREN Autre parti
           </th>
-          <th class="table-red">
+          <th class="table-blue">
             Objet
           </th>
           <th class="table-darkblue">
             Raison
           </th>
-          <th class="table-purple">
+          <th class="table-blue">
             Montant
           </th>
         </tr>
@@ -69,19 +72,19 @@
           <td class="white">
             0001
           </td>
-          <td class="grey">
+          <td class="white">
             12/10/2023
           </td>
           <td class="white">
             Jules
           </td>
-          <td class="grey">
+          <td class="white">
             842 017 349
           </td>
           <td class="white">
             KFC
           </td>
-          <td class="grey">
+          <td class="white">
             05
           </td>
           <td class="white montant">
