@@ -23,15 +23,12 @@ include('../include/verifyconnexion.inc.php');
 </head>
 
 <body>
-  <div class="navbar">
-    <nav>
-      <div class="onit">Compte</div>
-      <a class="link" href="#">Remise</a>
-      <a class="link" href="#">Impayé</a>
-      <a class="link" href="#">Création</a>
-    </nav>
-    <a class="deco" href="#"></a>
-  </div>
+
+<?php
+$onit = "Compte";
+include("../include/po_navbar.inc.php"); // Navbar
+?>
+
   <div class="Compte_tableau">
     <div class="sorting">
       Trier par :
