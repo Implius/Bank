@@ -1,4 +1,5 @@
 <?php
+session_start();
 global $cnx;
 if (!(isset($_POST['NumSiren']) && isset($_POST['password']))) { /* Vérification que l'on passe bien par la page de formulaire */
     header('location: po_login.php');
@@ -24,8 +25,10 @@ if (isset($_POST['NumSiren']) && isset($_POST['password'])) {
 
         if ($res->res == 1) {
 
-            setcookie('identifiant', $NumSiren, time() + 60*60*24*31);
-            setcookie('mdp', $password, time() + 60*60*24*31);
+            $_SESSION['sessionid'] = session_id();
+            $_SESSION['NumSiren'] = $NumSiren;
+            $_SESSION['password'] = $password;
+            
             header('location: po_compte.php');
 
         } else {

@@ -1,10 +1,16 @@
 <!doctype html>
 <html lang="en">
 
+<?php
+global$cnx;
+include('../include/connexion.inc.php');
+include('../include/verifyconnexion.inc.php');
+?>
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="po.css">
+  <link rel="stylesheet" href="PO.css">
   <title>JeFinance</title>
     <script>
     function sortTable() {
@@ -36,6 +42,7 @@
         <option value="Numéro SIREN">Numéro SIREN</option>
       </select>
     </div>
+
     <table class="tableau">
       <thead>
         <tr>
@@ -54,23 +61,30 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td class="white">
-            Picard
-          </td>
-          <td class="grey">
-            **** 1018
-          </td>
-          <td class="white">
-            784 939 688
-          </td>
-          <td class="grey montant">
-            87152.09 €
-          </td>
-        </tr>
-        <!--Mettre code PHP ici-->
+      <?php
+        $req = $cnx->query("SELECT * FROM compte");
+        while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
+            ?>
+            <tr>
+                <td class="white">
+                    <?php echo $ligne->raison_social; ?>
+                </td>
+                <td class="grey">
+                    <?php echo '************' . substr($ligne->num_compte, -4); ?>
+                </td>
+                <td class="white">
+                    <?php echo $ligne->num_siren; ?>
+                </td>
+                <td class="grey montant">
+                    <?php echo $ligne->tresorerie; ?>
+                </td>
+            </tr>
+            <?php
+        }
+      ?>
       </tbody>
     </table>
+
   </div>
 </body>
 
