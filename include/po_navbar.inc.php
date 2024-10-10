@@ -45,5 +45,5 @@ switch ($onit) {
         break;
 }
 
-echo "</nav><a class=\"deco\" href=\"#\"></a></div>";
+echo "</nav><a class=\"deco\" href=\"../index.php\"></a></div>";
 ?>

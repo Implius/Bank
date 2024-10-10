@@ -20,15 +20,15 @@
 
 <?php
     $onit = "Remise";
-    include("../include/po_navbar.inc.php"); // Navbar
+    include("../include/po_navbar_w_return.inc.php"); // Navbar
 ?>
 
 <div class="Compte_tableau">
-    <table class="tableau">
+    <table class="tableau" style="width:90%">
         <thead>
         <tr>
             <th class="table-blue">
-                Remise N°
+                Transaction N°
             </th>
             <th class="table-darkblue">
                 Date
@@ -45,47 +45,50 @@
             <th class="table-darkblue">
                 N° Auto
             </th>
-            <th class="table-darkblue">
+            <th class="table-blue">
                 Bénéficiaire
             </th>
-            <th class="table-blue">
+            <th class="table-darkblue">
                 N° SIREN Bénéficiaire
             </th>
-            <th class="table-darkblue">
+            <th class="table-blue">
                 Montant
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td class="white">
-                0005
-            </td>
-            <td class="grey">
-                14/09/2024
-            </td>
-            <td class="white">
-                Dupont
-            </td>
-            <td class="grey">
-                425 682 301
-            </td>
-            <td class="white">
-                Vente de produit
-            </td>
-            <td class="grey">
-                985621
-            </td>
-            <td class="white">
-                E.Leclerc
-            </td>
-            <td class="grey">
-                572 183 994
-            </td>
-            <td class="white montant">
-                87152.09 €
-            </td>
-        </tr>
+        <a href="PO_transaction_detail.php">
+            <div>
+                <tr>
+                    <td class="white">
+                        0005
+                    </td>
+                    <td class="grey">
+                        14/09/2024
+                    </td>
+                    <td class="white">
+                        Dupont
+                    </td>
+                    <td class="grey">
+                        425 682 301
+                    </td>
+                    <td class="white">
+                        Vente de produit
+                    </td>
+                    <td class="grey">
+                        985621
+                    </td>
+                    <td class="white">
+                        E.Leclerc
+                    </td>
+                    <td class="grey">
+                        572 183 994
+                    </td>
+                    <td class="white montant">
+                        87152.09 €
+                    </td>
+                </tr>
+            </div>
         <!--Mettre code PHP ici-->
         </tbody>
     </table>
