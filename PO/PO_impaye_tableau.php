@@ -64,25 +64,25 @@ include("../include/po_navbar.inc.php"); // Navbar
       </thead>
       <tbody>
         <tr>
-          <td class="white">
+          <td>
             0001
           </td>
-          <td class="white">
+          <td>
             12/10/2023
           </td>
-          <td class="white">
+          <td>
             Jules
           </td>
-          <td class="white">
+          <td>
             842 017 349
           </td>
-          <td class="white">
+          <td>
             KFC
           </td>
-          <td class="white">
+          <td>
             05
           </td>
-          <td class="white montant">
+          <td>
             50 €
           </td>
         </tr>
