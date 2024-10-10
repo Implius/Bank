@@ -131,13 +131,6 @@ tbody tr {
     text-align: right;
 }
 
-.grey{
-    background-color: #C6C6C6;
-}
-
-.white{
-    background-color: #F9F9F9;
-}
 
 .table-blue{
     background: linear-gradient(180deg, #3cbcc5 0%, #078992 100%);
