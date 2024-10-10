@@ -31,7 +31,8 @@ nav {
 }
 
 .mini_navbar {
-    top: 125px;
+    top: 140px;
+    height: 50px;
     position: sticky;
     display: flex;
     width: 100%;
@@ -64,6 +65,28 @@ nav {
     transition: border-width 0.15s ease;
     font-size: xx-large;
 
+}
+
+.mini_link {
+        display: inline-block;
+        width: 220px;
+        height: 50px;
+        padding-top: 25px;
+        border: solid #796ECD;
+        border-width: 0px;
+        transition: border-width 0.15s ease;
+        font-size: xx-large;
+}
+.mini_onit {
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    border: solid #796ECD;
+    border-width: 3px;
+    border-top-width: 0px;
+    background-color: rgba(0, 0, 0, 0.24);
+    padding-top: 25px;
+    font-size: xx-large;
 }
 
 a {
