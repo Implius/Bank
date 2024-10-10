@@ -43,12 +43,6 @@
             Date
           </th>
           <th class="table-blue">
-            Émetteur
-          </th>
-          <th class="table-darkblue">
-            N° SIREN Émetteur
-          </th>
-          <th class="table-blue">
             Objet
           </th>
           <th class="table-darkblue">
@@ -58,7 +52,7 @@
             N° SIREN Bénéficiaire
           </th>
           <th class="table-darkblue">
-            Montant du compte
+            Montant
           </th>
         </tr>
       </thead>
@@ -69,12 +63,6 @@
           </td>
           <td class="grey">
             14/09/2024
-          </td>
-          <td class="white">
-            Dupont
-          </td>
-          <td class="grey">
-            425 682 301
           </td>
           <td class="white">
             Vente de produit
