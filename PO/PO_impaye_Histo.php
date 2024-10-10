@@ -23,9 +23,9 @@ $onit = "Impaye";
 include("../include/po_navbar.inc.php"); // Navbar
 ?>
   <div class="mini_navbar">
-    <a class="link" href="PO_impaye_tableau.php">Tableau</a>
-    <div class="onit">Histogramme</div>
-    <a class="link" href="PO_impaye_Circu.php">Circulaire</a>
+    <a class="mini_link" href="PO_impaye_tableau.php">Tableau</a>
+    <div class="mini_onit">Histogramme</div>
+    <a class="mini_link" href="PO_impaye_Circu.php">Circulaire</a>
   </div>
   <div class="canva">
     <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
