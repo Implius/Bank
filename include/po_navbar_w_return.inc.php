@@ -3,7 +3,7 @@
 global $onit;
 echo "<div class=\"navbar\">";
 
-echo "<button class=\"backArrow\" onclick=\"history.back()\">Go Back</button><nav>";
+echo "<div class=\"backArrow\" onclick=\"history.back()\"></div><nav>";
 
 switch ($onit) {
 
