@@ -94,6 +94,23 @@ a {
     background-size: 100% 100%;
 }
 
+.backArrow {
+    position: fixed;
+    display: flex;
+    margin-left: 20%;
+    margin-top: 100px;
+    background-image: url(../images/backArrow.svg);
+    background-size: 100% 100%;
+    width: 115px;
+    height: 115px;
+    transition: background-image 0.2s;
+}
+
+.backArrow:hover {
+    background-image: url(../images/backArrowHover.svg);
+    background-size: 100% 100%;
+}
+
 .Compte_tableau {
     margin-top: 200px;
     display: flex;
