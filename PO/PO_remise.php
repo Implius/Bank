@@ -39,22 +39,22 @@
           <th class="table-blue">
             Remise N°
           </th>
-          <th class="table-green">
+          <th class="table-darkblue">
             Date
           </th>
-          <th class="table-orange">
+          <th class="table-blue">
             Émetteur
           </th>
-          <th class="table-yellow">
+          <th class="table-darkblue">
             N° SIREN Émetteur
           </th>
-          <th class="table-red">
+          <th class="table-blue">
             Objet
           </th>
-          <th class="table-lightpurple">
+          <th class="table-darkblue">
             Bénéficiaire
           </th>
-          <th class="table-purple">
+          <th class="table-blue">
             N° SIREN Bénéficiaire
           </th>
           <th class="table-darkblue">
