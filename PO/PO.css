@@ -130,7 +130,7 @@ tbody tr {
 }
 
 .table-blue{
-    background: linear-gradient(180deg, #44D4DE 0%, #07939C 100%);
+    background: linear-gradient(180deg, #3cbcc5 0%, #078992 100%);
 }
 
 .table-green{
@@ -162,7 +162,7 @@ tbody tr {
 }
 
 .table-darkblue{
-    background: linear-gradient(180deg, #44039E 0%, #3909E8 100%);
+    background: linear-gradient(0deg, #2a8288 0%, #07939C 100%);
 }
 
 .sorting{
@@ -226,4 +226,10 @@ tbody tr {
 .buttoncreate:hover{
     color: #DDDBEE;
     background-color: #686868;
+}
+
+.canva {
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
