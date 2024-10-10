@@ -29,6 +29,9 @@
             elseif ($_GET['error'] == 2) {
                 echo "<p class='error'>Vous n'avez pas les droits nécessaires</p>";
             }
+            elseif ($_GET['error'] == 3) {
+                echo "<p class='error'>Vous avez été déconnecté</p>";
+            }
         }
         ?>
 
