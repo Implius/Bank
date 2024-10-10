@@ -18,19 +18,14 @@
 </head>
 
 <body>
-  <div class="navbar">
-    <nav>
-      <a class="link" href="PO_compte.html">Compte</a>
-      <a class="link" href="PO_remise.html">Remise</a>
-      <div class="onit">Impayé</div>
-      <a class="link" href="PO_creation.html">Création</a>
-    </nav>
-    <a class="deco" href="index.html"></a>
-  </div>
+<?php
+$onit = "Impaye";
+include("../include/po_navbar.inc.php"); // Navbar
+?>
   <div class="mini_navbar">
-    <a class="link" href="PO_impaye_tableau.html">Tableau</a>
+    <a class="link" href="PO_impaye_tableau.php">Tableau</a>
     <div class="onit">Histogramme</div>
-    <a class="link" href="PO_impaye_Circu.html">Circulaire</a>
+    <a class="link" href="PO_impaye_Circu.php">Circulaire</a>
   </div>
   <div class="canva">
     <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
