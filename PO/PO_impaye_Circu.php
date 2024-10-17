@@ -38,7 +38,7 @@
   <?php
   global$cnx;
   include("../include/connexion.inc.php");
-  
+
   ?>
   <?php
   $code = [
@@ -48,7 +48,7 @@
   $req = $cnx->query("SELECT code_motif,montant FROM impaye;");
   print $sql;
   while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
-      $code[$ligne->code_motif] = $ligne->montant;
+      $code[$ligne->code_motif] += $ligne->montant;
   }
   ?>
   <script>
