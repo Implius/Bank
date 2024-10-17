@@ -38,6 +38,7 @@
   <?php
   global$cnx;
   include("../include/connexion.inc.php");
+  
   ?>
   <?php
   $code = [
