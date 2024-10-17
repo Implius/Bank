@@ -17,16 +17,14 @@
 </head>
 
 <body>
-
-    <?php
-    $onit = "Impaye";
-    include("../include/po_navbar.inc.php"); // Navbar
-    ?>
-
-<div class="mini_navbar">
-      <div class="onit">Tableau</div>
-      <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
-      <a class="link" href="PO_impaye_Circu.php">Circulaire</a>
+<?php
+$onit = "Impaye";
+include("../include/po_navbar.inc.php"); // Navbar
+?>
+  <div class="mini_navbar">
+      <div class="mini_onit">Tableau</div>
+      <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
+      <a class="mini_link" href="PO_impaye_Circu.php">Circulaire</a>
   </div>
   <div class="Compte_tableau">
     <div class="sorting">
@@ -44,47 +42,47 @@
           <th class="table-blue">
             Impayé N°
           </th>
-          <th class="table-green">
+          <th class="table-darkblue">
             Date
           </th>
-          <th class="table-orange">
+          <th class="table-blue">
             Autre parti
           </th>
-          <th class="table-yellow">
+          <th class="table-darkblue">
             N° SIREN Autre parti
           </th>
-          <th class="table-red">
+          <th class="table-blue">
             Objet
           </th>
           <th class="table-darkblue">
             Raison
           </th>
-          <th class="table-purple">
+          <th class="table-blue">
             Montant
           </th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="white">
+          <td>
             0001
           </td>
-          <td class="grey">
+          <td>
             12/10/2023
           </td>
-          <td class="white">
+          <td>
             Jules
           </td>
-          <td class="grey">
+          <td>
             842 017 349
           </td>
-          <td class="white">
+          <td>
             KFC
           </td>
-          <td class="grey">
+          <td>
             05
           </td>
-          <td class="white montant">
+          <td>
             50 €
           </td>
         </tr>

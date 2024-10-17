@@ -46,10 +46,10 @@ include("../include/po_navbar.inc.php"); // Navbar
           <th class="table-blue">
             Raison Social
           </th>
-          <th class="table-green">
+          <th class="table-darkblue">
             N° de compte
           </th>
-          <th class="table-yellow">
+          <th class="table-blue">
             N° SIREN
           </th>
           <th class="table-darkblue">

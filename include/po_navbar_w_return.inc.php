@@ -1,7 +1,9 @@
 <?php
 
 global $onit;
-echo "<div class=\"navbar\"><nav>";
+echo "<div class=\"navbar\">";
+
+echo "<div class=\"backArrow\" onclick=\"history.back()\"></div><nav>";
 
 switch ($onit) {
 
@@ -45,5 +47,5 @@ switch ($onit) {
         break;
 }
 
-echo "</nav><a class=\"deco\" href=\"../index.php\"></a></div>";
+echo "</nav><a class=\"deco\" href=\"#\"></a></div>";
 ?>
