@@ -14,6 +14,76 @@
             window.location.href = `?sort_by=${selectedValue}`;
         }
     </script>
+    <style>
+    @import url('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
+
+* { box-sizing: border-box; }
+body { padding: .2em 2em; }
+
+table {
+  width: 100%;
+  th { text-align: left; border-bottom: 1px solid #ccc;}
+  th, td { padding: .4em; }
+}
+    table.fold-table {
+    > tbody {
+    > tr.view {
+      td, th {cursor: pointer;}
+      td:first-child, 
+      th:first-child { 
+        position: relative;
+        padding-left:20px;
+        &:before {
+          position: absolute;
+          top:50%; left:5px;
+          width: 9px; height: 16px;
+          margin-top: -8px;
+          font: 16px fontawesome;
+          color: #999;
+          content: "\f0d7";
+          transition: all .3s ease;
+        }
+      }
+      &:nth-child(2n-1) { background: #eee; }
+      &:nth-child(4n-1) { background: #ca4040; }
+      &:hover { background: #4e4e4e46; }
+      &.open {
+        background: tomato;
+        color: white;
+        td:first-child, th:first-child {
+          &:before {
+            transform: rotate(-180deg);
+            color: #333;
+          }
+        }
+      }
+    }
+  
+    > tr.fold {
+      display: none;
+      &.open { display:table-row; }
+    }
+  }
+}
+
+
+
+.fold-content {
+  padding: .5em;
+  h3 { margin-top:0; }
+  > table {
+    border: 2px solid #ccc;
+    > tbody {
+      tr:nth-child(even) {
+        background: #eee;
+      }
+      tr:nth-child(odd) {
+        background: #707070;
+      }
+    }
+  }
+}
+  </style>
 </head>
 
 <body>
