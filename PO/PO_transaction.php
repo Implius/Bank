@@ -102,7 +102,7 @@ table {
 ?>
 
 <div class="Compte_tableau">
-    <table class="tableau" style="width:90%">
+    <table class="fold-table">
         <thead>
         <tr>
             <th class="table-blue">
