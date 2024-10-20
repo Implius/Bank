@@ -6,14 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="po.css">
     <title>JeFinance</title>
-    <script>
-        function sortTable() {
-            const select = document.getElementById('sort_by');
-            const selectedValue = select.value;
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue}`;
-        }
-    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    function sortTable() {
+      const select = document.getElementById('sort_by');
+      const selectedValue = select.value;
+      // Redirige vers la même page avec le paramètre de tri
+      window.location.href = `?sort_by=${selectedValue}`;
+    }
+  </script>
+  <script>
+  $(function(){
+    $(".fold-table tr.view").on("click", function(){
+      $(this).toggleClass("open").next(".fold").toggleClass("open");
+    });
+  });
+</script>
     <style>
     @import url('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
 
