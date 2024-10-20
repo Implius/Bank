@@ -14,7 +14,6 @@ body {
 .navbar {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: center;
     align-items: center;
 }
 
@@ -127,6 +126,7 @@ a {
     height: 115px;
     transition: background-image 0.2s;
     cursor: pointer;
+    z-index: 2;
 }
 
 .backArrow:hover {
