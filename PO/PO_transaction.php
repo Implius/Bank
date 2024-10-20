@@ -53,7 +53,7 @@ table {
         }
       }
       &:nth-child(2n-1) { background: #eee; }
-      &:nth-child(4n-1) { background: #ca4040; }
+      &:nth-child(4n-1) { background: ##808080; }
       &:hover { background: #4e4e4e46; }
       &.open {
         background: tomato;
