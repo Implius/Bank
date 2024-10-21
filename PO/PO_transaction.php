@@ -53,7 +53,7 @@ table {
         }
       }
       &:nth-child(2n-1) { background: #eee; }
-      &:nth-child(4n-1) { background: ##808080; }
+      &:nth-child(4n-1) { background: #b3b3b3; }
       &:hover { background: #CDCDCD44; }
       &.open {
         background: #4e4e4e46;
@@ -86,7 +86,7 @@ table {
         background: #eee;
       }
       tr:nth-child(odd) {
-        background: #808080;
+        background: #b3b3b3;
       }
     }
   }
