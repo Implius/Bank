@@ -54,9 +54,9 @@ table {
       }
       &:nth-child(2n-1) { background: #eee; }
       &:nth-child(4n-1) { background: ##808080; }
-      &:hover { background: #4e4e4e46; }
+      &:hover { background: #CDCDCD44; }
       &.open {
-        background: tomato;
+        background: #4e4e4e46;
         color: white;
         td:first-child, th:first-child {
           &:before {
@@ -86,7 +86,7 @@ table {
         background: #eee;
       }
       tr:nth-child(odd) {
-        background: #707070;
+        background: #808080;
       }
     }
   }
