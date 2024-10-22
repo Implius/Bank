@@ -55,8 +55,8 @@ include("../include/connexion.inc.php");
   <script>
     const ctx = document.getElementById('myChart').getContext('2d');
     const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
-    const yValues = [55, 49, 44, 24, 15, 18 ,21, 69];
-
+    const yValues = [<?php echo $code["01"] . "," . $code["02"] . "," . $code["03"] . "," . $code["04"] . "," . $code["05"] . "," . $code["06"] . "," . $code["07"] . "," . $code["08"]; ?>];
+    
     function createRandomGradient() {
       const color1 = barColors[Math.floor(Math.random() * barColors.length)];
       const color2 = barColors[Math.floor(Math.random() * barColors.length)];
