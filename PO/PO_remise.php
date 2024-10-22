@@ -1,6 +1,7 @@
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
+include('../include/verifyconnexion.inc.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -60,7 +61,7 @@ include("../include/po_navbar.inc.php"); // Navbar
             </th>
         </tr>
         </thead>
-        <tbody>
+        <a>
 
         <?php
         if (isset($_GET["sort_by"])) {
@@ -86,7 +87,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         }
         $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
-            ?>
+            echo "<a href=\"PO_transaction.php?id_remise=".$ligne->id_remise.">"; ?>
             <tr>
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
@@ -139,6 +140,7 @@ include("../include/po_navbar.inc.php"); // Navbar
                     ?>
                 </td>
             </tr>
+            </a>
             <?php
         }
         ?>
