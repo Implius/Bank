@@ -1,3 +1,7 @@
+<?php
+global$cnx;
+include("../include/connexion.inc.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -18,21 +22,42 @@
 </head>
 
 <body>
-<?php
-$onit = "Impaye";
-include("../include/po_navbar.inc.php"); // Navbar
-?>
+  <div class="navbar">
+    <nav>
+      <a class="link" href="PO_compte.php">Compte</a>
+      <a class="link" href="PO_remise.php">Remise</a>
+      <div class="onit">Impayé</div>
+      <a class="link" href="PO_creation.php">Création</a>
+    </nav>
+    <a class="deco" href="index.php"></a>
+  </div>
   <div class="mini_navbar">
-    <a class="link" href="PO_impaye_tableau.php">Tableau</a>
-    <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
-    <div class="onit">Circulaire</div>
+    <a class="mini_link" href="PO_impaye_tableau.php">Tableau</a>
+    <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
+    <div class="mini_onit">Circulaire</div>
   </div>
   <div class="canva">
     <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
   </div>
+  <?php
+  global$cnx;
+  include("../include/connexion.inc.php");
+
+  ?>
+  <?php
+  $code = [
+          "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
+  ];
+  $sql = "SELECT code_motif,montant FROM impaye;";
+  $req = $cnx->query("SELECT code_motif,montant FROM impaye;");
+  print $sql;
+  while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
+      $code[$ligne->code_motif] += $ligne->montant;
+  }
+  ?>
   <script>
     const ctx = document.getElementById('myChart').getContext('2d');
-    const xValues = ["Raison 1", "Raison 2", "Raison 3", "Raison 4", "Raison 5", "Raison 6", "Raison 7", "Raison 8"];
+    const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
     const yValues = [55, 49, 44, 24, 15, 18 ,21, 69];
 
     function createRandomGradient() {

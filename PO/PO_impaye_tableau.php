@@ -1,3 +1,7 @@
+<?php
+global$cnx;
+include("../include/connexion.inc.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -22,9 +26,9 @@ $onit = "Impaye";
 include("../include/po_navbar.inc.php"); // Navbar
 ?>
   <div class="mini_navbar">
-      <div class="onit">Tableau</div>
-      <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
-      <a class="link" href="PO_impaye_Circu.php">Circulaire</a>
+      <div class="mini_onit">Tableau</div>
+      <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
+      <a class="mini_link" href="PO_impaye_Circu.php">Circulaire</a>
   </div>
   <div class="Compte_tableau">
     <div class="sorting">
