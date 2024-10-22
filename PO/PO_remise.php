@@ -19,16 +19,6 @@ include('../include/verifyconnexion.inc.php');
             window.location.href = `?sorta_by=${selectedValue}`;
         }
     </script>
-    <script>
-        function redirectTo(url) {
-            window.location.href = url;
-        }
-    </script>
-    <style>
-        tr{
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
@@ -71,7 +61,7 @@ include("../include/po_navbar.inc.php"); // Navbar
             </th>
         </tr>
         </thead>
-        <a>
+        <tbody>
 
         <?php
         if (isset($_GET["sort_by"])) {
@@ -97,8 +87,8 @@ include("../include/po_navbar.inc.php"); // Navbar
         }
         $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
-            echo "<a href=\"PO_transaction.php?id_remise=".$ligne->id_remise.">"; ?>
-            <tr onclick="redirectTo('PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>')">
+            ?>
+            <tr>
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
                 </td>
@@ -150,7 +140,6 @@ include("../include/po_navbar.inc.php"); // Navbar
                     ?>
                 </td>
             </tr>
-            </a>
             <?php
         }
         ?>
