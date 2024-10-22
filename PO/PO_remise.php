@@ -77,10 +77,10 @@ include("../include/po_navbar.inc.php"); // Navbar
                 Objet
             </th>
             <th class="table-darkblue">
-                Bénéficiaire
+                Raison sociale
             </th>
             <th class="table-blue">
-                N° SIREN Bénéficiaire
+                N° SIREN
             </th>
             <th class="table-darkblue">
                 Montant
