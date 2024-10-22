@@ -125,10 +125,10 @@ table {
                 N° Auto
             </th>
             <th class="table-blue">
-                Bénéficiaire
+                Partie
             </th>
             <th class="table-darkblue">
-                N° SIREN Bénéficiaire
+                N° SIREN Partie
             </th>
             <th class="table-blue">
                 Montant
