@@ -9,7 +9,7 @@ switch ($onit) {
         ?>
         <div class="onit">Compte</div>
         <a class="link" href="../PO/PO_remise.php">Remise</a>
-        <a class="link" href="../PO/PO_impaye_Circu.php">Impayé</a>
+        <a class="link" href="../PO/PO_impaye_tableau.php">Impayé</a>
         <a class="link" href="../PO/PO_creation.php">Création</a>
         <?php
         break;
@@ -18,7 +18,7 @@ switch ($onit) {
         ?>
         <a class="link" href="../PO/po_compte.php">Compte</a>
         <div class="onit">Remise</div>
-        <a class="link" href="../PO/PO_impaye_Circu.php">Impayé</a>
+        <a class="link" href="../PO/PO_impaye_tableau.php">Impayé</a>
         <a class="link" href="../PO/PO_creation.php">Création</a>
         <?php
         break;
@@ -36,7 +36,7 @@ switch ($onit) {
         ?>
         <a class="link" href="../PO/po_compte.php">Compte</a>
         <a class="link" href="../PO/PO_remise.php">Remise</a>
-        <a class="link" href="../PO/PO_impaye_Circu.php">Impayé</a>
+        <a class="link" href="../PO/PO_impaye_tableau.php">Impayé</a>
         <div class="onit">Création</div>
         <?php
         break;
@@ -45,5 +45,5 @@ switch ($onit) {
         break;
 }
 
-echo "</nav><a class=\"deco\" href=\"../index.php\"></a></div>";
+echo "</nav><a class=\"deco\" href=\"../include/deco.inc.php\"></a></div>";
 ?>

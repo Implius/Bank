@@ -1,3 +1,7 @@
+<?php
+global$cnx;
+include("../include/connexion.inc.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -7,6 +11,11 @@
   <link rel="stylesheet" href="PO.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>JeFinance</title>
+  <style>
+        canvas {
+            margin-top: 30px;
+        }
+    </style>
   <script>
     function sortTable() {
       const select = document.getElementById('sort_by');
