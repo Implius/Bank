@@ -202,7 +202,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                     echo "</p>";
                 }
                 else {
-                    echo $montant->montant.$devise; // montant
+                    echo $montant.$devise; // montant
                 }?>
             </td>
         </tr>
