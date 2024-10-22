@@ -104,7 +104,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
-            <tr>
+            <tr onclick="redirectTo('PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>')">
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
                 </td>
