@@ -115,11 +115,8 @@ table {
             <th class="table-darkblue">
                 Date
             </th>
-            <th class="table-blue">
-                Émetteur
-            </th>
             <th class="table-darkblue">
-                N° SIREN Émetteur
+                Num Carte 
             </th>
             <th class="table-blue">
                 Objet
@@ -147,10 +144,7 @@ table {
                         14/09/2024
                     </td>
                     <td>
-                        Dupont
-                    </td>
-                    <td>
-                        425 682 301
+                        **** **** **** 0174
                     </td>
                     <td>
                         Vente de produit
@@ -200,10 +194,7 @@ table {
               14/09/2024
           </td>
           <td>
-              Dupont
-          </td>
-          <td>
-              425 682 301
+                        **** **** **** 0174
           </td>
           <td>
               Vente de produit
