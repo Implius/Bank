@@ -57,7 +57,7 @@ table {
         }
       }
       &:nth-child(2n-1) { background: #eee; }
-      &:nth-child(4n-1) { background: #b3b3b3; }
+      &:nth-child(4n-1) { background: #cccccc; }
       &:hover { background: #CDCDCD44; }
       &.open {
         background: #4e4e4e46;
