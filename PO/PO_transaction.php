@@ -1,3 +1,7 @@
+<?php
+global$cnx;
+include("../include/connexion.inc.php");
+?>
 <!doctype html>
 <html lang="en">
 
