@@ -135,84 +135,72 @@ table {
             </th>
         </tr>
         </thead>
+        <?php
+        global $cnx;
+        include("../include/connexion.inc.php");
+
+        $remise = $_GET["id_remise"];
+        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+        $req = $cnx->query($sql);
+        while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
+
+
+        ?>
         <tbody>
                 <tr class="view">
+                    
                     <td>
-                        0005
+                        <?php echo $donnees->id_remise; ?>
                     </td>
                     <td>
-                        14/09/2024
+                        <?php echo $donnees->date_trans; ?>
                     </td>
                     <td>
-                        **** **** **** 0174
+                        <?php $carte = $donnees->num_carte;
+                        $ano = "**** **** **** ".substr($carte,-4,4);
+                        echo $ano;?>
                     </td>
                     <td>
-                        Vente de produit
+                        <?php echo $donnees->libelle; ?>
                     </td>
                     <td>
-                        985621
+                        <?php echo $donnees->num_autorisation; ?>
                     </td>
                     <td>
-                        E.Leclerc
+                        <?php echo $donnees->raison_autre_parti; ?>
                     </td>
                     <td>
-                        572 183 994
+                        <?php echo $donnees->siren_autre_parti; ?>
                     </td>
                     <td>
-                        87152.09 €
+                        <?php $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren;");
+                        $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
+                        switch ($devise) {
+                            case "EUR":
+                                $devise = " €";
+                                break;
+                            case "USD":
+                                $devise = " $";
+                                break;
+                            case "GBP":
+                                $devise = " £";
+                                break;
+                            default:
+                                $devise = " ?";
+                                break;
+                        }
+                        if ($donnees->sens == '-') {
+                            echo "<p class=\"red\">";
+                            echo "- ".$donnees->montant.$devise; // montant
+                            echo "</p>";
+                        }
+                        else {
+                            echo $donnees->montant.$devise; // montant
+                        }}?>
                     </td>
                 </tr>
              <tr class="fold">
-          <td colspan="7">
-            <div class="fold-content">
-              <h3>Details</h3>
-              <table>
-               <thead>
-                  <tr>
-                    <th>Objet</th><th>Montant</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Sony</td>
-                    <td>13245</td>
-                  </tr>
-                  <tr>
-                    <td>Sony</td>
-                    <td>13288</td>
-                  </tr>
-                </tbody>
-              </table>          
-            </div>
-          </td>
-        </tr>
-        <tr class="view">
-          <td>
-              0005
-          </td>
-          <td>
-              14/09/2024
-          </td>
-          <td>
-                        **** **** **** 0174
-          </td>
-          <td>
-              Vente de produit
-          </td>
-          <td>
-              985621
-          </td>
-          <td>
-              E.Leclerc
-          </td>
-          <td>
-              572 183 994
-          </td>
-          <td>
-              87152.09 €
-          </td>
-      </tr>
-        <tr class="fold">
+                 
           <td colspan="7">
             <div class="fold-content">
               <h3>Details</h3>
