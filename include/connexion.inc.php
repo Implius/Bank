@@ -3,8 +3,8 @@
 /*
  * création d'objet PDO de la connexion qui sera représenté par la variable $cnx
  */
-$user =  'postgres';
-$pass =  '1078515';
+$user =  '';
+$pass =  '';
 try {
     $cnx = new PDO('pgsql:host=localhost;dbname=achirecesei', $user, $pass) ;
     $cnx->exec("SET search_path TO bank");
