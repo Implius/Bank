@@ -110,7 +110,7 @@ table {
         <thead>
         <tr>
             <th class="table-blue">
-                Transaction N°
+                Remise N°
             </th>
             <th class="table-darkblue">
                 Date
