@@ -189,13 +189,21 @@ table {
                                 $devise = " ?";
                                 break;
                         }
-                        if ($donnees->sens == '-') {
+                        $remise = $ligne->id_remise;
+                        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+                        $req2 = $cnx->query($sql);
+                        $montant = 0;
+                        while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
+                            $montant += $donnees->montant;
+                        }
+                        if ($ligne->sens == '-') {
                             echo "<p class=\"red\">";
-                            echo "- ".$donnees->montant.$devise; // montant
+                            echo "- ".$montant; // montant
                             echo "</p>";
                         }
                         else {
-                            echo $donnees->montant.$devise; // montant
+                            echo $montant.$devise; // montant
+                        }
                         }}?>
                     </td>
                 </tr>
