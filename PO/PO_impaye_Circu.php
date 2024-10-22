@@ -28,9 +28,9 @@
     <a class="deco" href="index.php"></a>
   </div>
   <div class="mini_navbar">
-    <a class="link" href="PO_impaye_tableau.php">Tableau</a>
-    <a class="link" href="PO_impaye_Histo.php">Histogramme</a>
-    <div class="onit">Circulaire</div>
+    <a class="mini_link" href="PO_impaye_tableau.php">Tableau</a>
+    <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
+    <div class="mini_onit">Circulaire</div>
   </div>
   <div class="canva">
     <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
