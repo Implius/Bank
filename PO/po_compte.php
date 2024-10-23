@@ -13,12 +13,12 @@ include('../include/verifyconnexion.inc.php');
   <link rel="stylesheet" href="PO.css">
   <title>JeFinance</title>
     <script>
-    function sortTable() {
-      const select = document.getElementById('sort_by');
-      const selectedValue = select.value;
-      // Redirige vers la même page avec le paramètre de tri
-      window.location.href = `?sort_by=${selectedValue}`;
-    }
+        function sortTable() {
+            const select = document.getElementById('sort_by');
+            const selectedValue = document.getElementById('sort_by');
+            // Redirige vers la même page avec le paramètre de tri
+            window.location.href = `?sort_by=${selectedValue.value}`;
+        }
   </script>
 </head>
 
@@ -33,10 +33,24 @@ include("../include/po_navbar.inc.php"); // Navbar
     <div class="sorting">
       Trier par :
       <select name="sort_by" id="sort_by" onchange="sortTable()">
-        <option value="montant du compte">Montant du compte</option>
-        <option value="nombre de remise">Nombre de remises</option>
-        <option value="montant des impayés">Montant des impayés</option>
-        <option value="Numéro SIREN">Numéro SIREN</option>
+          <option value="" disabled selected><?php
+              if (isset($_GET["sort_by"])) {
+                  $tri = $_GET["sort_by"];
+                  echo match ($_GET["sort_by"]) {
+                    "tresorerie" => "Montant du compte",
+                    "nb_remises" => "Nombre de remises",
+                    "nb_impayes" => "Montant des impayés",
+                    "num_siren" => "Numéro SIREN",
+                    default => "Aucun",
+                  };
+            } else {
+                  echo "Aucun";
+            }
+            ?></option>
+        <option value="tresorerie">Montant du compte</option>
+        <option value="nb_remises">Nombre de remises</option>
+        <option value="nb_impayes">Montant des impayés</option>
+        <option value="num_siren">Numéro SIREN</option>
       </select>
     </div>
 
@@ -59,7 +73,17 @@ include("../include/po_navbar.inc.php"); // Navbar
       </thead>
       <tbody>
       <?php
-        $req = $cnx->query("SELECT * FROM compte");
+      if (isset($_GET["sort_by"])) {
+          $tri = match ($_GET["sort_by"]) {
+                "tresorerie" => "ORDER BY tresorerie DESC",
+                "nb_remises" => "ORDER BY (select count(*) from remise where remise.num_siren = compte.num_siren) DESC",
+                "nb_impayes" => "ORDER BY (select count(*) from impaye where impaye.num_siren = compte.num_siren) DESC",
+                "num_siren" => "ORDER BY num_siren",
+          };
+      } else {
+          $tri = "";
+      }
+        $req = $cnx->query("SELECT * FROM compte ".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr>
