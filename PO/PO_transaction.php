@@ -202,7 +202,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                     echo "</p>";
                 }
                 else {
-                    echo $montant->montant.$devise; // montant
+                    echo $montant.$devise; // montant
                 }?>
             </td>
         </tr>
@@ -223,11 +223,14 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                         <tbody>
                         <?php while ($donneesT = $reqT->fetch(PDO::FETCH_OBJ)) { ?>
                         <tr>
-                            <td><?php echo $donneesT->libelle; ?></td>
-                            <td><?php echo "<p class=\"red\">";
-                                if ($donneesT->sens == '+') echo $donneesT->montant.$devise;
-                                if ($donneesT->sens == '-') echo '- '.$donneesT->montant.$devise;?></td>
-                        </tr>
+                                <td><?php echo $donneesT->libelle; ?></td>
+                                <td><?php
+                                    if ($donneesT->sens == '+') {echo $donneesT->montant.$devise;}
+                                    if ($donneesT->sens == '-') {
+                                        echo "<p class=\"red\">";
+                                        echo '- '.$donneesT->montant.$devise;
+                                    } ?></td>
+                            </tr>
                         <?php } ?>
                         </tbody>
                     </table>

@@ -19,16 +19,6 @@ include('../include/verifyconnexion.inc.php');
             window.location.href = `?sort_by=${selectedValue.value}`;
         }
     </script>
- <script>
-        function redirectTo(url) {
-            window.location.href = url;
-        }
-    </script>
-    <style>
-        tr{
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body>
@@ -77,10 +67,11 @@ include("../include/po_navbar.inc.php"); // Navbar
                 Objet
             </th>
             <th class="table-darkblue">
-                Bénéficiaire
+                Raison sociale <!--Pas bénéficiaire car on parle juste d'une entreprise y'a pas de bénéficiaire en soit-->
             </th>
             <th class="table-blue">
-                N° SIREN Bénéficiaire
+                N° SIREN 
+                <!--Donc pas bénéficaire pas bénéficiare en bas. ça évite les problème de confusion -->
             </th>
             <th class="table-darkblue">
                 Montant
@@ -104,7 +95,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
-            <tr onclick="redirectTo('PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>')">
+            <tr onclick="document.location = 'PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
                 </td>
@@ -116,15 +107,14 @@ include("../include/po_navbar.inc.php"); // Navbar
                 </td>
                 <td>
                     <?php
-                    $join_query = $cnx->query("select raison_social from compte join remise on compte.num_siren = remise.num_siren;");
+                    $join_query = $cnx->query("select raison_social from compte where num_siren = '".$ligne->num_siren."';");
 
                     echo $join_query->fetch(PDO::FETCH_OBJ)->raison_social; // beneficiaire ?>
                 </td>
                 <td>
                     <?php
-                    $join_query = $cnx->query("select compte.num_siren from compte join remise on compte.num_siren = remise.num_siren;");
-
-                    echo $join_query->fetch(PDO::FETCH_OBJ)->num_siren; // num siren beneficiaire ?>
+                    echo $ligne->num_siren;
+                    ?>
                 </td>
                 <td class="montant">
                     <?php
@@ -144,21 +134,25 @@ include("../include/po_navbar.inc.php"); // Navbar
                             $devise = " ?";
                             break;
                     }
-                        $remise = $ligne->id_remise;
-                        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
-                        $req2 = $cnx->query($sql);
-                        $montant = 0;
-                        while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
-                            $montant += $donnees->montant;
-                        }
-                        if ($ligne->sens == '-') {
-                            echo "<p class=\"red\">";
-                            echo "- ".$montant; // montant
-                            echo "</p>";
-                        }
-                        else {
-                            echo $montant.$devise; // montant
-                        }
+
+                    //permet de faire du montant une somme des montant des transactions
+                    //Permet d'éviter tout problème de cohérence avec la bdd
+                    $remise = $ligne->id_remise;
+                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+                    $req2 = $cnx->query($sql);
+                    $montant = 0;
+                    while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
+                        $montant += $donnees->montant;
+                    }
+
+                    if ($ligne->sens == '-') {
+                        echo "<p class=\"red\">";
+                        echo "- ".$montant.$devise; // montant
+                        echo "</p>";
+                    }
+                    else {
+                        echo $montant.$devise; // montant
+                    }
                     ?>
                 </td>
             </tr>
