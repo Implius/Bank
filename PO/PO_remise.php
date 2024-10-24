@@ -19,6 +19,11 @@ include('../include/verifyconnexion.inc.php');
             window.location.href = `?sort_by=${selectedValue.value}`;
         }
     </script>
+<style>
+    tr{
+        cursor:pointer;
+    }
+</style>
 </head>
 
 <body>
