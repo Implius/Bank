@@ -58,6 +58,26 @@ include("../include/po_navbar.inc.php"); // Navbar
             <option value="montant">Montant impayé</option>
         </select>
     </div>
+
+    <?php
+    if (isset($_GET["sort_by"])) {
+        $tri = match ($_GET["sort_by"]) {
+            "date_plusrecent" => " ORDER BY date_impaye DESC",
+            "date_plusancient" => " ORDER BY date_impaye ASC",
+            "numero_impaye" => " ORDER BY id_impaye",
+            "Numero_SIREN" => " ORDER BY num_siren",
+            "montant" => " ORDER BY montant DESC",
+            default => "",
+        };
+    } else {
+        $tri = "";
+    }
+    $req = $cnx->query("SELECT * FROM impaye".$tri);
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM impaye;");
+    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
+    echo "Nombre de lignes : ".$req->rowCount();
+    ?>
+
     <table class="tableau">
         <thead>
         <tr>
@@ -89,19 +109,6 @@ include("../include/po_navbar.inc.php"); // Navbar
         </thead>
         <tbody>
         <?php
-        if (isset($_GET["sort_by"])) {
-            $tri = match ($_GET["sort_by"]) {
-                "date_plusrecent" => " ORDER BY date_impaye DESC",
-                "date_plusancient" => " ORDER BY date_impaye ASC",
-                "numero_impaye" => " ORDER BY id_impaye",
-                "Numero_SIREN" => " ORDER BY num_siren",
-                "montant" => " ORDER BY montant DESC",
-                default => "",
-            };
-        } else {
-            $tri = "";
-        }
-        $req = $cnx->query("SELECT * FROM impaye".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
         ?>
         <tr>
