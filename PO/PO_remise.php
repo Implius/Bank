@@ -67,10 +67,11 @@ include("../include/po_navbar.inc.php"); // Navbar
                 Objet
             </th>
             <th class="table-darkblue">
-                Bénéficiaire
+                Raison sociale <!--Pas bénéficiaire car on parle juste d'une entreprise y'a pas de bénéficiaire en soit-->
             </th>
             <th class="table-blue">
-                N° SIREN Bénéficiaire
+                N° SIREN 
+                <!--Donc pas bénéficaire pas bénéficiare en bas. ça évite les problème de confusion -->
             </th>
             <th class="table-darkblue">
                 Montant
@@ -134,13 +135,23 @@ include("../include/po_navbar.inc.php"); // Navbar
                             break;
                     }
 
+                    //permet de faire du montant une somme des montant des transactions
+                    //Permet d'éviter tout problème de cohérence avec la bdd
+                    $remise = $ligne->id_remise;
+                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+                    $req2 = $cnx->query($sql);
+                    $montant = 0;
+                    while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
+                        $montant += $donnees->montant;
+                    }
+
                     if ($ligne->sens == '-') {
                         echo "<p class=\"red\">";
-                        echo "- ".$ligne->montant.$devise; // montant
+                        echo "- ".$montant.$devise; // montant
                         echo "</p>";
                     }
                     else {
-                        echo $ligne->montant.$devise; // montant
+                        echo $montant.$devise; // montant
                     }
                     ?>
                 </td>
