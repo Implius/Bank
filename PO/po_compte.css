@@ -1,12 +1,11 @@
-html,
-body {
-    height: 100%;
-    overflow-y: hidden;
+html, body {
+    margin: 0;
+    min-height: 100%;
 }
 
 body {
     background: linear-gradient(135deg, #BBB5E5 0%, #796ECD 100%);
-    background-repeat: no-repeat;
+
     background-size: cover;
     justify-content: center;
     align-items: center;
@@ -15,7 +14,7 @@ body {
 
 .navbar {
     display: flex;
-    justify-content: center;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
@@ -43,7 +42,6 @@ nav {
 
 }
 
-
 .link {
     display: inline-block;
     width: 250px;
@@ -55,7 +53,39 @@ nav {
     font-size: xx-large;
 
 }
+.mini_navbar {
+    top: 140px;
+    height: 50px;
+    position: sticky;
+    display: flex;
+    width: 100%;
+    margin-top: 120px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
 
+.mini_link {
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    padding-top: 25px;
+    border: solid #796ECD;
+    border-width: 0px;
+    transition: border-width 0.15s ease;
+    font-size: xx-large;
+}
+.mini_onit {
+    display: inline-block;
+    width: 220px;
+    height: 50px;
+    border: solid #796ECD;
+    border-width: 3px;
+    border-top-width: 0px;
+    background-color: rgba(0, 0, 0, 0.24);
+    padding-top: 25px;
+    font-size: xx-large;
+}
 a {
     text-decoration: none;
     color: #443B85;
@@ -71,7 +101,7 @@ a {
     position: fixed;
     display: flex;
     margin-left: 80%;
-    margin-top: 100px;
+    margin-top: 120px;
     background-image: url(../images/Exit_1.svg);
     background-size: 100% 100%;
     width: 115px;
@@ -92,6 +122,55 @@ a {
     align-items: center;
 }
 
+.green{
+    color:green;
+    font-size: xx-large;
+}
+.Compte_title {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.Compte_title_sup{
+    margin-top: 125px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 150px;
+    margin-bottom: 75px;
+}
+.backArrow {
+    position: fixed;
+    display: flex;
+    margin-top: 100px;
+    background-image: url(../images/backArrow.svg);
+    background-size: 100% 100%;
+    width: 115px;
+    height: 115px;
+    transition: background-image 0.2s;
+    cursor: pointer;
+    z-index: 2;
+}
+.buttonsup {
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #ef0c0c;
+    font-size: xx-large;
+    border: solid dimgray;
+    color: #e6e6e6;
+    transition: border-color 0.3s;
+    border-radius: 40px;
+}
+.buttonsup:hover{
+    border-color: whitesmoke;
+}
+
+
 .tableau {
     width: 75%;
     border-collapse: collapse;
@@ -111,6 +190,13 @@ tbody tr {
     text-align: right;
 }
 
+tr:nth-child(even){
+    background-color: #f8f8f8;
+}
+
+tr:nth-child(odd){
+    background-color: #C6C6C6;
+}
 .grey{
     background-color: #C6C6C6;
 }
@@ -133,9 +219,41 @@ tbody tr {
 
 
 .table-darkblue{
-    background: linear-gradient(180deg, #44039E 0%, #3909E8 100%);
+    background: linear-gradient(0deg, #2a8288 0%, #07939C 100%);
 }
 
 .sorting{
     margin-bottom: 50px;
 }
+
+.canva {
+    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+.tresorerie{
+    font-size: xxx-large;
+    color: white;
+    -webkit-text-stroke-width: 2px;
+    -webkit-text-stroke-color: black;
+    text-shadow:
+            1px 4px 0 #000,
+            2px 4px 0 #000,
+            -1px 4px 0 #000;
+    margin:0px;
+}
+
+.subtitle1{
+    color: #5C5C5C;
+    font-size: medium;
+    margin:0;
+}
+
+.subtitle2{
+    color:#5C5C5C;
+    font-size: large;
+    margin:0;
+}
+
