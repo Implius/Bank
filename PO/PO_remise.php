@@ -12,11 +12,35 @@ include('../include/verifyconnexion.inc.php');
     <link rel="stylesheet" href="po.css">
     <title>JeFinance</title>
     <script>
+        var dict = {
+            "sort_by": "",
+            "search": ""
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+
         function sortTable() {
-            const select = document.getElementById('sort_by');
-            const selectedValue = document.getElementById('sort_by');
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue.value}`;
+            var selectedValue = document.getElementById('sort_by');
+            var url = String(window.location.href).split('?')[0];
+            url = url.concat("?sort_by=".concat(selectedValue.value));
+            var search = urlParams.get('search');
+            if (search == null) {
+                search = "";
+            }
+            url = url.concat("&search=".concat(search));
+            window.location.href = url;
+        }
+
+        function search() {
+            var selectedValue = document.getElementById('search');
+            var url = String(window.location.href).split('?')[0];
+            url = url.concat("?search=".concat(selectedValue.value));
+            var sort_by = urlParams.get('sort_by');
+            if (sort_by == null) {
+                sort_by = "";
+            }
+            url = url.concat("&sort_by=".concat(sort_by));
+            window.location.href = url;
         }
     </script>
     <style>
@@ -34,6 +58,12 @@ include("../include/po_navbar.inc.php"); // Navbar
 ?>
 
 <div class="Compte_tableau">
+    <div class="search">
+        <form onchange="search()">
+            <input type="text" name="search" id="search" <?php if(isset($_GET["search"])) { echo "placeholder=\"".$_GET["search"]."\""; } else { echo "placeholder=\"Rechercher un compte\""; } ?>>
+            <button type="submit">Rechercher</button>
+        </form>
+    </div>
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -61,6 +91,29 @@ include("../include/po_navbar.inc.php"); // Navbar
             <option value="montant">Montant remise</option>
         </select>
     </div>
+
+    <?php
+    if (isset($_GET["sort_by"])) {
+        $tri = match ($_GET["sort_by"]) {
+            "date_plusrecent" => " ORDER BY date_remise DESC",
+            "date_plusancient" => " ORDER BY date_remise ASC",
+            "numero_remise" => " ORDER BY id_remise",
+            "Numero_SIREN" => " ORDER BY num_siren",
+            "montant" => " ORDER BY (SELECT sum(montant) FROM transaction WHERE transaction.id_remise = remise.id_remise) DESC",
+            default => "",
+        };
+    } else {
+        $tri = "";
+    }
+    if (isset($_GET["search"])) {
+        $search = "where id_remise like '%" . $_GET["search"] . "%' ";
+    } else {
+        $search = "";
+    }
+    $req = $cnx->query("SELECT * FROM remise ".$search.$tri);
+    echo "Nombre de lignes : ".$req->rowCount();
+    ?>
+
     <table class="tableau">
         <thead>
         <tr>
@@ -86,21 +139,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         </tr>
         </thead>
         <tbody>
-
         <?php
-        if (isset($_GET["sort_by"])) {
-            $tri = match ($_GET["sort_by"]) {
-                "date_plusrecent" => " ORDER BY date_remise DESC",
-                "date_plusancient" => " ORDER BY date_remise ASC",
-                "numero_remise" => " ORDER BY id_remise",
-                "Numero_SIREN" => " ORDER BY num_siren",
-                "montant" => " ORDER BY (SELECT sum(montant) FROM transaction WHERE transaction.id_remise = remise.id_remise) DESC",
-                default => "",
-            };
-        } else {
-            $tri = "";
-        }
-        $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
