@@ -19,11 +19,11 @@ include('../include/verifyconnexion.inc.php');
             window.location.href = `?sort_by=${selectedValue.value}`;
         }
     </script>
-<style>
-    tr{
-        cursor:pointer;
-    }
-</style>
+    <style>
+        tr{
+            cursor:pointer;
+        }
+    </style>
 </head>
 
 <body>
@@ -46,6 +46,7 @@ include("../include/po_navbar.inc.php"); // Navbar
                         "date_plusancient" => "Date (plus ancient)",
                         "numero_remise" => "Numéro de remise",
                         "Numero_SIREN" => "Numéro SIREN",
+                        "montant" => "Montant remise",
                         default => "Aucun",
                     };
                 } else {
@@ -57,6 +58,7 @@ include("../include/po_navbar.inc.php"); // Navbar
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_remise">Numéro de remise</option>
             <option value="Numero_SIREN">Numéro SIREN</option>
+            <option value="montant">Montant remise</option>
         </select>
     </div>
     <table class="tableau">
@@ -75,7 +77,7 @@ include("../include/po_navbar.inc.php"); // Navbar
                 Raison sociale <!--Pas bénéficiaire car on parle juste d'une entreprise y'a pas de bénéficiaire en soit-->
             </th>
             <th class="table-blue">
-                N° SIREN 
+                N° SIREN
                 <!--Donc pas bénéficaire pas bénéficiare en bas. ça évite les problème de confusion -->
             </th>
             <th class="table-darkblue">
@@ -92,6 +94,7 @@ include("../include/po_navbar.inc.php"); // Navbar
                 "date_plusancient" => " ORDER BY date_remise ASC",
                 "numero_remise" => " ORDER BY id_remise",
                 "Numero_SIREN" => " ORDER BY num_siren",
+                "montant" => " ORDER BY (SELECT sum(montant) FROM transaction WHERE transaction.id_remise = remise.id_remise) DESC",
                 default => "",
             };
         } else {
