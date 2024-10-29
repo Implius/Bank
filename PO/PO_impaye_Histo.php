@@ -125,9 +125,9 @@ include("../include/po_navbar.inc.php"); // Navbar
     //Début du traitement des infos
 
     //Initialisation d'un tableau qui contiendra les num siren et leur valeurs associé le tout associer à un mois (1 les premiers, 2 le deuxième, etc...)
-    $année = [];
+    $annee = [];
     for ($i = 1; $i <= $inter; $i++) {
-        $année[$i] = [];
+        $annee[$i] = [];
     }
 
     //On initialise un tableau qui gardera en mémoire les différents siren sur les derniers mois
@@ -146,10 +146,10 @@ include("../include/po_navbar.inc.php"); // Navbar
         $req = $cnx->query($sql);
         $montant = 0;
         while ($row = $req->fetch(PDO::FETCH_OBJ)) {
-            $montant += $row->montant; //Ajoute le montant
-            $siren = $row->num_siren; //Prend le siren associer à ce montant
+            $siren = $row->num_siren;
+            $annee[$m][$siren] += $row->montant; //Ajoute le montant
+             //Prend le siren associer à ce montant
             if (!in_array($siren,$num_siren)) {array_push($num_siren,$siren);} //Ajoute le siren dans liste des sirens (si il y est pas déjà)
-            $année[$m][$siren] = $montant; //Associe montant et mois
         }
         // On augmente la borne de 1 mois
         $monthmin = $month;
@@ -183,8 +183,8 @@ include("../include/po_navbar.inc.php"); // Navbar
                     //la boucle for qui permet de crée le dataset avec les montant des différents mois associer au siren
                     for ($m = 1; $m != $inter+1; $m++){
                         $data = 0;
-                        if (!empty($année[$m][$siren])) {
-                            $data = $année[$m][$siren];
+                        if (!empty($annee[$m][$siren])) {
+                            $data = $annee[$m][$siren];
                         }
                         if ($m == $inter){
                             echo $data;
@@ -213,8 +213,8 @@ include("../include/po_navbar.inc.php"); // Navbar
                 echo "data: [";
                 for ($m = 1; $m != $inter+1; $m++){
                     $data = 0;
-                    if (!empty($année[$m])){
-                        foreach($année[$m] as $montant){
+                    if (!empty($annee[$m])){
+                        foreach($annee[$m] as $montant){
                             $data += $montant;
                         }
                     }
