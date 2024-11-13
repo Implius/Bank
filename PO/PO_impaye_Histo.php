@@ -146,7 +146,10 @@ include("../include/po_navbar.inc.php"); // Navbar
         $req = $cnx->query($sql);
         $montant = 0;
         while ($row = $req->fetch(PDO::FETCH_OBJ)) {
-            $siren = $row->num_siren;
+           $siren = $row->num_siren;
+            if (!in_array($siren,$annee[$m])){
+                $annee[$m][$siren] = 0;
+            }
             $annee[$m][$siren] += $row->montant; //Ajoute le montant
              //Prend le siren associer à ce montant
             if (!in_array($siren,$num_siren)) {array_push($num_siren,$siren);} //Ajoute le siren dans liste des sirens (si il y est pas déjà)
