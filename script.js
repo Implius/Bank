@@ -1,4 +1,4 @@
-document.getElementById('btn').addEventListener("click",()=> {
+document.getElementById('btn_csv').addEventListener("click",()=> {
     const lines = document.querySelectorAll('.line');
     const data = [];
 
