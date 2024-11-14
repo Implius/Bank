@@ -1,3 +1,3 @@
 <?php
 session_destroy();
-header("location: ../PO/po_login.php?error=3");
+header("location: ../po_login.php?error=3");
