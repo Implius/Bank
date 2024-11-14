@@ -27,9 +27,58 @@ include("../include/User_po_navbar.inc.php"); // Navbar
             <h2 class="subtitle2">Num Compte: 2222</h2>
             <h2 class="green">Total argent</h2>
         </div>
-        <form action="" method="POST">
-            <button class="buttonsup">Supprimer</button>
+        <div>
+        <form action="PO_Compte_Tresorerie.php" method="POST">
+            <button name="supprimer" class="buttonsup" type="submit">Supprimer</button>
         </form>
+        <?php
+        if (isset($_POST["supprimer"])) {
+
+            // Récupération de l'ID de demande suivant
+            $nextid = $cnx->query("SELECT max(id_demande) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
+            $nextid = (int)$nextid + 2;
+            $nextid = (string)$nextid;
+            $num_siren = $_SESSION["num_siren"];
+            $check = $cnx->prepare("SELECT COUNT(*) as count FROM suppression WHERE num_siren = :num_siren");
+            $check->bindParam(':num_siren', $_SESSION["num_siren"]);
+            $check->execute();
+            $count = $check->fetch(PDO::FETCH_OBJ)->count;
+
+            // Si la requête existe déjà
+            if ($count > 0) {
+                echo "Cette requête a déjà été faite.";
+            } else {
+                // Récupération du nom du compte en utilisant une requête préparée
+                $stmt = $cnx->prepare("SELECT raison_social FROM compte WHERE num_siren = :num_siren");
+                $stmt->bindParam(':num_siren', $_SESSION["num_siren"]);
+                $stmt->execute();
+                $name = $stmt->fetch(PDO::FETCH_OBJ)->raison_social;
+
+                $date_demande = date('Y-m-d');
+
+                // Insertion dans la table `demande_compte`
+                $req = $cnx->prepare("INSERT INTO demande_compte (id_demande, date_demande, libelle_demande) VALUES (:nextid, :date_demande, :name)");
+                $req->bindParam(':nextid', $nextid, PDO::PARAM_STR);
+                $req->bindParam(':date_demande', $date_demande, PDO::PARAM_STR);
+                $req->bindParam(':name', $name, PDO::PARAM_STR);
+                $req->execute();
+
+                // Insertion dans la table `suppression`
+                $req = $cnx->prepare("INSERT INTO suppression (id_demande, num_siren) VALUES (:nextid, :num_siren)");
+                $req->bindParam(':nextid', $nextid, PDO::PARAM_STR);
+                $req->bindParam(':num_siren', $_SESSION["num_siren"], PDO::PARAM_STR);
+                $req->execute();
+
+                // Nettoyage du formulaire
+                unset($_POST["supprimer"]);
+
+                // Redirection
+                header("Location: PO_Compte_Tresorerie.php?deleted=1");
+
+            }
+        }
+        ?>
+        </div>
     </div>
     <div class="canva">
         <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
