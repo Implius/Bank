@@ -159,13 +159,12 @@ a {
     text-align: center;
 }
 
- tr:nth-child(even){
-    background-color: #d2d2d2;
+tr:nth-child(even){
+    background-color: #f8f8f8;
 }
-
- tr:nth-child(odd){
-     background-color: #C6C6C6;
- }
+tr:nth-child(odd){
+    background-color: #C6C6C6;
+}
 thead {
     color : #FFF3DA;
 }
