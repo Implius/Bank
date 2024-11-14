@@ -1,2 +1,2 @@
 <?php
-header('location: PO/po_login.php');
+header('location: po_login.php');
