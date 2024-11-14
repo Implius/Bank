@@ -5,6 +5,9 @@
 global$cnx;
 include('../include/connexion.inc.php');
 include('../include/verifyconnexion.inc.php');
+if (isset($_SESSION['num_siren'])) {
+    unset($_SESSION['num_siren']);
+}
 ?>
 
 <head>
