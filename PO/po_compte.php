@@ -86,7 +86,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         $req = $cnx->query("SELECT * FROM compte ".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
-            <tr>
+            <tr onclick="document.location = 'PO_Compte_Tresorerie.php?num_siren=<?php echo $ligne->num_siren; ?>';">
                 <td class="white">
                     <?php echo $ligne->raison_social; ?>
                 </td>
