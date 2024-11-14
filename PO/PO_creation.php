@@ -2,29 +2,6 @@
 global$cnx;
 include("../include/connexion.inc.php");
 ?>
-<?php
-global$cnx;
-include("../include/connexion.inc.php");
-include('../include/verifyconnexion.inc.php');
-
-if (isset($_POST["Raison"]) && isset($_POST["NumCompte"]) && isset($_POST["NumSiren"]) && isset($_POST["money"])) {
-
-    $nextid = $cnx->query("SELECT max(id_demande) as nextid from creation;")->fetch(PDO::FETCH_OBJ)->nextid;
-    $nextid = (int)$nextid + 2;
-    $nextid = (string)$nextid;
-
-    $req = $cnx->prepare("insert into creation (id_demande, devise, num_siren, raison, num_compte) values('".$nextid."', '".$_POST["money"]."', '".$_POST["NumSiren"]."', '".$_POST["Raison"]."', '".$_POST["NumCompte"]."');");
-
-    $req->execute();
-
-    unset($_POST["Raison"]);
-    unset($_POST["NumCompte"]);
-    unset($_POST["NumSiren"]);
-    unset($_POST["money"]);
-
-    header("PO_creation.php?inserted=1");
-}
-?>
 <!doctype html>
 <html lang="en">
 
@@ -71,7 +48,47 @@ include("../include/po_navbar.inc.php"); // Navbar
         </div>
         <button class="buttoncreate" type="submit">Créer le compte</button>
     </form>
+    <?php
+    global$cnx;
+    include("../include/connexion.inc.php");
+    include('../include/verifyconnexion.inc.php');
+
+    if (isset($_POST["Raison"]) && isset($_POST["NumCompte"]) && isset($_POST["NumSiren"]) && isset($_POST["money"])) {
+
+        $nextid = $cnx->query("SELECT max(id_demande) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
+        $nextid = (int)$nextid + 2;
+        $nextid = (string)$nextid;
+        $num_siren=$_POST["NumSiren"];
+        $check = $cnx->prepare("SELECT COUNT(*) as count FROM creation WHERE num_siren = :num_siren;");
+        $check->bindParam(':num_siren', $num_siren);
+        $check->execute();
+        $count = $check->fetch(PDO::FETCH_OBJ)->count;
+
+        // Si la requête existe déjà
+        if ($count > 0) {
+            echo "Cette requête a déjà été faite.";
+        } else {
+            $req = $cnx->prepare("INSERT INTO demande_compte (id_demande, date_demande, libelle_demande) VALUES (:nextid, :date_demande, :name)");
+            $req->bindParam(':nextid', $nextid, PDO::PARAM_STR);
+            $req->bindParam(':date_demande', $date_demande, PDO::PARAM_STR);
+            $req->bindParam(':name', $name, PDO::PARAM_STR);
+            $req->execute();
+
+            $req = $cnx->prepare("insert into creation (id_demande, devise, num_siren, raison, num_compte) values('" . $nextid . "', '" . $_POST["money"] . "', '" . $_POST["NumSiren"] . "', '" . $_POST["Raison"] . "', '" . $_POST["NumCompte"] . "');");
+
+            $req->execute();
+
+            unset($_POST["Raison"]);
+            unset($_POST["NumCompte"]);
+            unset($_POST["NumSiren"]);
+            unset($_POST["money"]);
+
+            header("PO_creation.php?inserted=1");
+        }
+    }
+    ?>
 </div>
+
 <?php
 if (isset($_GET["inserted"])) {
     if ($_GET["inserted"] == 1) {
