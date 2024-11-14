@@ -281,11 +281,11 @@ tbody tr {
 }
 
 .canva {
+    margin-top: 40px;
     justify-content: center;
     align-items: center;
     display: flex;
 }
-
 #btn{
 
 }
