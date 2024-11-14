@@ -87,16 +87,16 @@ include("../include/po_navbar.inc.php"); // Navbar
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'PO_Compte_Tresorerie.php?num_siren=<?php echo $ligne->num_siren; ?>';">
-                <td class="white">
+                <td>
                     <?php echo $ligne->raison_social; ?>
                 </td>
-                <td class="grey">
+                <td>
                     <?php echo '************' . substr($ligne->num_compte, -4); ?>
                 </td>
-                <td class="white">
+                <td>
                     <?php echo $ligne->num_siren; ?>
                 </td>
-                <td class="grey montant">
+                <td class="montant">
                     <?php echo $ligne->tresorerie; ?>
                 </td>
             </tr>
