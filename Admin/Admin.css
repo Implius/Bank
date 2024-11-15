@@ -1,12 +1,11 @@
 html,
 body {
-    height: 100%;
-    overflow-y: hidden;
+    margin: 0;
+    min-height: 100vh;
 }
 
 body {
     background: linear-gradient(135deg, #BBB5E5 0%, #796ECD 100%);
-    background-repeat: no-repeat;
     background-size: cover;
     justify-content: center;
     align-items: center;
@@ -32,14 +31,6 @@ nav {
     text-align: center;
 }
 
-.mini_navbar {
-    display: flex;
-    width: 100%;
-    margin-top: 120px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
 .onit {
     display: inline-block;
     width: 250px;
@@ -94,6 +85,247 @@ a {
     background-size: 100% 100%;
 }
 
-.sidewindow {
-    overflow: scroll;
+
+.scrollable-section-container {
+    position: fixed;         /* Fixe la position */
+    bottom: 0;               /* Position en bas de la page */
+    left: 0;                 /* Position dans le coin gauche */
+    width: 550px;            /* Largeur de la section */
+    height: 800px;           /* Hauteur de la zone défilable */
+    overflow-y: scroll;      /* Activer le défilement vertical */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #e5e0f5;
+    padding: 10px;
+    box-shadow: 2px -2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.list-group{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+/* Style pour chaque élément de la liste */
+.list-item {
+    padding: 8px;
+    background-color: #d7d7d7;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bolder;
+    border: 2px solid #939393;
+
+}
+
+.list-item-sup {
+    display: flex; /* Utilisation de Flexbox pour aligner le texte et le bouton horizontalement */
+    justify-content: space-between; /* Laisser de l'espace entre le texte et le bouton */
+    align-items: center; /* Aligner les éléments verticalement */
+    padding: 8px;
+    background-color: #d7d7d7;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: xx-large;
+    font-weight: bold;
+    border: 2px solid #939393;
+    width: 100%; /* Prendre toute la largeur disponible */
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.item-text {
+    flex: 1; /* Le texte prend tout l'espace restant */
+    text-align: left; /* Aligner le texte à gauche */
+    padding-left: 10px; /* Ajouter un peu de marge gauche au texte */
+}
+
+.list-item.selected {
+    color: white; /* Couleur du texte pour l'élément sélectionné */
+    text-shadow:
+            2px 2px 0px black,  /* Ombre noire en bas à droite */
+            -2px -2px 0px black, /* Ombre noire en haut à gauche */
+            2px -2px 0px black,  /* Ombre noire en bas à gauche */
+            -2px 2px 0px black;  /* Ombre noire en haut à droite */
+    font-weight: bolder;
+}
+/* Personnalisation de la scrollbar */
+.scrollable-section-container::-webkit-scrollbar {
+    width: 5px;
+}
+
+.scrollable-section-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+}
+
+.form-container {
+    position: fixed;
+    top: 50%;
+    right: 25%;
+    transform: translateY(-50%);
+    width: 250px;
+    padding: 20px;
+}
+
+.formcrea {
+    display: flex;
+    background-color: #D9D9D9;
+    border-radius: 50px;
+    border: solid black;
+    border-width:3px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+    width: 250px;
+    height: 50px;
+}
+
+
+.forminput{
+    display: flex;
+    margin: 40px;
+    width: 180px;
+    height: 45px;
+    border-width: 0px;
+    border-bottom-width: 3px;
+    border-color: black;
+    background-color: #ffffff00;
+    font-size: 20px;
+    text-align: center;
+}
+
+.devise {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.devise select{
+    padding: 15px;
+    font-size: large;
+    text-align: center;
+}
+
+.buttoncreate {
+    background-color: #D9D9D9;
+    border-radius: 50px;
+    border: solid black;
+    border-width:3px;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 35px;
+    text-align: center;
+    width: 255px;
+    height: 95px;
+    font-size: 35px;
+    color: #443B85;
+    transition: background-color 0.15s;
+}
+
+.buttoncreate:hover{
+    color: #DDDBEE;
+    background-color: #686868;
+}
+
+.details-panel {
+    position: fixed;
+    top: 50%;
+    left: 35%; /* Décalé à droite de la liste */
+    transform: translateY(-50%);
+    width: 350px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: none; /* Masqué par défaut */
+    text-align: center;
+    font-size: x-large;
+    row-gap: 50px;
+}
+
+.details-panel h3 {
+    margin-top: 0;
+}
+
+/* Flèche de retour */
+.back-arrow {
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 65%;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.arrow{
+    height: 50px;
+}
+
+.buttonsup {
+    padding: 15px;
+    padding-left: 30px;
+    padding-right: 30px;
+    background-color: #ef0c0c;
+    font-size: xx-large;
+    border: solid dimgray;
+    color: #e6e6e6;
+    transition: border-color 0.3s;
+    border-radius: 40px;
+}
+.buttonsup:hover{
+    border-color: whitesmoke;
+}
+
+.confirmation-popup {
+    display: none; /* Cache le pop-up par défaut */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Placer le pop-up au-dessus de tout autre contenu */
+}
+
+.popup-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup-content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.confirm-button, .cancel-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.confirm-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.confirm-button:hover {
+    background-color: #45a049;
+}
+
+.cancel-button {
+    background-color: #f44336;
+    color: white;
+}
+
+.cancel-button:hover {
+    background-color: #e53935;
 }
