@@ -26,7 +26,7 @@ switch ($onit) {
     case "Impaye":
         ?>
         <a class="link" href="User_tresorerie.php">Compte</a>
-        <a class="link" href="User_Impaye_tableau.php">Remise</a>
+        <a class="link" href="User_remise.php">Remise</a>
         <div class="onit">Impayé</div>
         <?php
         break;
