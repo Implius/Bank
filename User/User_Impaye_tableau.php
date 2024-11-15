@@ -3,8 +3,8 @@ global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
 ?>
-    <!doctype html>
-    <html lang="en">
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,13 +26,54 @@ include("../include/User_navbar.inc.php"); // Navbar
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
+            <option value="" disabled selected><?php
+
+                if (isset($_GET["sort_by"])) {
+                    $tri = $_GET["sort_by"];
+                    echo match ($tri) {
+                        "date_plusrecent" => "Date (plus récent)",
+                        "date_plusancient" => "Date (plus ancient)",
+                        "numero_impaye" => "Numéro d'impayé",
+                        "Numero_SIREN" => "Numéro SIREN",
+                        "montant" => "Montant d'impayé",
+                        default => "Aucun",
+                    };
+                } else {
+                    echo "Aucun";
+                }
+
+                ?></option>
             <option value="date_plusrecent">Date (plus récent)</option>
             <option value="date_plusancient">Date (plus ancient)</option>
-            <option value="numero_remise">Numéro d'impayé</option>
+            <option value="numero_impaye">Numéro d'impayé</option>
             <option value="Numero_SIREN">Numéro SIREN</option>
+            <option value="montant">Montant impayé</option>
         </select>
     </div>
-    <table class="tableau">
+
+    <?php
+    if (isset($_GET["sort_by"])) {
+        $tri = match ($_GET["sort_by"]) {
+            "date_plusrecent" => " ORDER BY date_impaye DESC",
+            "date_plusancient" => " ORDER BY date_impaye ASC",
+            "numero_impaye" => " ORDER BY id_impaye",
+            "Numero_SIREN" => " ORDER BY num_siren",
+            "montant" => " ORDER BY montant DESC",
+            default => "",
+        };
+    } else {
+        $tri = "";
+    }
+    if (isset($_SESSION['NumSiren'])) {
+        $siren = $_SESSION['NumSiren'];
+    }
+    $req = $cnx->query("SELECT * FROM bank.impayé WHERE num_siren='$siren'".$tri);
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impayé;");
+    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
+    echo "Nombre de lignes : ".$req->rowCount();
+    ?>
+
+    <table class="tableau" id="table_imp">
         <thead>
         <tr>
             <th class="table-blue">
@@ -45,46 +86,68 @@ include("../include/User_navbar.inc.php"); // Navbar
                 Autre parti
             </th>
             <th class="table-darkblue">
-                N° SIREN Autre parti
+                N° SIREN
             </th>
             <th class="table-blue">
-                Objet
+                Raison sociale
             </th>
             <th class="table-darkblue">
-                Raison
+                Objet
             </th>
             <th class="table-blue">
+                Motif
+            </th>
+            <th class="table-darkblue">
                 Montant
             </th>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                0001
-            </td>
-            <td>
-                12/10/2023
-            </td>
-            <td>
-                Jules
-            </td>
-            <td>
-                842 017 349
-            </td>
-            <td>
-                KFC
-            </td>
-            <td>
-                05
-            </td>
-            <td>
-                50 €
-            </td>
-        </tr>
-        <!--Mettre code PHP ici-->
+        <?php
+        while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
+            ?>
+            <tr class="line">
+                <td>
+                    <?php echo $ligne->id_impaye; // id impaye ?>
+                </td>
+                <td>
+                    <?php echo $ligne->date_impaye; // date ?>
+                </td>
+                <td>
+                    <?php echo $ligne->raison_autre_parti; // autre parti ?>
+                </td>
+                <td>
+                    <?php echo $ligne->num_siren; // num siren ?>
+                </td>
+                <td>
+                    <?php
+                    $join_query = $cnx->query("select compte.raison_social from compte where compte.num_siren = '".$ligne->num_siren."';");
+                    $raison_social = $join_query->fetch(PDO::FETCH_OBJ);
+                    echo $raison_social->raison_social; // raison sociale
+                    ?>
+                </td>
+                <td>
+                    <?php echo $ligne->libelle; // objet ?>
+                </td>
+                <td>
+                    <?php echo $ligne->code_motif; // motif ?>
+                </td>
+                <td class="montant">
+                    <?php echo $ligne->montant; // montant ?>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
         </tbody>
     </table>
+
+
+</div>
+<div class="button_tel">
+    <button id="btn_csv">Exporter format CSV</button>
+    <button id="btn_pdf">Exporter format PDF</button>
+    <button id="btn_xls">Exporter format XLS</button>
 </div>
 </body>
 </html>
