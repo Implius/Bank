@@ -13,10 +13,18 @@ include('../include/verifyconnexion.inc.php');
     <title>JeFinance</title>
     <script>
         function sortTable() {
-            const select = document.getElementById('sort_by');
             const selectedValue = document.getElementById('sort_by');
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue.value}`;
+            // Si l'url contient un paramètre search
+            if (window.location.href.includes("?")) {
+                // On redirige vers la même page avec le paramètre sort_by
+                if (window.location.href.includes("&sort_by=")) {
+                    window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
+                } else {
+                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                }
+            } else {
+                window.location.href = `?sort_by=${selectedValue.value}`;
+            }
         }
     </script>
 </head>
@@ -26,9 +34,22 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Remise";
 include("../include/po_navbar.inc.php"); // Navbar
+if (!isset($_GET['search']) || $_GET['search'] == "") {
+    $search = "";
+} else {
+    $search = " WHERE id_remise LIKE '%".$_GET['search']."%' ";
+}
 ?>
 
 <div class="Compte_tableau">
+
+    <div class="sorting">
+        <form action="PO_remise.php" method="get">
+            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+        </form>
+    </div>
+
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -54,6 +75,23 @@ include("../include/po_navbar.inc.php"); // Navbar
             <option value="Numero_SIREN">Numéro SIREN</option>
         </select>
     </div>
+
+    <?php
+    if (isset($_GET["sort_by"])) {
+        $tri = match ($_GET["sort_by"]) {
+            "date_plusrecent" => " ORDER BY date_remise DESC",
+            "date_plusancient" => " ORDER BY date_remise ASC",
+            "numero_remise" => " ORDER BY id_remise",
+            "Numero_SIREN" => " ORDER BY num_siren",
+            default => "",
+        };
+    } else {
+        $tri = "";
+    }
+    $req = $cnx->query("SELECT * FROM remise".$search.$tri);
+    echo "<p class='nb_lignes'>Nombre de comptes : ".$req->rowCount()."</p>";
+    ?>
+
     <table class="tableau">
         <thead>
         <tr>
@@ -81,18 +119,6 @@ include("../include/po_navbar.inc.php"); // Navbar
         <tbody>
 
         <?php
-        if (isset($_GET["sort_by"])) {
-            $tri = match ($_GET["sort_by"]) {
-                "date_plusrecent" => " ORDER BY date_remise DESC",
-                "date_plusancient" => " ORDER BY date_remise ASC",
-                "numero_remise" => " ORDER BY id_remise",
-                "Numero_SIREN" => " ORDER BY num_siren",
-                default => "",
-            };
-        } else {
-            $tri = "";
-        }
-        $req = $cnx->query("SELECT * FROM remise".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'PO_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
