@@ -86,10 +86,13 @@ include("../include/User_navbar.inc.php"); // Navbar
         } else {
             $tri = "";
         }
-        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$_SESSION["num_siren"]."'".$tri);
+        if (isset($_SESSION['NumSiren'])){
+            $numsiren = $_SESSION["NumSiren"];
+        }
+        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
-            <tr onclick="document.location = 'PO_Compte_Transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
+            <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
                 </td>
