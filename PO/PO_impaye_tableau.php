@@ -12,10 +12,18 @@ include("../include/connexion.inc.php");
     <title>JeFinance</title>
     <script>
         function sortTable() {
-            const select = document.getElementById('sort_by');
-            const selectedValue = select.value;
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue}`;
+            const selectedValue = document.getElementById('sort_by');
+            // Si l'url contient un paramètre search
+            if (window.location.href.includes("?")) {
+                // On redirige vers la même page avec le paramètre sort_by
+                if (window.location.href.includes("&sort_by=")) {
+                    window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
+                } else {
+                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                }
+            } else {
+                window.location.href = `?sort_by=${selectedValue.value}`;
+            }
         }
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -38,6 +46,11 @@ include("../include/connexion.inc.php");
 <?php
 $onit = "Impaye";
 include("../include/po_navbar.inc.php"); // Navbar
+if (!isset($_GET['search']) || $_GET['search'] == "") {
+    $search = "";
+} else {
+    $search = " WHERE id_impaye LIKE '%".$_GET['search']."%' ";
+}
 ?>
 <div class="mini_navbar">
     <div class="mini_onit">Tableau</div>
@@ -45,6 +58,14 @@ include("../include/po_navbar.inc.php"); // Navbar
     <a class="mini_link" href="PO_impaye_Circu.php">Circulaire</a>
 </div>
 <div class="Compte_tableau">
+
+    <div class="sorting">
+        <form action="PO_impaye_tableau.php" method="get">
+            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+        </form>
+    </div>
+
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -86,7 +107,7 @@ include("../include/po_navbar.inc.php"); // Navbar
     } else {
         $tri = "";
     }
-    $req = $cnx->query("SELECT * FROM bank.impaye".$tri);
+    $req = $cnx->query("SELECT * FROM bank.impaye".$search.$tri);
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;");
     echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount()."</p>";
