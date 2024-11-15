@@ -3,7 +3,7 @@
 global $cnx;
 session_start();
 if (!isset($_SESSION['sessionid'])) {
-header('location: login.php');
+header('location: ../po_login.php');
 }
 
 $NumSiren = $_SESSION['NumSiren'];
@@ -17,6 +17,6 @@ $ligne=$req->fetch(PDO::FETCH_OBJ);
 
 if (!$ligne) {
 
-    header('location: login.php?error=3'); // Si l'utilisateur n'existe pas
+    header('location: ../po_login.php?error=3'); // Si l'utilisateur n'existe pas
 
 }
