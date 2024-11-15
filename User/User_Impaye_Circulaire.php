@@ -32,7 +32,7 @@ $code = [
     "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
 ];
 $sql = "SELECT code_motif,montant FROM impaye;";
-$req = $cnx->query("SELECT code_motif,montant FROM bank.impayé;");
+$req = $cnx->query("SELECT code_motif,montant FROM bank.impayé where num_siren='".$_SESSION['NumSiren']."';");
 while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
     $code[$ligne->code_motif] += $ligne->montant;
 }
@@ -127,3 +127,4 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
 </script>
 </body>
 </html>
+
