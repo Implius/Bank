@@ -21,8 +21,8 @@ $req_po = $cnx->query("SELECT COUNT(*) as res FROM po WHERE id_util = $ligne->id
 $res = $req_po->fetch(PDO::FETCH_OBJ);
 
 if ($res->res != 1) {
-header('location: login.php?error=3'); // Si l'utilisateur n'est pas un po
+header('location: ../po_login.php?error=3'); // Si l'utilisateur n'est pas un po
 }
 } else {
-header('location: login.php?error=3'); // Si l'utilisateur n'existe pas
+header('location: ../po_login.php?error=3'); // Si l'utilisateur n'existe pas
 }
