@@ -34,7 +34,6 @@ include("../include/User_navbar.inc.php"); // Navbar
                         "date_plusrecent" => "Date (plus récent)",
                         "date_plusancient" => "Date (plus ancient)",
                         "numero_impaye" => "Numéro d'impayé",
-                        "Numero_SIREN" => "Numéro SIREN",
                         "montant" => "Montant d'impayé",
                         default => "Aucun",
                     };
@@ -46,7 +45,6 @@ include("../include/User_navbar.inc.php"); // Navbar
             <option value="date_plusrecent">Date (plus récent)</option>
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_impaye">Numéro d'impayé</option>
-            <option value="Numero_SIREN">Numéro SIREN</option>
             <option value="montant">Montant impayé</option>
         </select>
     </div>
