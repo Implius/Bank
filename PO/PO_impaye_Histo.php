@@ -43,7 +43,7 @@ include("../include/po_navbar.inc.php"); // Navbar
 
 <div class="sorting">
     Trier par :
-    <select name="month_by" id="month_by" onChange="sortTable()">
+    <select name="month_by" id="month_by" onChange="sortTable()" class="tri_histo">
         <option value="" disabled selected><?php
             if (isset($_GET["month_by"])) {
                 $tri = $_GET["month_by"];
@@ -103,7 +103,7 @@ include("../include/po_navbar.inc.php"); // Navbar
     }
 
     //permet d'avoir le derniers mois enregistrer dans la bdd
-    $sql = "Select max(impayé.date_impaye) FROM bank.impayé;";
+    $sql = "Select max(impaye.date_impaye) FROM bank.impaye;";
     $datemax = $cnx->query($sql)->fetch();
 
     //La partie qui permet d'avoir les données de départ pour commencer
@@ -142,7 +142,7 @@ include("../include/po_navbar.inc.php"); // Navbar
         $year = $tmp2[1];
 
         //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
-        $sql = "SELECT * FROM bank.impayé WHERE date_impaye BETWEEN make_timestamp($yearmin,$monthmin,$day,$hour,$min,$sec) AND make_timestamp($year,$month,$day,$hour,$min,$sec) ORDER BY date_impaye;";
+        $sql = "SELECT * FROM bank.impaye WHERE date_impaye BETWEEN make_timestamp($yearmin,$monthmin,$day,$hour,$min,$sec) AND make_timestamp($year,$month,$day,$hour,$min,$sec) ORDER BY date_impaye;";
         $req = $cnx->query($sql);
         $montant = 0;
         while ($row = $req->fetch(PDO::FETCH_OBJ)) {

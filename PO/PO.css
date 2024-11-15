@@ -289,3 +289,46 @@ tbody tr {
 #btn{
 
 }
+
+.sorting {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 16px;
+    color: #333;
+    margin: 20px 0;
+    display: inline-block;
+}
+
+.sorting select {
+    margin-left: 10px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.sorting select:hover {
+    border-color: #aaa;
+}
+
+.sorting option {
+    padding: 10px;
+}
+
+.sorting label {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.nb_lignes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    font-weight: bold;
+}

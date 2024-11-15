@@ -86,10 +86,10 @@ include("../include/po_navbar.inc.php"); // Navbar
     } else {
         $tri = "";
     }
-    $req = $cnx->query("SELECT * FROM bank.impayé".$tri);
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impayé;");
-    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
-    echo "Nombre de lignes : ".$req->rowCount();
+    $req = $cnx->query("SELECT * FROM bank.impaye".$tri);
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;");
+    echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
+    echo "Nombre de lignes : ".$req->rowCount()."</p>";
     ?>
 
     <table class="tableau" id="table_imp">
