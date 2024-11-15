@@ -232,8 +232,8 @@ for ($m = 1; $m != $inter+1; $m++){
                 echo "label: 'Montant Total',\n";
                 echo "type: 'line',\n";
                 echo "data: [";
+                $data = 0;
                 for ($m = 1; $m != $inter+1; $m++){
-                    $data = 0;
                     if (!empty($annee[$m])){
                         foreach($annee[$m] as $montant){
                             $data += $montant;
