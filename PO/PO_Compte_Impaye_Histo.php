@@ -42,9 +42,7 @@ if (isset($_POST["date_end"])) {
     <div class="mini_onit">Histogramme</div>
     <a class="mini_link" href="PO_Compte_Impaye_Circulaire.php">Circulaire</a>
 </div>
-<div class="canva">
-    <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
-</div>
+
 <div class="Compte_histo">
 <div class="sorting">
     <div class="month">
@@ -82,6 +80,9 @@ if (isset($_POST["date_end"])) {
         </form>
     </div>
 </div>
+</div>
+<div class="canva">
+    <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
 </div>
 
 
