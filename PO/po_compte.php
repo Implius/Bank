@@ -32,7 +32,7 @@ if (isset($_SESSION['num_siren'])) {
         }
   </script>
 </head>
-
+²
 <body>
 
 <?php

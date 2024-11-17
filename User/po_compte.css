@@ -115,6 +115,11 @@ a {
     justify-content: center;
     align-items: center;
 }
+
+.red {
+    color: red;
+}
+
 .green{
     color:green;
     font-size: xx-large;
