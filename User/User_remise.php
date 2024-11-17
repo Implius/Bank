@@ -13,10 +13,18 @@ include('../include/verifyconnexion_user.inc.php');
     <title>JeFinance</title>
     <script>
         function sortTable() {
-            const select = document.getElementById('sort_by');
             const selectedValue = document.getElementById('sort_by');
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue.value}`;
+            // Si l'url contient un paramètre search
+            if (window.location.href.includes("?")) {
+                // On redirige vers la même page avec le paramètre sort_by
+                if (window.location.href.includes("&sort_by=")) {
+                    window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
+                } else {
+                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                }
+            } else {
+                window.location.href = `?sort_by=${selectedValue.value}`;
+            }
         }
     </script>
 </head>
@@ -24,8 +32,20 @@ include('../include/verifyconnexion_user.inc.php');
 <?php
 $onit = "Remise";
 include("../include/User_navbar.inc.php"); // Navbar
+if (!isset($_GET['search']) || $_GET['search'] == "") {
+    $search = "";
+} else {
+    $search = " AND id_remise LIKE '%".$_GET['search']."%' ";
+}
 ?>
 <div class="Compte_tableau">
+    <div class="sorting">
+        <form action="User_remise.php" method="get">
+            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+        </form>
+    </div>
+
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -87,7 +107,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         if (isset($_SESSION['NumSiren'])){
             $numsiren = $_SESSION["NumSiren"];
         }
-        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$tri);
+        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
