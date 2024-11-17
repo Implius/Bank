@@ -67,7 +67,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
             <option value="numero_remise">Numéro de remise</option>
         </select>
     </div>
-    <table class="tableau">
+    <table class="tableau" id="table">
         <thead>
         <tr>
             <th class="table-blue">
@@ -110,7 +110,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
-            <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">
+            <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';" class="line">
                 <td>
                     <?php echo $ligne->id_remise; // id remise ?>
                 </td>
@@ -174,5 +174,47 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         </tbody>
     </table>
 </div>
+
+<div class="button_tel">
+    <button id="btn_csv">Exporter format CSV</button>
+    <button id="btn_pdf">Exporter format PDF</button>
+    <button id="btn_xls">Exporter format XLS</button>
+</div>
+<script src="../script_remise.js">
+</script>
+
+<script>
+    function exportTableToExcel(tableId) {
+
+        // Get the table element using the provided ID
+        const table = document.getElementById(tableId);
+
+        // Extract the HTML content of the table
+        const html = table.outerHTML;
+
+        // Create a Blob containing the HTML data with Excel MIME type
+        const blob = new Blob([html], {type: 'application/vnd.ms-excel'});
+
+        // Create a URL for the Blob
+        const url = URL.createObjectURL(blob);
+
+        // Create a temporary anchor element for downloading
+        const a = document.createElement('a');
+        a.href = url;
+
+        // Set the desired filename for the downloaded file
+        a.download = 'table.xls';
+
+        // Simulate a click on the anchor to trigger download
+        a.click();
+
+        // Release the URL object to free up resources
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('btn_xls').addEventListener('click', function() {
+        exportTableToExcel('table');
+    });
+</script>
 </body>
 </html>
