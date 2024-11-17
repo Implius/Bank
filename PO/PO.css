@@ -288,6 +288,17 @@ tbody tr {
     background-color: #686868;
 }
 
+.button_tel{
+     margin-top: 30px;
+     display: flex;
+     justify-content: center;
+}
+.button_tel button{
+    padding: 25px 25px;
+    border-radius: 15px;
+    background-color: #c1c1c1;
+}
+
 .canva {
     margin-top: 40px;
     justify-content: center;
