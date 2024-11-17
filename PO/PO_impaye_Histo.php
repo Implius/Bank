@@ -138,16 +138,17 @@ if (isset($_POST["date_end"])) {
             return $monthtmp + 1;
         }
     }
-    if ($date_begin != null && $date_end != null) {
-        $date_begin = (string)$date_begin;
-        $year_begin = substr($date_begin, 0, 4);
-        $month_begin = substr($date_begin, 5, 2);
-        $day_begin = substr($date_begin, 8, 2);
-        $date_end = (string)$date_end;
-        $year_end = substr($date_end, 0, 4);
-        $month_end = substr($date_end, 5, 2);
-        $day_end = substr($date_end, 8, 2);
-    }
+    if ($date_begin != null){
+    $date_begin = (string)$date_begin;
+    $year_begin = substr($date_begin, 0, 4);
+    $month_begin = substr($date_begin, 5, 2);
+    $day_begin = substr($date_begin, 8, 2);
+} else if ($date_end != null){
+    $date_end = (string)$date_end;
+    $year_end = substr($date_end, 0, 4);
+    $month_end = substr($date_end, 5, 2);
+    $day_end = substr($date_end, 8, 2);
+}
     //permet d'avoir le derniers mois enregistrer dans la bdd
     if ($date_begin == null){
         $sql = "Select max(impaye.date_impaye) FROM bank.impaye;";
