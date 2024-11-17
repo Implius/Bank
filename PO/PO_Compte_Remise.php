@@ -24,8 +24,21 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Remise";
 include("../include/User_po_navbar.inc.php"); // Navbar
+if (!isset($_GET['search']) || $_GET['search'] == "") {
+    $search = "";
+} else {
+    $search = " AND id_remise LIKE '%".$_GET['search']."%' ";
+}
 ?>
 <div class="Compte_tableau">
+
+    <div class="sorting">
+        <form action="PO_Compte_Remise.php" method="get">
+            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+        </form>
+    </div>
+
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -86,7 +99,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
         } else {
             $tri = "";
         }
-        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$_SESSION["num_siren"]."'".$tri);
+        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$_SESSION["num_siren"]."'".$search.$tri);
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'PO_Compte_Transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';">

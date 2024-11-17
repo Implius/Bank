@@ -16,6 +16,11 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Impaye";
 include("../include/User_po_navbar.inc.php"); // Navbar
+if (!isset($_GET['search']) || $_GET['search'] == "") {
+    $search = "";
+} else {
+    $search = " AND id_impaye LIKE '%".$_GET['search']."%' ";
+}
 ?>
 <div class="mini_navbar">
     <div class="mini_onit">Tableau</div>
@@ -23,6 +28,14 @@ include("../include/User_po_navbar.inc.php"); // Navbar
     <a class="mini_link" href="PO_Compte_Impaye_Circulaire.php">Circulaire</a>
 </div>
 <div class="Compte_tableau">
+
+    <div class="sorting">
+        <form action="PO_Compte_Impaye_tableau.php" method="get">
+            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+        </form>
+    </div>
+
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
@@ -65,7 +78,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
         $tri = "";
     }
     $siren = $_SESSION['num_siren'];
-    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$tri);
+    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri);
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;");
     echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount();
