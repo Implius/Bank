@@ -93,8 +93,8 @@ include("../include/User_navbar.inc.php"); // Navbar
     if (isset($_SESSION['NumSiren'])) {
         $siren = $_SESSION['NumSiren'];
     }
-    $req = $cnx->query("SELECT * FROM bank.impayé WHERE num_siren='$siren'".$tri);
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impayé;");
+    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$tri);
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;");
     echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount();
     ?>
