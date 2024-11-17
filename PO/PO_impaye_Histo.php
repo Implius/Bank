@@ -208,12 +208,12 @@ if (isset($_POST["date_end"])) {
             $montant = 0;
             while ($row = $req->fetch(PDO::FETCH_OBJ)) {
                 $siren = $row->num_siren;
-                if (!in_array($siren, $annee[$m])) {
+                if (!array_key_exists($siren, $annee[$m])) {
                     $annee[$m][$siren] = 0;
                 }
                 $annee[$m][$siren] += $row->montant; //Ajoute le montant
                 //Prend le siren associer à ce montant
-                if (!array_key_exists($siren, $annee[$m])) {
+                if (!in_array($siren, $num_siren)) {
                     array_push($num_siren, $siren);
                 } //Ajoute le siren dans liste des sirens (si il y est pas déjà)
             }
