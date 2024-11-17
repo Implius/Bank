@@ -172,7 +172,6 @@ if (isset($_POST["date_end"])) {
         } else {
             $inter = (int)$tri;
         }
-        print_r($inter);
         $tmp = getMonthMin($yearmax, $monthend, $inter - 1);
         $monthmin = $tmp[0];
         $yearmin = $tmp[1];
