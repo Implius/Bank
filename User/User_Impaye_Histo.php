@@ -135,7 +135,8 @@ if ($date_begin != null){
     $year_begin = substr($date_begin, 0, 4);
     $month_begin = substr($date_begin, 5, 2);
     $day_begin = substr($date_begin, 8, 2);
-} else if ($date_end != null){
+} 
+if ($date_end != null){
     $date_end = (string)$date_end;
     $year_end = substr($date_end, 0, 4);
     $month_end = substr($date_end, 5, 2);
