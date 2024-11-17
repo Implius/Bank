@@ -123,14 +123,17 @@ function monthToString($month){
     $months = ["Jan","Feb","March","Avr","May","June","July","Aout","Sep","Oct","Nov","Dec"];
     return $months[$month-1];
 }
-function compareMonth($monthA,$monthB) : int
+function compareMonth($monthA,$yearA,$monthB,$yearB,$monthmax,$yearmax) : int
 {
-    $monthtmp = $monthB - $monthA;
-    if ($monthtmp == 0){
-        return 1;
-    } else {
-        return $monthtmp + 1;
+    $count = 0;
+    if ($yearmax < $yearB || ($yearB == $yearmax && $monthmax < $monthB)) {
+        $monthB = $monthmax;
     }
+    while ($monthA != $monthB) {
+        $count++;
+        $monthA = addMonth($yearA,$monthA,1)[0];
+    }
+    return $count + 1 ;
 }
 
 if ($date_begin != null){
@@ -164,9 +167,9 @@ if ($datemax[0] != null) {
     $monthend = substr($datemax[0], 5, 2);
     $monthmin = $monthend;
     if ($date_begin == null && $date_end != null) {
-        $inter = compareMonth($monthend, $month_end);
+        $inter = compareMonth($monthend,$yearmax,$month_end,$year_end,$monthend,$yearmax);
     } else if ($date_begin != null && $date_end != null) {
-        $inter = compareMonth($month_begin, $month_end);
+        $inter = compareMonth($month_begin,$year_begin,$month_end,$year_end,$monthend,$yearmax);
     } else {
         $inter = (int)$tri;
     }
