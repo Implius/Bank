@@ -213,7 +213,7 @@ if (isset($_POST["date_end"])) {
                 }
                 $annee[$m][$siren] += $row->montant; //Ajoute le montant
                 //Prend le siren associer à ce montant
-                if (!in_array($siren, $num_siren)) {
+                if (!array_key_exists($siren, $annee[$m])) {
                     array_push($num_siren, $siren);
                 } //Ajoute le siren dans liste des sirens (si il y est pas déjà)
             }
