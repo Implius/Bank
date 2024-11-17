@@ -11,6 +11,34 @@ include('../include/verifyconnexion_user.inc.php');
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="po_compte.css">
     <title>JeFinance</title>
+<script>
+        function sortTable() {
+            const selectedValue = document.getElementById('sort_by');
+            // Si l'url contient un paramètre search
+            if (window.location.href.includes("?")) {
+                // On redirige vers la même page avec le paramètre sort_by
+                if (window.location.href.includes("&sort_by=")) {
+                    window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
+                } else {
+                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                }
+            } else {
+                window.location.href = `?sort_by=${selectedValue.value}`;
+            }
+        }
+    </script>
+    <style>
+        .button_tel{
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+        }
+        .button_tel button{
+            padding: 25px 25px;
+            border-radius: 15px;
+            background-color: #c1c1c1;
+        }
+    </style>
 </head>
 <body>
 <?php
