@@ -201,7 +201,7 @@ if ($datemax[0] != null) {
         $montant = 0;
         while ($row = $req->fetch(PDO::FETCH_OBJ)) {
             $siren = $row->num_siren;
-            if (!in_array($siren, $annee[$m])) {
+            if (!array_key_exist($siren, $annee[$m])) {
                 $annee[$m][$siren] = 0;
             }
             $annee[$m][$siren] += $row->montant; //Ajoute le montant
