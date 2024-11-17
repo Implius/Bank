@@ -14,6 +14,14 @@ if (isset($_GET['num_siren'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="po_compte.css">
     <title>JeFinance</title>
+    <script>
+    function sortTable() {
+      const select = document.getElementById('month_by');
+      const selectedValue = select.value;
+      // Redirige vers la même page avec le paramètre de tri
+      window.location.href = `?month_by=${selectedValue}`;
+    }
+  </script>
 </head>
 <body>
 <?php
