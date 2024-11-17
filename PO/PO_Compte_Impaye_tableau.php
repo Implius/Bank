@@ -27,7 +27,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     <a class="mini_link" href="PO_Compte_Impaye_Histo.php">Histogramme</a>
     <a class="mini_link" href="PO_Compte_Impaye_Circulaire.php">Circulaire</a>
 </div>
-<div class="Compte_tableau">
+<div class="Compte_tableau" style="margin-top: 100px">
 
     <div class="sorting">
         <form action="PO_Compte_Impaye_tableau.php" method="get">

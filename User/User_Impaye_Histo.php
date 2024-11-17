@@ -42,7 +42,7 @@ if (isset($_POST["date_end"])) {
     <div class="mini_onit">Histogramme</div>
     <a class="mini_link" href="User_Impaye_Circulaire.php">Circulaire</a>
 </div>
-<div class="Compte_histo">
+<div class="Compte_histo" style="margin-top: 100px">
 <div class="sorting">
     <div class="month">
         Trier par :

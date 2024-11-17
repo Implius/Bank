@@ -109,7 +109,6 @@ a {
 }
 
 .Compte_histo{
-    margin-top: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,7 +136,6 @@ a {
     justify-content: center;
     align-items: center;
     gap: 150px;
-    margin-bottom: 75px;
 }
 .backArrow {
     position: fixed;

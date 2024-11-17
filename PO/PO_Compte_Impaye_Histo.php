@@ -42,9 +42,8 @@ if (isset($_POST["date_end"])) {
     <div class="mini_onit">Histogramme</div>
     <a class="mini_link" href="PO_Compte_Impaye_Circulaire.php">Circulaire</a>
 </div>
-
 <div class="Compte_histo">
-<div class="sorting">
+<div class="sorting" style="margin-top: 100px">
     <div class="month">
         Trier par :
         <select name="month_by" id="month_by" onChange="sortTable()">

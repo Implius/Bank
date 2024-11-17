@@ -43,7 +43,7 @@ include("../include/User_navbar.inc.php"); // Navbar
             $tresorerie = $cnx->prepare("SELECT tresorerie from compte where num_siren=:num_siren;");
             $tresorerie->bindParam(':num_siren', $_SESSION["NumSiren"]);
             $tresorerie->execute();
-            echo $tresorerie->fetchColumn();
+            echo $tresorerie->fetchColumn()." €";
             ?></h2>
     </div>
 </div>
