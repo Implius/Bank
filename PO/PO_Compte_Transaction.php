@@ -93,7 +93,7 @@ include('../include/verifyconnexion.inc.php');
     <body>
     <?php
     $onit = "Remise";
-    include("../include/User_po_navbar.inc.php"); // Navbar
+    include("../include/User_po_navbar_trans.inc.php"); // Navbar
     ?>
     <div class="Compte_tableau">
         <table class="fold-table">
