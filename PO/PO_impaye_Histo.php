@@ -134,7 +134,6 @@ if (isset($_POST["date_end"])) {
         if ($monthtmp == 0){
             return 1;
         } else {
-            print_r($monthtmp);
             return $monthtmp + 1;
         }
     }
