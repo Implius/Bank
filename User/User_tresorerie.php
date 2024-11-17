@@ -39,11 +39,8 @@ include("../include/User_navbar.inc.php"); // Navbar
             ?></h2>
     </div>
 </div>
-<div class="canva">
-    <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
-</div>
-
-<div class="sorting">
+<div class="Compte_histo">
+    <div class="sorting">
     Trier par :
     <select name="month_by" id="month_by" onChange="sortTable()">
         <option value="" disabled selected><?php
@@ -66,6 +63,11 @@ include("../include/User_navbar.inc.php"); // Navbar
         <option value="12">12 months</option>
     </select>
 </div>
+</div>
+<div class="canva">
+    <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
+</div>
+
 <?php
 function addMonth($year,$month,$nb){
     //Ajoute $nb aux mois et 1 à l'année si elle est passé en ajoutant le mois
