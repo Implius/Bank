@@ -40,8 +40,6 @@ if (isset($_POST["date_end"])) {
 } else {
     $date_end = null;
 }
-print_r($date_end);
-print_r($date_begin);
 ?>
 
   <div class="mini_navbar">
