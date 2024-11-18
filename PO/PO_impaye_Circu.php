@@ -1,7 +1,6 @@
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
-include('../include/verifyconnexion.inc.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,7 +10,8 @@ include('../include/verifyconnexion.inc.php');
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="PO.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <title>JeFinance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <title>JeFinance</title>
   <script>
     function sortTable() {
       const select = document.getElementById('sort_by');
@@ -23,11 +23,15 @@ include('../include/verifyconnexion.inc.php');
 </head>
 
 <body>
-    <?php
-    $onit = "Impaye";
-    include("../include/po_navbar.inc.php"); // Navbar
-    ?>
-
+  <div class="navbar">
+    <nav>
+      <a class="link" href="PO_compte.php">Compte</a>
+      <a class="link" href="PO_remise.php">Remise</a>
+      <div class="onit">Impayé</div>
+      <a class="link" href="PO_creation.php">Création</a>
+    </nav>
+    <a class="deco" href="index.php"></a>
+  </div>
   <div class="mini_navbar">
     <a class="mini_link" href="PO_impaye_tableau.php">Tableau</a>
     <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
@@ -49,6 +53,9 @@ include('../include/verifyconnexion.inc.php');
   }
 
   ?>
+  <div class="button_tel">
+      <button id="btn_pdf">Exporter format PDF</button>
+  </div>
   <script>
     const ctx = document.getElementById('myChart').getContext('2d');
     const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
@@ -140,6 +147,26 @@ include('../include/verifyconnexion.inc.php');
         }
       }
     });
+  </script>
+  <script>
+      document.getElementById('btn_pdf').addEventListener('click', () => {
+          const element = document.getElementById('myChart');
+
+          // Obtenir les dimensions avec getBoundingClientRect
+          const rect = element.getBoundingClientRect();
+          const contentWidth = rect.width;
+          const contentHeight = rect.height;
+
+          const opt = {
+              margin: 0, //pas de marge
+              filename: 'table.pdf',
+              image: { type: 'jpeg', quality: 0.98 },
+              html2canvas: { scale: 2, width: contentWidth, height: contentHeight }, // Meilleure qualité
+              jsPDF: { unit: 'px', format: [contentWidth, contentHeight], orientation: 'landscape' }
+          };
+          // Génération du PDF
+          html2pdf().set(opt).from(element).save();
+      });
   </script>
 </body>
 
