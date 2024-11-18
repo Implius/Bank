@@ -1,6 +1,7 @@
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
+include('../include/verifyconnexion.inc.php');
 ?>
 <!doctype html>
 <html lang="en">
