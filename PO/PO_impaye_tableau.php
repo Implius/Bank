@@ -1,7 +1,6 @@
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
-include('../include/verifyconnexion.inc.php');
 ?>
 <!doctype html>
 <html lang="en">
@@ -11,6 +10,7 @@ include('../include/verifyconnexion.inc.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="PO.css">
     <title>JeFinance</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <script>
         function sortTable() {
             const selectedValue = document.getElementById('sort_by');
@@ -224,6 +224,27 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     document.getElementById('btn_xls').addEventListener('click', function() {
         exportTableToExcel('table_imp');
+    });
+</script>
+<script>
+    document.getElementById('btn_pdf').addEventListener('click', () => {
+        const element = document.getElementById('table_imp');
+
+        // Obtenir les dimensions avec getBoundingClientRect
+        const rect = element.getBoundingClientRect();
+        const contentWidth = rect.width;
+        const contentHeight = rect.height;
+
+        const opt = {
+            margin: 0, //pas de marge
+            filename: 'table.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 }, // Meilleure qualité
+            jsPDF: { unit: 'px', format: [contentWidth, contentHeight], orientation: 'portrait' }
+        };
+
+        // Génération du PDF
+        html2pdf().set(opt).from(element).save();
     });
 </script>
 </body>
