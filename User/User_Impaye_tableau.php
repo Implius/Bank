@@ -12,7 +12,7 @@ include('../include/verifyconnexion_user.inc.php');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="po_compte.css">
     <title>JeFinance</title>
-<script>
+    <script>
         function sortTable() {
             const selectedValue = document.getElementById('sort_by');
             // Si l'url contient un paramètre search
@@ -21,7 +21,11 @@ include('../include/verifyconnexion_user.inc.php');
                 if (window.location.href.includes("&sort_by=")) {
                     window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
                 } else {
-                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                    if (window.location.href.includes("?search=")) {
+                        window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                    } else {
+                        window.location.href = `?sort_by=${selectedValue.value}`;
+                    }
                 }
             } else {
                 window.location.href = `?sort_by=${selectedValue.value}`;

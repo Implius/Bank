@@ -14,10 +14,22 @@ include('../include/verifyconnexion.inc.php');
     <title>JeFinance</title>
     <script>
         function sortTable() {
-            const select = document.getElementById('sort_by');
             const selectedValue = document.getElementById('sort_by');
-            // Redirige vers la même page avec le paramètre de tri
-            window.location.href = `?sort_by=${selectedValue.value}`;
+            // Si l'url contient un paramètre search
+            if (window.location.href.includes("?")) {
+                // On redirige vers la même page avec le paramètre sort_by
+                if (window.location.href.includes("&sort_by=")) {
+                    window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
+                } else {
+                    if (window.location.href.includes("?search=")) {
+                        window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                    } else {
+                        window.location.href = `?sort_by=${selectedValue.value}`;
+                    }
+                }
+            } else {
+                window.location.href = `?sort_by=${selectedValue.value}`;
+            }
         }
     </script>
 </head>
