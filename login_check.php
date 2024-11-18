@@ -17,8 +17,13 @@ if (isset($_POST['NumSiren']) && isset($_POST['password'])) {
     $req->bindParam(':password', $password);
     $req->execute();
     $ligne=$req->fetch(PDO::FETCH_OBJ);
+    echo $ligne->id_util;
 
     if ($ligne) {
+
+        if (isset($_COOKIE['tentatives'])) {
+            unset($_COOKIE['tentatives']);
+        }
 
         $req_po = $cnx->query("SELECT COUNT(*) as res FROM po WHERE id_util = $ligne->id_util"); // Verifier si c'est un po
         $res=$req_po->fetch(PDO::FETCH_OBJ);
@@ -47,6 +52,12 @@ if (isset($_POST['NumSiren']) && isset($_POST['password'])) {
         }
 
     } else {
+        if (!isset($_COOKIE['tentatives'])) {
+            setcookie('tentatives', 1, time() + 60*60*60, '/');
+        }
+        else {
+            setcookie('tentatives', $_COOKIE['tentatives'] + 1, time() + 60*60*60, '/');
+        }
         header('location: po_login.php?error=1'); // Si l'utilisateur n'existe pas
     }
 }
