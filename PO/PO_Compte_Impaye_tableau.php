@@ -80,8 +80,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     $siren = $_SESSION['num_siren'];
     $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri);
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
-    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
-    echo "Nombre de lignes : ".$req->rowCount();
+    echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
+    echo "Nombre de lignes : ".$req->rowCount()."</p>";
     ?>
 
     <table class="tableau" id="table_imp">
