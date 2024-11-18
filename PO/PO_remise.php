@@ -162,7 +162,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 </td>
                 <td class="montant">
                     <?php
-                    $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren;");
+                    $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$ligne->num_siren';");
                     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
                     switch ($devise) {
                         case "EUR":

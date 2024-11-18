@@ -130,7 +130,25 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     <?php echo $ligne->num_siren; ?>
                 </td>
                 <td class="montant">
-                    <?php echo $ligne->tresorerie; ?>
+
+                    <?php
+                    $join_query = $cnx->query("select compte.devise from compte WHERE num_siren='$ligne->num_siren';");
+                    $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
+                    switch ($devise) {
+                        case "EUR":
+                            $devise = " €";
+                            break;
+                        case "USD":
+                            $devise = " $";
+                            break;
+                        case "GBP":
+                            $devise = " £";
+                            break;
+                        default:
+                            $devise = " ?";
+                            break;
+                    }
+                    echo $ligne->tresorerie.$devise; ?>
                 </td>
             </tr>
             <?php

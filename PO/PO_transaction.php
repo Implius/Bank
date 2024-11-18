@@ -173,7 +173,10 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                 <?php echo $donnees->siren_autre_parti; ?>
             </td>
             <td>
-                <?php $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren;");
+                <?php
+                $join_siren = $cnx->query("SELECT compte.num_siren FROM compte join remise on compte.num_siren = remise.num_siren join transaction on remise.id_remise = transaction.id_remise WHERE transaction.id_remise = '$donnees->id_remise';");
+                $siren = $join_siren->fetch(PDO::FETCH_OBJ)->num_siren;
+                $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$siren';");
                 $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
                 switch ($devise) {
                     case "EUR":
