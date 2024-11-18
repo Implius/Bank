@@ -25,13 +25,17 @@ if (isset($_SESSION['num_siren'])) {
                 if (window.location.href.includes("&sort_by=")) {
                     window.location.href = window.location.href.split("&sort_by=")[0] + "&sort_by=" + selectedValue.value;
                 } else {
-                    window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                    if (window.location.href.includes("?search=")) {
+                        window.location.href = `?search=${window.location.href.split("?search=")[1]}&sort_by=${selectedValue.value}`;
+                    } else {
+                        window.location.href = `?sort_by=${selectedValue.value}`;
+                    }
                 }
             } else {
                 window.location.href = `?sort_by=${selectedValue.value}`;
             }
         }
-  </script>
+    </script>
 </head>
 ²
 <body>
