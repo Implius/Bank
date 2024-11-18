@@ -31,7 +31,7 @@ include("../include/User_navbar.inc.php"); // Navbar
 <div class="Compte_title_sup">
     <div class="Compte_title">
         <h1 class="tresorerie"><?php
-            $stmt = $cnx->prepare("SELECT raison_social, num_compte, tresorerie, devise FROM compte WHERE num_siren = :num_siren");
+            $stmt = $cnx->prepare("SELECT * FROM compte WHERE num_siren = :num_siren");
             $stmt->bindParam(':num_siren', $_SESSION["NumSiren"]);
             $stmt->execute();
             $ligne = $stmt->fetch(PDO::FETCH_OBJ);
@@ -39,14 +39,15 @@ include("../include/User_navbar.inc.php"); // Navbar
             $num_compte = $ligne->num_compte;
             $tresorerie = $ligne->tresorerie;
             $devise = $ligne->devise;
+            $sens = $ligne->sens;
             echo $name;
             ?></h1>
         <h2 class="subtitle1">Num SIREN: <?php echo $_SESSION["NumSiren"]?></h2>
         <h2 class="subtitle2">Num Compte: <?php echo $num_compte ?></h2>
          <?php
-        if($tresorerie<0) {
+        if ($sens == "-") {
             echo "<h2 class=\"titlered\">";
-            echo $tresorerie;
+            echo '-'.$tresorerie;
             switch ($devise) {
                 case "EUR":
                     echo " €";
