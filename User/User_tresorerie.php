@@ -153,6 +153,11 @@ $datemax = $cnx->query($sql)->fetch();
 
 //La partie qui permet d'avoir les données de départ pour commencer
 //L'initialisation en gros
+if ($datemax[0]===null){
+    echo "<center>";
+    echo "Vous n'avez pas de remise";
+    echo "</center>";
+} else {
 $yearmax = substr($datemax[0],0,4);
 $yearmin = $yearmax;
 $monthend = substr($datemax[0],5,2);
@@ -206,6 +211,7 @@ for ($m = 1; $m != $inter+1; $m++){
     // On augmente la borne de 1 mois
     $monthmin = $month;
     $yearmin = $year;
+}
 }
 ?>
 <script>
