@@ -1,3 +1,5 @@
+<?php
+?>
 <!doctype html>
 <html lang="en">
 
@@ -9,32 +11,68 @@
 </head>
 <body>
 <?php
+global $cnx;
+include("../include/connexion.inc.php");
+include("../include/verifyconnexion_admin.inc.php");
+
+if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSiren']) && isset($_POST['money'])) {
+
+    // Add new user in utilisateur
+
+    $stmt = $cnx->query("SELECT max(id_util) as max FROM utilisateur");
+    $max_id = $stmt->fetch(PDO::FETCH_OBJ)->max + 1;
+    echo $max_id;
+
+    $mdp = md5($_POST['Raison']);
+    $sql = "INSERT INTO utilisateur (id_util, identifiant, mdp) VALUES (:id_util, :identifiant, :mdp)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':id_util', $max_id, PDO::PARAM_INT);
+    $stmt->bindParam(':identifiant', $_POST['Raison'], PDO::PARAM_STR);
+    $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
+    $stmt->execute();
+
+    // Add new account in compte
+
+    $Raison = $_POST['Raison'];
+    $NumCompte = $_POST['NumCompte'];
+    $NumSiren = $_POST['NumSiren'];
+    $money = $_POST['money'];
+
+    $tresorerie = 0;
+
+    $sql = "INSERT INTO compte (num_siren, num_compte, tresorerie, devise, raison_social, id_util) VALUES (:num_siren, :num_compte, :tresorerie, :devise, :raison_social, :id_util)";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':num_siren', $NumSiren, PDO::PARAM_STR);
+    $stmt->bindParam(':num_compte', $NumCompte, PDO::PARAM_STR);
+    $stmt->bindParam(':tresorerie', $tresorerie, PDO::PARAM_INT);
+    $stmt->bindParam(':devise', $money, PDO::PARAM_STR);
+    $stmt->bindParam(':raison_social', $Raison, PDO::PARAM_STR);
+    $stmt->bindParam(':id_util', $max_id, PDO::PARAM_INT);
+    $stmt->execute();
+
+    // Delete the request from the creation table
+
+    $sql = "DELETE FROM creation WHERE num_siren = :num_siren";
+    $stmt = $cnx->prepare($sql);
+    $stmt->bindParam(':num_siren', $NumSiren, PDO::PARAM_STR);
+    $stmt->execute();
+
+    echo "<script>alert('Compte créé avec succès !');</script>";
+}
+
 $onit = "Creation";
 include("../include/Admin_navbar.inc.php"); // Navbar
 ?>
 
 <div class="scrollable-section-container">
     <h1>Demande de création</h1>
-    <div class="list-item" onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Leroy Merlin</div>
-    <div class="list-item"  onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 2</div>
-    <div class="list-item"  onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 3</div>
-    <div class="list-item">Item 4</div>
-    <div class="list-item">Item 5</div>
-    <div class="list-item">Item 6</div>
-    <div class="list-item">Item 7</div>
-    <div class="list-item">Item 8</div>
-    <div class="list-item">Item 9</div>
-    <div class="list-item"onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 10</div>
-    <div class="list-item" onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Leroy Merlin</div>
-    <div class="list-item"  onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 2</div>
-    <div class="list-item"  onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 3</div>
-    <div class="list-item">Item 4</div>
-    <div class="list-item">Item 5</div>
-    <div class="list-item">Item 6</div>
-    <div class="list-item">Item 7</div>
-    <div class="list-item">Item 8</div>
-    <div class="list-item">Item 9</div>
-    <div class="list-item"onclick="showDetails(this,'Leroy Merlin', '123 456 789', '01234567891', '€')">Item 10</div>
+
+    <?php
+    $stmt = $cnx->query("SELECT * FROM creation");
+    while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+        echo "<div class='list-item' onclick='showDetails(this,\"$row->raison\", \"$row->num_siren\", \"$row->num_compte\", \"$row->devise\")'>$row->raison</div>";
+    }
+    ?>
 </div>
 <div class="details-panel" id="detailsPanel">
     <div class="back-arrow" onclick="closeDetails()"><img alt="fleche" class="arrow" src="../images/backArrow.svg"/></div>
