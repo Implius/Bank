@@ -115,11 +115,13 @@ a {
     align-items: center;
 }
 
-.red {
-    color: red;
+.red{
+    color:red;
+}
+.titlered{
+    color:red;
     font-size: xx-large;
 }
-
 .green{
     color:green;
     font-size: xx-large;
