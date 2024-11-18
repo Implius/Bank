@@ -78,8 +78,8 @@ if (isset($_POST["date_end"])) {
     </div>
     <div class="date">
         <form action="" method="POST">
-            <div><label> To : </label> <input name="date_begin" type="date" min="2020-01-01" <?php if($date_begin != null) echo "value='".$date_begin."'" ?>/></div>
-            <div><label> From : </label> <input name="date_end" type="date" min="2020-01-01" <?php if($date_end != null) echo "value='".$date_end."'" ?>/></div>
+            <div><label> From : </label> <input name="date_begin" type="date" min="2020-01-01" <?php if($date_begin != null) echo "value='".$date_begin."'" ?>/></div>
+            <div><label> To : </label> <input name="date_end" type="date" min="2020-01-01" <?php if($date_end != null) echo "value='".$date_end."'" ?>/></div>
             <div><button value="submit"> Submit </button> <button value="reset" name="reset"> Reset </button></div>
         </form>
     </div>
