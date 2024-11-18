@@ -1,5 +1,3 @@
-<?php
-?>
 <!doctype html>
 <html lang="en">
 
@@ -23,11 +21,11 @@ if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSi
     $max_id = $stmt->fetch(PDO::FETCH_OBJ)->max + 1;
     echo $max_id;
 
-    $mdp = md5($_POST['Raison']);
+    $mdp = md5($_POST['NumSiren']);
     $sql = "INSERT INTO utilisateur (id_util, identifiant, mdp) VALUES (:id_util, :identifiant, :mdp)";
     $stmt = $cnx->prepare($sql);
     $stmt->bindParam(':id_util', $max_id, PDO::PARAM_INT);
-    $stmt->bindParam(':identifiant', $_POST['Raison'], PDO::PARAM_STR);
+    $stmt->bindParam(':identifiant', $_POST['NumSiren'], PDO::PARAM_STR);
     $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
     $stmt->execute();
 
