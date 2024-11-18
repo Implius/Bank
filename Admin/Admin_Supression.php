@@ -9,16 +9,26 @@
 </head>
 <body>
 <?php
+global $cnx;
+include("../include/connexion.inc.php");
+include("../include/verifyconnexion_admin.inc.php");
+
 $onit = "Supression";
 include("../include/Admin_navbar.inc.php"); // Navbar
 ?>
 <div class="scrollable-section-container">
     <h1>Demande de suppression</h1>
     <div class="list-group">
-        <div class="list-item-sup">
-            <div class="item-text">Leroy Merlin</div>
-            <button name="supprimer" class="buttonsup" type="submit" onclick="showConfirmation()">Supprimer</button>
-        </div>
+            <?php
+            $stmt = $cnx->query("SELECT * FROM suppression");
+            while ($row = $stmt->fetch(PDO::FETCH_OBJ)) {
+                $raison_social = $cnx->query("SELECT raison_social FROM compte WHERE num_siren = '$row->num_siren'")->fetch(PDO::FETCH_OBJ)->raison_social;
+                echo "<div class=\"list-item-sup\">";
+                echo "<div class='item-text'>" . $raison_social . "</div>";
+                echo "<button name='supprimer' class='buttonsup' type='submit' onclick='showConfirmation()'>Supprimer</button>";
+                echo "</div>";
+            }
+            ?>
         <!-- Vous pouvez ajouter d'autres éléments de la liste ici de la même manière -->
     </div>
 </div>
