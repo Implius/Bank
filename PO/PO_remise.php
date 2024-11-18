@@ -102,7 +102,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         $tri = "";
     }
     $req = $cnx->query("SELECT * FROM remise".$search.$tri);
-    echo "<p class='nb_lignes'>Nombre de comptes : ".$req->rowCount()."</p>";
+    echo "<p class='nb_lignes'>Nombre de remises : ".$req->rowCount()."</p>";
     ?>
 
     <table class="tableau" id="table">
