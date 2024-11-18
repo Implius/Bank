@@ -45,7 +45,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         <h2 class="subtitle2">Num Compte: <?php echo $num_compte ?></h2>
          <?php
         if($tresorerie<0) {
-            echo "<h2 class=\"red\">";
+            echo "<h2 class=\"titlered\">";
             echo $tresorerie;
             switch ($devise) {
                 case "EUR":
