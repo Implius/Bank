@@ -82,14 +82,14 @@ include("../include/Admin_navbar.inc.php"); // Navbar
 <div class="form-container">
     <form action="Admin_Creation.php" method="post">
         <div class="formcrea">
-            <input class="forminput" type="text" id="Raison" name="Raison" placeholder="Raison social" required><br>
+            <input class="forminput" type="text" id="Raison" name="Raison" placeholder="Raison social" required maxlength="50"><br>
         </div>
         <div class="formcrea">
             <input class="forminput" type="text" id="NumCompte" name="NumCompte" placeholder="Numéro du compte"
-                   required><br>
+                   required maxlength="11"><br>
         </div>
         <div class="formcrea">
-            <input class="forminput" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required><br>
+            <input class="forminput" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required maxlength="9"><br>
         </div>
         <div class="devise">
             <select name="money" id="money" required>
