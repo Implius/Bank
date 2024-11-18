@@ -43,7 +43,9 @@ include("../include/User_navbar.inc.php"); // Navbar
             ?></h1>
         <h2 class="subtitle1">Num SIREN: <?php echo $_SESSION["NumSiren"]?></h2>
         <h2 class="subtitle2">Num Compte: <?php echo $num_compte ?></h2>
-        <h2 class="green"><?php
+         <?php
+        if($tresorerie<0) {
+            echo "<h2 class=\"red\">";
             echo $tresorerie;
             switch ($devise) {
                 case "EUR":
@@ -59,7 +61,27 @@ include("../include/User_navbar.inc.php"); // Navbar
                     echo " ?";
                     break;
             }
-            ?></h2>
+            echo "</h2>";
+        } else {
+            echo "<h2 class=\"green\">";
+            echo $tresorerie;
+            switch ($devise) {
+                case "EUR":
+                    echo " €";
+                    break;
+                case "USD":
+                    echo " $";
+                    break;
+                case "GBP":
+                    echo " £";
+                    break;
+                default:
+                    echo " ?";
+                    break;
+            }
+        }
+        echo "</h2>";
+        ?>
     </div>
 </div>
 <div class="Compte_histo">
