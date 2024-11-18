@@ -17,7 +17,7 @@ switch ($onit) {
 
     case "Remise":
         ?>
-        <a class="link" href="User_tresorerie.php">Compte</a>
+        <a class="link" href="User_tresorerie.php">Trésorerie</a>
         <div class="onit">Remise</div>
         <a class="link" href="User_Impaye_tableau.php">Impayé</a>
         <?php
@@ -25,7 +25,7 @@ switch ($onit) {
 
     case "Impaye":
         ?>
-        <a class="link" href="User_tresorerie.php">Compte</a>
+        <a class="link" href="User_tresorerie.php">Trésorerie</a>
         <a class="link" href="User_remise.php">Remise</a>
         <div class="onit">Impayé</div>
         <?php
