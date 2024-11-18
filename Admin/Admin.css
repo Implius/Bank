@@ -91,7 +91,7 @@ a {
     bottom: 0;               /* Position en bas de la page */
     left: 0;                 /* Position dans le coin gauche */
     width: 550px;            /* Largeur de la section */
-    height: 800px;           /* Hauteur de la zone défilable */
+    height: 75%;           /* Hauteur de la zone défilable */
     overflow-y: scroll;      /* Activer le défilement vertical */
     border: 1px solid #ccc;
     border-radius: 10px;
