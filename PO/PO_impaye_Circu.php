@@ -23,15 +23,11 @@ include('../include/verifyconnexion.inc.php');
 </head>
 
 <body>
-  <div class="navbar">
-    <nav>
-      <a class="link" href="PO_compte.php">Compte</a>
-      <a class="link" href="PO_remise.php">Remise</a>
-      <div class="onit">Impayé</div>
-      <a class="link" href="PO_creation.php">Création</a>
-    </nav>
-    <a class="deco" href="index.php"></a>
-  </div>
+    <?php
+    $onit = "Impaye";
+    include("../include/po_navbar.inc.php"); // Navbar
+    ?>
+
   <div class="mini_navbar">
     <a class="mini_link" href="PO_impaye_tableau.php">Tableau</a>
     <a class="mini_link" href="PO_impaye_Histo.php">Histogramme</a>
