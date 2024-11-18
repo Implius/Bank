@@ -9,6 +9,7 @@ include('../include/verifyconnexion_user.inc.php');
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <link rel="stylesheet" href="po_compte.css">
     <title>JeFinance</title>
     <script>
@@ -216,5 +217,26 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         exportTableToExcel('table');
     });
 </script>
+<script>
+    document.getElementById('btn_pdf').addEventListener('click', () => {
+        const element = document.getElementById('table');
+
+        // Obtenir les dimensions avec getBoundingClientRect
+        const rect = element.getBoundingClientRect();
+        const contentWidth = rect.width;
+        const contentHeight = rect.height;
+
+        const opt = {
+            margin: 0, //pas de marge
+            filename: 'table.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2, width: contentWidth, height: contentHeight }, // Meilleure qualité
+            jsPDF: { unit: 'px', format: [contentWidth, contentHeight], orientation: 'landscape' }
+        };
+        // Génération du PDF
+        html2pdf().set(opt).from(element).save();
+    });
+</script>
+
 </body>
 </html>
