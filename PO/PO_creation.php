@@ -55,9 +55,8 @@ include("../include/po_navbar.inc.php"); // Navbar
 
     if (isset($_POST["Raison"]) && isset($_POST["NumCompte"]) && isset($_POST["NumSiren"]) && isset($_POST["money"])) {
 
-        $nextid = $cnx->query("SELECT max(id_demande) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
-        $nextid = (int)$nextid + 2;
-        $nextid = (string)$nextid;
+        $nextid = $cnx->query("SELECT max(cast(id_demande as int)) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
+        $nextid = $nextid + 1;
         $num_siren=$_POST["NumSiren"];
         $check = $cnx->prepare("SELECT COUNT(*) as count FROM creation WHERE num_siren = :num_siren;");
         $check->bindParam(':num_siren', $num_siren);
