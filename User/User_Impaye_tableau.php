@@ -177,7 +177,24 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     <?php echo $ligne->code_motif; // motif ?>
                 </td>
                 <td class="montant">
-                    <?php echo $ligne->montant; // montant ?>
+                    <?php
+                    $join_query = $cnx->query("select compte.devise from compte join impaye on compte.num_siren = impaye.num_siren WHERE impaye.num_siren='$ligne->num_siren';");
+                    $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
+                    switch ($devise) {
+                        case "EUR":
+                            $devise = " €";
+                            break;
+                        case "USD":
+                            $devise = " $";
+                            break;
+                        case "GBP":
+                            $devise = " £";
+                            break;
+                        default:
+                            $devise = " ?";
+                            break;
+                    }
+                    echo $ligne->montant.$devise; // montant ?>
                 </td>
             </tr>
             <?php
