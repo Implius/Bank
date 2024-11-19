@@ -149,9 +149,9 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                             break;
                     }
                     if ($ligne->sens=='-'){
-                        echo '-'.$ligne->tresorerie.$devise;
+                        echo <h2 class="red">'-'.$ligne->tresorerie.$devise</h2>;
                     } else {
-                    echo $ligne->tresorerie.$devise; }?>
+                    echo <h2>$ligne->tresorerie.$devise;</h2> }?>
                 </td>
             </tr>
             <?php
