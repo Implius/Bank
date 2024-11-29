@@ -13,6 +13,7 @@ include('../include/verifyconnexion.inc.php');
         <title>JeFinance</title>
     <script>
         function sortTable() {
+            //Fonction qui permet de trier en renvoyant un variable
             const select = document.getElementById('sort_by');
             const selectedValue = select.value;
             // Redirige vers la même page avec le paramètre de tri
@@ -129,6 +130,8 @@ include('../include/verifyconnexion.inc.php');
             global $cnx;
             include("../include/connexion.inc.php");
             $remise = $_GET["id_remise"];
+
+            //recupere les transactions d'une remise precise (celle cliquee)
             $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
             $req = $cnx->query($sql);
             while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
@@ -160,6 +163,7 @@ include('../include/verifyconnexion.inc.php');
                 </td>
                 <td>
                     <?php
+                    //Toute la parti de jonction de requete qui permet de recuperer le numero de siren et la devise du compte
                     $join_siren = $cnx->query("SELECT compte.num_siren FROM compte join remise on compte.num_siren = remise.num_siren join transaction on remise.id_remise = transaction.id_remise WHERE transaction.id_remise = '$donnees->id_remise';");
                     $siren = $join_siren->fetch(PDO::FETCH_OBJ)->num_siren;
                     $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$siren';");
@@ -179,9 +183,11 @@ include('../include/verifyconnexion.inc.php');
                             break;
                     }
                     $trans = $donnees->id_trans;
+                    // recupere les donnees des details associer a une transaction
                     $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';";
                     $reqD = $cnx->query($sql);
                     $montant = 0;
+                    //Ajoute les montants des details de la transaction afin de le montant de celle-ci
                     while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) {
                         $montant += $ligne->montant;
                     }
@@ -195,6 +201,7 @@ include('../include/verifyconnexion.inc.php');
                     }?>
                 </td>
             </tr>
+            <!-- La partie cacher qui represente les details (afficher des que l'on clique sur une transaction) -->
             <tr class="fold">
                 <?php //requete pour les détails de la transactions cliqué
                 $sql = "SELECT * FROM bank.detail WHERE id_trans = '".$donnees->id_trans."';";
