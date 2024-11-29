@@ -16,6 +16,7 @@ if (isset($_GET['num_siren'])) {
     <title>JeFinance</title>
     <script>
     function sortTable() {
+        //Fonction qui permet de trier en renvoyant une variable
       const select = document.getElementById('month_by');
       const selectedValue = select.value;
       // Redirige vers la même page avec le paramètre de tri
@@ -31,6 +32,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
 <div class="Compte_title_sup">
     <div class="Compte_title">
         <h1 class="tresorerie"><?php
+            //On recupere les infos du compte cliquer par le PO
             $stmt = $cnx->prepare("SELECT * FROM compte WHERE num_siren = :num_siren");
             $stmt->bindParam(':num_siren', $_SESSION["num_siren"]);
             $stmt->execute();
@@ -143,6 +145,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
     <select name="month_by" id="month_by" onChange="sortTable()">
         <option value="" disabled selected><?php
             if (isset($_GET["month_by"])) {
+                //Affiche la parti selectionner en fonction de la variable tri
                 $tri = $_GET["month_by"];
                 echo match ($tri) {
                     "4month" => "4 months",
@@ -156,6 +159,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
             }
 
             ?></option>
+        <!-- Les autres option selectionnable -->
         <option value="4">4 months</option>
         <option value="6">6 months</option>
         <option value="12">12 months</option>
@@ -204,7 +208,7 @@ $sql = "Select max(bank.remise.date_remise) FROM bank.remise;";
 $datemax = $cnx->query($sql)->fetch();
 
 //La partie qui permet d'avoir les données de départ pour commencer
-//L'initialisation en gros
+//L'initialisation en soit
 if ($datemax[0]===null){
     echo "<center>";
     echo "Vous n'avez pas de remise";
@@ -267,6 +271,7 @@ for ($m = 1; $m != $inter+1; $m++){
 }
 ?>
 <script>
+    //La parti de definition du graphique
     const ctx = document.getElementById('mixedChart').getContext('2d');
 
     const mixedChart = new Chart(ctx, {
