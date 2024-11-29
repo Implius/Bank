@@ -37,6 +37,7 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Remise";
 include("../include/User_po_navbar.inc.php"); // Navbar
+//prend en compte le parametre search en cas de recherche
 if (!isset($_GET['search']) || $_GET['search'] == "") {
     $search = "";
 } else {
@@ -47,6 +48,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <div class="sorting">
         <form action="PO_Compte_Remise.php" method="get">
+            <!-- Fais attention si une recherche est deja en cours -->
             <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
             <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
@@ -56,6 +58,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
             <option value="" disabled selected><?php
+                //La parti qui affiche l'option deja selectionner
                 if (isset($_GET["sort_by"])) {
                     $tri = $_GET["sort_by"];
                     echo match ($tri) {
@@ -69,6 +72,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     echo "Aucun";
                 }
                 ?></option>
+            <!-- les autre option selectionnable -->
             <option value="date_plusrecent">Date (plus récent)</option>
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_remise">Numéro de remise</option>
@@ -78,6 +82,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
+        //Permet de recuperer tri afin de trier les donnees dans la requete
         $tri = match ($_GET["sort_by"]) {
             "date_plusrecent" => " ORDER BY date_remise DESC",
             "date_plusancient" => " ORDER BY date_remise ASC",
@@ -88,6 +93,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     } else {
         $tri = "";
     }
+
+    //la requete qui recupere les donnees en fonction de la variable tri et search
     $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$_SESSION["num_siren"]."'".$search.$tri);
     echo "<p class='nb_lignes'>Nombre de remises : ".$req->rowCount()."</p>";
     ?>
@@ -191,11 +198,12 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     <button id="btn_xls">Exporter format XLS</button>
 </div>
 <script src="../script_remise.js">
+    //Le script d'export en CSV
 </script>
 
 <script>
     function exportTableToExcel(tableId) {
-
+        //permet l'export des donnees en XLS
         // Get the table element using the provided ID
         const table = document.getElementById(tableId);
 
@@ -221,12 +229,13 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         // Release the URL object to free up resources
         URL.revokeObjectURL(url);
     }
-
+    //Le listener attacher au bouton qui detecte quand il est clique
     document.getElementById('btn_xls').addEventListener('click', function() {
         exportTableToExcel('table');
     });
 </script>
 <script>
+    //script d'export en pdf
     document.getElementById('btn_pdf').addEventListener('click', () => {
         const element = document.getElementById('table');
 
@@ -235,6 +244,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         const contentWidth = rect.width;
         const contentHeight = rect.height;
 
+        //Les options du pdf
         const opt = {
             margin: 0, //pas de marge
             filename: 'table.pdf',
