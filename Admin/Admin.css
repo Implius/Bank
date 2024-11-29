@@ -3,7 +3,7 @@ body {
     margin: 0;
     min-height: 100vh;
 }
-
+/*CSS permettant d'avoir un fond gradiant*/
 body {
     background: linear-gradient(135deg, #BBB5E5 0%, #796ECD 100%);
     background-size: cover;
@@ -11,7 +11,7 @@ body {
     align-items: center;
     font-family: "Inter", sans-serif;
 }
-
+/*CSS des différentes Navbars*/
 .navbar {
     display: flex;
     flex-wrap: nowrap;
@@ -85,7 +85,7 @@ a {
     background-size: 100% 100%;
 }
 
-
+/*CSS du contenue des pages admin, notamment de la partie scrollable, du popup et du formulaire*/
 .scrollable-section-container {
     position: fixed;         /* Fixe la position */
     bottom: 0;               /* Position en bas de la page */
@@ -159,7 +159,7 @@ a {
     background-color: #888;
     border-radius: 10px;
 }
-
+/*CSS du formulaire*/
 .form-container {
     position: fixed;
     top: 50%;
@@ -229,7 +229,7 @@ a {
     color: #DDDBEE;
     background-color: #686868;
 }
-
+/*CSS de la popup de création*/
 .details-panel {
     position: fixed;
     top: 50%;
@@ -262,7 +262,7 @@ a {
 .arrow{
     height: 50px;
 }
-
+/*CSS de la page suppression*/
 .buttonsup {
     padding: 15px;
     padding-left: 30px;
@@ -277,7 +277,7 @@ a {
 .buttonsup:hover{
     border-color: whitesmoke;
 }
-
+/*CSS de la popup de confirmation*/
 .confirmation-popup {
     display: none; /* Cache le pop-up par défaut */
     position: fixed;
