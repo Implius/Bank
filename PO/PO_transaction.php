@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérification de la connexion.
+
 global$cnx;
 include("../include/connexion.inc.php");
 ?>
@@ -20,7 +22,7 @@ include("../include/connexion.inc.php");
         }
     </script>
     <script>
-        $(function(){
+        $(function(){ // Détails des transactions
             $(".fold-table tr.view").on("click", function(){
                 $(this).toggleClass("open").next(".fold").toggleClass("open");
             });
@@ -101,7 +103,7 @@ include("../include/connexion.inc.php");
 <body>
 
 <?php
-$onit = "Remise";
+$onit = "Remise"; // Page actuelle
 include("../include/po_navbar_w_return.inc.php"); // Navbar
 ?>
 
@@ -136,11 +138,9 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
         </tr>
         </thead>
         <?php
-        global $cnx;
-        include("../include/connexion.inc.php");
 
         $remise = $_GET["id_remise"];
-        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';"; // Requête pour les transactions
         $req = $cnx->query($sql);
         while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
 
@@ -157,7 +157,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
             </td>
             <td>
                 <?php $carte = $donnees->num_carte;
-                $ano = "**** **** **** ".substr($carte,-4,4);
+                $ano = "**** **** **** ".substr($carte,-4,4); // Affiche les 4 derniers chiffres de la carte
                 echo $ano;?>
             </td>
             <td>
@@ -174,8 +174,10 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
             </td>
             <td>
                 <?php
+                // Requête pour le siren
                 $join_siren = $cnx->query("SELECT compte.num_siren FROM compte join remise on compte.num_siren = remise.num_siren join transaction on remise.id_remise = transaction.id_remise WHERE transaction.id_remise = '$donnees->id_remise';");
                 $siren = $join_siren->fetch(PDO::FETCH_OBJ)->num_siren;
+                // Requête pour la devise
                 $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$siren';");
                 $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
                 switch ($devise) {
@@ -193,10 +195,10 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                         break;
                 }
                 $trans = $donnees->id_trans;
-                $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';";
+                $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';"; // Détails de la transaction
                 $reqD = $cnx->query($sql);
                 $montant = 0;
-                while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) {
+                while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) { // Affiche le montant de la total transaction, somme des détails
                     $montant += $ligne->montant;
                 }
                 if ($donnees->sens == '-') {
@@ -228,8 +230,10 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                         <tr>
                                 <td><?php echo $donneesT->libelle; ?></td>
                                 <td><?php
-                                    if ($donneesT->sens == '+') {echo $donneesT->montant.$devise;}
-                                    if ($donneesT->sens == '-') {
+                                    if ($donneesT->sens == '+') { // Affiche le montant du détail en vert si positif
+                                        echo $donneesT->montant.$devise;
+                                    }
+                                    if ($donneesT->sens == '-') { // Affiche le montant du détail en rouge si négatif
                                         echo "<p class=\"red\">";
                                         echo '- '.$donneesT->montant.$devise;
                                     } ?></td>

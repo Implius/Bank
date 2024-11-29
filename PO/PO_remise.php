@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérication de la connexion.
+
 global$cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion.inc.php');
@@ -50,12 +52,12 @@ include('../include/verifyconnexion.inc.php');
 <body>
 
 <?php
-$onit = "Remise";
+$onit = "Remise"; // Page actuelle
 include("../include/po_navbar.inc.php"); // Navbar
-if (!isset($_GET['search']) || $_GET['search'] == "") {
+if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     $search = "";
 } else {
-    $search = " WHERE id_remise LIKE '%".$_GET['search']."%' ";
+    $search = " WHERE id_remise LIKE '%".$_GET['search']."%' "; // Recherche SQL à concaténer à la requête
 }
 ?>
 
@@ -63,8 +65,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <div class="sorting">
         <form action="PO_remise.php" method="get">
-            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
-            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+            <input type="text" name="search" placeholder="<?php /* Recherche actuelle */ if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php /* 'Supprimer' la recherche */ if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
     </div>
 
@@ -73,9 +75,9 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         <select name="sort_by" id="sort_by" onchange="sortTable()">
             <option value="" disabled selected><?php
 
-                if (isset($_GET["sort_by"])) {
+                if (isset($_GET["sort_by"])) { // Si un tri est déjà sélectionné
                     $tri = $_GET["sort_by"];
-                    echo match ($tri) {
+                    echo match ($tri) { // Affichage en fonction de la clé de tri
                         "date_plusrecent" => "Date (plus récent)",
                         "date_plusancient" => "Date (plus ancient)",
                         "numero_remise" => "Numéro de remise",
@@ -96,7 +98,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
-        $tri = match ($_GET["sort_by"]) {
+        $tri = match ($_GET["sort_by"]) { // Tri SQL à concaténer à la requête
             "date_plusrecent" => " ORDER BY date_remise DESC",
             "date_plusancient" => " ORDER BY date_remise ASC",
             "numero_remise" => " ORDER BY id_remise",
@@ -106,7 +108,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     } else {
         $tri = "";
     }
-    $req = $cnx->query("SELECT * FROM remise".$search.$tri);
+    $req = $cnx->query("SELECT * FROM remise".$search.$tri); // Requête SQL avec recherche et tri
     echo "<p class='nb_lignes'>Nombre de remises : ".$req->rowCount()."</p>";
     ?>
 
@@ -162,9 +164,10 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 </td>
                 <td class="montant">
                     <?php
+                    // Requête pour la devise
                     $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$ligne->num_siren';");
                     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
-                    switch ($devise) {
+                    switch ($devise) { // Affichage du symbole de la devise
                         case "EUR":
                             $devise = " €";
                             break;
@@ -182,11 +185,11 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     //permet de faire du montant une somme des montant des transactions
                     //Permet d'éviter tout problème de cohérence avec la bdd
                     $remise = $ligne->id_remise;
-                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';"; // Transactions de la remise
                     $req2 = $cnx->query($sql);
                     $montant = 0;
                     while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
-                        $montant += $donnees->montant;
+                        $montant += $donnees->montant; // Calcul du montant total de la remise
                     }
 
                     if ($ligne->sens == '-') {
