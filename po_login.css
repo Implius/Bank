@@ -4,7 +4,7 @@ body {
     align-items: center;
     display: flex;
 }
-
+/*CSS de la Carte de connexion*/
 .connectcard{
     background-image: url("images/Connexion Card.png");
     background-size: 100% 100%;
