@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     min-height: 100%;
 }
+/*Permet d'obtenir un fond gradiant*/
 body {
     background: linear-gradient(135deg, #BBB5E5 0%, #796ECD 100%);
     background-size: cover;
@@ -9,6 +10,7 @@ body {
     align-items: center;
     font-family: "Inter", sans-serif;
 }
+/*CSS des différentes Navbars*/
 .navbar {
     display: flex;
     flex-wrap: nowrap;
@@ -100,6 +102,7 @@ a {
     background-image: url(../images/Exit_2.svg);
     background-size: 100% 100%;
 }
+/*CSS du contenue de page*/
 .Compte_tableau {
     margin-top: 200px;
     display: flex;
