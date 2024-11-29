@@ -9,7 +9,7 @@
   <body>
     <div class="Large">
     <div class="connectcard" className="items-center">
-
+        <!--Partie permettant la vérification et empêchant l'utilisateur de se connecter après 3 erreurs-->
         <form action="login_check.php" method="post">
           <input class="idconnexion" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required
               <?php
@@ -29,6 +29,7 @@
               }
               ?>
           >
+          <!--Checkbox prennant le role de l'oeil afin de voir ou cacher le mot de passe-->
             <label class="checkbox-container">
               <input class="hidden" type="checkbox" onclick="myFunction()">
               <span class="checkmark"></span>
@@ -36,7 +37,7 @@
           <br>
           <button class="buttonconnexion" type="submit">Se connecter</button>
         </form>
-
+        <!--Code php pour la vérification-->
         <?php
         if (isset($_GET['error'])) {
             if ($_GET['error'] == 1) {
