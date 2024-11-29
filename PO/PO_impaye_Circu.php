@@ -14,7 +14,8 @@ include('../include/verifyconnexion.inc.php');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
     <title>JeFinance</title>
   <script>
-    function sortTable() {
+    function sortTable() { 
+      //Permet de trier les valeurs en renvoyant une variable
       const select = document.getElementById('sort_by');
       const selectedValue = select.value;
       // Redirige vers la même page avec le paramètre de tri
@@ -39,9 +40,12 @@ include('../include/verifyconnexion.inc.php');
   <?php
   global$cnx;
   include("../include/connexion.inc.php");
+  //initialise un tableaux contenant les codes et associe un montant (0 au depart)
   $code = [
           "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
   ];
+
+  //recupere les montant associer aux differents codes et les ajoutes a notre tableau
   $sql = "SELECT code_motif,montant FROM impaye;";
   $req = $cnx->query("SELECT code_motif,montant FROM bank.impaye;");
   while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
@@ -53,11 +57,13 @@ include('../include/verifyconnexion.inc.php');
       <button id="btn_pdf">Exporter format PDF</button>
   </div>
   <script>
+    //definit les options et les valeurs du graphique
     const ctx = document.getElementById('myChart').getContext('2d');
     const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
     const yValues = [<?php echo $code["01"] . "," . $code["02"] . "," . $code["03"] . "," . $code["04"] . "," . $code["05"] . "," . $code["06"] . "," . $code["07"] . "," . $code["08"]; ?>];
     
     function createRandomGradient() {
+      //Permet de cree une couleur aleatoire en format RGB
       const color1 = barColors[Math.floor(Math.random() * barColors.length)];
       const color2 = barColors[Math.floor(Math.random() * barColors.length)];
       const gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -67,6 +73,7 @@ include('../include/verifyconnexion.inc.php');
     }
 
     function createRadialGradient(color1, color2) {
+            //Permet de cree un degrade entre deux couleur
             const gradient = ctx.createLinearGradient(200, 200, 50, 200, 200, 200);
             gradient.addColorStop(0, color1);
             gradient.addColorStop(1, color2);
@@ -145,6 +152,7 @@ include('../include/verifyconnexion.inc.php');
     });
   </script>
   <script>
+      //Permet l'export en pdf
       document.getElementById('btn_pdf').addEventListener('click', () => {
           const element = document.getElementById('myChart');
 
@@ -153,6 +161,7 @@ include('../include/verifyconnexion.inc.php');
           const contentWidth = rect.width;
           const contentHeight = rect.height;
 
+          //Les options du pdf
           const opt = {
               margin: 0, //pas de marge
               filename: 'table.pdf',
