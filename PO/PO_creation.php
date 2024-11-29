@@ -12,6 +12,7 @@ include("../include/connexion.inc.php");
     <title>JeFinance</title>
     <script>
         function sortTable() {
+            //fonction qui permet de trier en renvoyant une variable
             const select = document.getElementById('sort_by');
             const selectedValue = select.value;
             // Redirige vers la même page avec le paramètre de tri
@@ -27,6 +28,7 @@ include("../include/po_navbar.inc.php"); // Navbar
 ?>
 
 <div class="Compte_tableau">
+    <!-- Tout le formulaire qui permet la recuperation des donnees pour la demande de creation d'un compte -->
     <form action="PO_creation.php" method="post">
         <div class="formcrea">
             <input class="forminput" type="text" id="Raison" name="Raison" placeholder="Raison social" required maxlength="50"><br>
@@ -55,6 +57,7 @@ include("../include/po_navbar.inc.php"); // Navbar
 
     if (isset($_POST["Raison"]) && isset($_POST["NumCompte"]) && isset($_POST["NumSiren"]) && isset($_POST["money"])) {
 
+        //Recupere le prochaine id de la demande
         $nextid = $cnx->query("SELECT max(cast(id_demande as int)) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
         $nextid = $nextid + 1;
         $num_siren=$_POST["NumSiren"];
