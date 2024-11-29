@@ -15,6 +15,7 @@ include('../include/verifyconnexion.inc.php');
 
     <script>
         function sortTable() {
+            //fonction qui permet de trier le tableau et donnant une variable de tri
             const select = document.getElementById('month_by');
             const selectedValue = select.value;
             // Redirige vers la même page avec le paramètre de tri
@@ -38,17 +39,20 @@ if (isset($_POST["date_end"])) {
     $date_end = null;
 }
 ?>
-<div class="mini_navbar">
+<div class="mini_navbar"> <!-- La petite navbar -->
     <a class="mini_link" href="PO_Compte_Impaye_tableau.php">Tableau</a>
     <div class="mini_onit">Histogramme</div>
     <a class="mini_link" href="PO_Compte_Impaye_Circulaire.php">Circulaire</a>
 </div>
+    
 <div class="Compte_histo">
+    <!-- Le bouton de tri -->
 <div class="sorting" style="margin-top: 100px">
     <div class="month">
         Trier par :
         <select name="month_by" id="month_by" onChange="sortTable()">
             <option value="" disabled selected><?php
+                //En fonction de la variable donner par la fonction sortTable() en js
                 if (isset($_GET["month_by"])) {
                     $tri = $_GET["month_by"];
                     echo match ($tri) {
@@ -72,6 +76,7 @@ if (isset($_POST["date_end"])) {
             <option value="12">12 months</option>
         </select>
     </div>
+    <!-- Les bouton de choix des dates -->
     <div class="date">
         <form action="" method="POST">
             <div><label> From : </label> <input name="date_begin" type="date" min="2020-01-01" <?php if($date_begin != null) echo "value='".$date_begin."'" ?>/></div>
@@ -81,6 +86,7 @@ if (isset($_POST["date_end"])) {
     </div>
 </div>
 </div>
+<!-- L'histogramme definit dans le js-->
 <div class="canva">
     <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
 </div>
@@ -115,7 +121,7 @@ function getMonthMin($year,$month,$i){
             $month -= 1;
         }
     }
-    return [$month,$year];
+    return [$month,$year]; //return un tableau car impossible de renvoyer plusieurs valeurs
 }
 
 function monthToString($month){
@@ -123,8 +129,10 @@ function monthToString($month){
     $months = ["Jan","Feb","March","Avr","May","June","July","Aout","Sep","Oct","Nov","Dec"];
     return $months[$month-1];
 }
+
 function compareMonth($monthA,$yearA,$monthB,$yearB,$monthmax,$yearmax) : int
 {
+    //Compare deux mois entre eux afin de donner leur intervalle entre eux
     $count = 0;
     if ($yearmax < $yearB || ($yearB == $yearmax && $monthmax < $monthB)) {
         $monthB = $monthmax;
@@ -136,6 +144,7 @@ function compareMonth($monthA,$yearA,$monthB,$yearB,$monthmax,$yearmax) : int
     return $count + 1 ;
 }
 
+//Partie qui recupere les dates entrer dans les boutons de choix des dates (si existant)
 if ($date_begin != null){
     $date_begin = (string)$date_begin;
     $year_begin = substr($date_begin, 0, 4);
@@ -160,8 +169,8 @@ if ($date_begin == null){
 $datemax = $cnx->query($sql)->fetch();
 
 //La partie qui permet d'avoir les données de départ pour commencer
-//L'initialisation en gros
-if ($datemax[0] != null) {
+//L'initialisation en soit
+if ($datemax[0] != null) //Check si il ya des dates qui ont ete recuperer de la bdd {
     $yearmax = substr($datemax[0], 0, 4);
     $yearmin = $yearmax;
     $monthend = substr($datemax[0], 5, 2);
@@ -222,6 +231,7 @@ if ($datemax[0] != null) {
         $yearmin = $year;
     }
 } else {
+    //En cas de probleme de donnees
     echo "<div class='error'> There's no data to show or you selected the same date</div>";
 }
 
@@ -230,6 +240,7 @@ if ($datemax[0] != null) {
     <button id="btn_pdf">Exporter format PDF</button>
 </div>
 <script>
+    //Toute la parti definiton du graphique
     const ctx = document.getElementById('mixedChart').getContext('2d');
 
     const mixedChart = new Chart(ctx, {
@@ -346,6 +357,7 @@ if ($datemax[0] != null) {
     });
 </script>
 <script>
+    //Le script qui permet d'exporter en pdf
     document.getElementById('btn_pdf').addEventListener('click', () => {
         const element = document.getElementById('mixedChart');
 
@@ -354,6 +366,7 @@ if ($datemax[0] != null) {
         const contentWidth = rect.width;
         const contentHeight = rect.height;
 
+        //Les options pour les pdf
         const opt = {
             margin: 0, //pas de marge
             filename: 'table.pdf',
