@@ -15,7 +15,7 @@ include("../include/verifyconnexion_admin.inc.php");
 
 if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSiren']) && isset($_POST['money'])) {
 
-    // Add new user in utilisateur
+    // Ajoute un nouvelle utilisateur dans Utilisateur
 
     $stmt = $cnx->query("SELECT max(id_util) as max FROM utilisateur");
     $max_id = $stmt->fetch(PDO::FETCH_OBJ)->max + 1;
@@ -29,7 +29,7 @@ if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSi
     $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
     $stmt->execute();
 
-    // Add new account in compte
+    // Ajoute un nouveau compte dans Compte
 
     $Raison = $_POST['Raison'];
     $NumCompte = $_POST['NumCompte'];
@@ -48,7 +48,7 @@ if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSi
     $stmt->bindParam(':id_util', $max_id, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Delete the request from the creation table
+    // Supprime la requête dans la table Creation
 
     $sql = "DELETE FROM creation WHERE num_siren = :num_siren";
     $stmt = $cnx->prepare($sql);
@@ -72,6 +72,7 @@ include("../include/Admin_navbar.inc.php"); // Navbar
     }
     ?>
 </div>
+    <!--Popup permettant de voir les informations d'un compte pour sa création-->
 <div class="details-panel" id="detailsPanel">
     <div class="back-arrow" onclick="closeDetails()"><img alt="fleche" class="arrow" src="../images/backArrow.svg"/></div>
     <h3 id="accountName">Nom du compte : </h3>
@@ -79,6 +80,7 @@ include("../include/Admin_navbar.inc.php"); // Navbar
     <p id="accountNumber">Numéro du compte : </p>
     <p id="currency">Devise : </p>
 </div>
+    <!--Formularie de création-->
 <div class="form-container">
     <form action="Admin_Creation.php" method="post">
         <div class="formcrea">
