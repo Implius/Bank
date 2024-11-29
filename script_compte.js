@@ -1,7 +1,11 @@
+//Script qui permet d'envoyer les donnees vers un fichier php qui les convertira en CSV
+//Si le bouton cliquer
 document.getElementById('btn_csv').addEventListener("click",()=> {
+    //On recupere les donner des lignes et initialise un tableau
     const lines = document.querySelectorAll('.line');
     const data = [];
 
+    //On met les donnees recuperees dans un tableau que l'on met dans notre tableau du depart
     lines.forEach((line) => {
         const tds = line.querySelectorAll('td');
         const tmp = [];
@@ -13,6 +17,8 @@ document.getElementById('btn_csv').addEventListener("click",()=> {
         data.push(tmp);
     });
 
+    //On envoie les donnees au fichier export.php au format json
+    //La methode then permet de lancer le telechargement du fichier cree par le fichier php
     fetch('export_compte.php', {
         method: 'POST',
         headers: {
