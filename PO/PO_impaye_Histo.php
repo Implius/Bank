@@ -20,6 +20,7 @@ include('../include/verifyconnexion.inc.php');
     </style>
   <script>
     function sortTable() {
+      //Permet de trier les valeurs en renvoyant une variable
       const select = document.getElementById('month_by');
       const selectedValue = select.value;
       // Redirige vers la même page avec le paramètre de tri
@@ -32,6 +33,7 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Impaye";
 include("../include/po_navbar.inc.php"); // Navbar
+//Check si il ya des dates qui ont ete choisis
 if (isset($_POST["date_begin"])) {
     $date_begin = $_POST["date_begin"];
 } else {
@@ -55,6 +57,7 @@ if (isset($_POST["date_end"])) {
     Trier par :
     <select name="month_by" id="month_by" onChange="sortTable()" class="tri_histo">
             <option value="" disabled selected><?php
+                //Affiche l'option selectionner
                 if (isset($_GET["month_by"])) {
                     $tri = $_GET["month_by"];
                     echo match ($tri) {
@@ -73,6 +76,7 @@ if (isset($_POST["date_end"])) {
                 }
 
                 ?></option>
+            <!-- Les autres option selectionnable -->
             <option value="4">4 months</option>
             <option value="6">6 months</option>
             <option value="12">12 months</option>
@@ -143,6 +147,7 @@ if (isset($_POST["date_end"])) {
         }
         return $count + 1 ;
     }
+//Recupere les dates selectionner (si elles existent)
     if ($date_begin != null){
     $date_begin = (string)$date_begin;
     $year_begin = substr($date_begin, 0, 4);
@@ -167,7 +172,7 @@ if ($date_end != null){
     $datemax = $cnx->query($sql)->fetch();
 
     //La partie qui permet d'avoir les données de départ pour commencer
-    //L'initialisation en gros
+    //L'initialisation en soit
     if ($datemax[0] != null) {
         $yearmax = substr($datemax[0], 0, 4);
         $yearmin = $yearmax;
@@ -236,6 +241,7 @@ if ($date_end != null){
     <button id="btn_pdf">Exporter format PDF</button>
 </div>
   <script>
+    //Definition des parametres et des valeurs du graphique
     const ctx = document.getElementById('mixedChart').getContext('2d');
 
     const mixedChart = new Chart(ctx, {
@@ -352,6 +358,7 @@ if ($date_end != null){
     });
   </script>
 <script>
+    //Permet l'export en pdf
     document.getElementById('btn_pdf').addEventListener('click', () => {
         const element = document.getElementById('mixedChart');
 
@@ -360,6 +367,7 @@ if ($date_end != null){
         const contentWidth = rect.width;
         const contentHeight = rect.height;
 
+        //les options du pdf
         const opt = {
             margin: 0, //pas de marge
             filename: 'table.pdf',
