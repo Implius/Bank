@@ -154,6 +154,7 @@ a {
     cursor: pointer;
     z-index: 2;
 }
+/*CSS du bouton suppression de compte*/
 .buttonsup {
     padding: 15px;
     padding-left: 30px;
@@ -168,6 +169,7 @@ a {
 .buttonsup:hover{
     border-color: whitesmoke;
 }
+/*CSS des tableaux*/
 .tableau {
     width: 75%;
     border-collapse: collapse;
@@ -208,15 +210,14 @@ tr:nth-child(odd){
 .table-darkblue{
     background: linear-gradient(0deg, #2a8288 0%, #07939C 100%);
 }
-.sorting{
-    margin-bottom: 50px;
-}
+/*CSS des graphiques*/
 .canva {
     margin-top: 40px;
     justify-content: center;
     align-items: center;
     display: flex;
 }
+/*CSS de la trésorerie*/
 .tresorerie{
     font-size: xxx-large;
     color: white;
@@ -238,7 +239,9 @@ tr:nth-child(odd){
     font-size: large;
     margin:0;
 }
+/*CSS du tri de tableaux*/
 .sorting {
+    margin-bottom: 50px;
     background-color: #ffffff;
     padding: 10px;
     border-radius: 8px;
