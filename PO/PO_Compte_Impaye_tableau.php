@@ -14,6 +14,8 @@ include('../include/verifyconnexion.inc.php');
     <title>JeFinance</title>
     <script>
         function sortTable() {
+            //Fonction qui permet de trier les tableaux en renvoyant une variable
+            //prend en compte le parametre donner pour la recherche
             const selectedValue = document.getElementById('sort_by');
             // Si l'url contient un paramètre search
             if (window.location.href.includes("?")) {
@@ -37,6 +39,7 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Impaye";
 include("../include/User_po_navbar.inc.php"); // Navbar
+//Si il y a un parametre de recherche
 if (!isset($_GET['search']) || $_GET['search'] == "") {
     $search = "";
 } else {
@@ -52,6 +55,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <div class="sorting">
         <form action="PO_Compte_Impaye_tableau.php" method="get">
+            <!-- prend en compte le parametre search pour cree le bouton de recherche-->
             <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
             <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
@@ -63,6 +67,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
             <option value="" disabled selected><?php
 
                 if (isset($_GET["sort_by"])) {
+                    //La partie qui s'occupe d'afficher le tri selectionner
                     $tri = $_GET["sort_by"];
                     echo match ($tri) {
                         "date_plusrecent" => "Date (plus récent)",
@@ -77,6 +82,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 }
 
                 ?></option>
+            <!-- Le reste des option selectionnable -->
             <option value="date_plusrecent">Date (plus récent)</option>
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_impaye">Numéro d'impayé</option>
@@ -87,6 +93,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
+        //Prend le parametre tri pour la requete qui arrive plus tard (afin de pouvoir trier les donnees)
         $tri = match ($_GET["sort_by"]) {
             "date_plusrecent" => " ORDER BY date_impaye DESC",
             "date_plusancient" => " ORDER BY date_impaye ASC",
@@ -99,6 +106,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         $tri = "";
     }
     $siren = $_SESSION['num_siren'];
+
+    //La requete en fonction des parametre de tri et de recherche
     $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri);
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
     echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
@@ -199,11 +208,12 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     <button id="btn_xls">Exporter format XLS</button>
 </div>
 <script src="../script.js">
+    //Tout le script qui permet l'export en CSV
 </script>
 
 <script>
     function exportTableToExcel(tableId) {
-
+        //Export le tableau en excel
         // Get the table element using the provided ID
         const table = document.getElementById(tableId);
 
@@ -229,12 +239,13 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         // Release the URL object to free up resources
         URL.revokeObjectURL(url);
     }
-
+    //Le listener attacher au bouton qui detecte lorsqu'il est cliquer
     document.getElementById('btn_xls').addEventListener('click', function() {
         exportTableToExcel('table_imp');
     });
 </script>
 <script>
+    //Permet l'export en pdf
     document.getElementById('btn_pdf').addEventListener('click', () => {
         const element = document.getElementById('table_imp');
 
@@ -243,6 +254,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         const contentWidth = rect.width;
         const contentHeight = rect.height;
 
+        //Les option du pdf
         const opt = {
             margin: 0, //pas de marge
             filename: 'table.pdf',
