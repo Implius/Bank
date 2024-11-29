@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérification de la connexion.
+
 global$cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion.inc.php');
@@ -52,10 +54,10 @@ include('../include/verifyconnexion.inc.php');
 <?php
 $onit = "Impaye";
 include("../include/po_navbar.inc.php"); // Navbar
-if (!isset($_GET['search']) || $_GET['search'] == "") {
+if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     $search = "";
 } else {
-    $search = " WHERE id_impaye LIKE '%".$_GET['search']."%' ";
+    $search = " WHERE id_impaye LIKE '%".$_GET['search']."%' "; // Recherche SQL à concaténer à la requête
 }
 ?>
 <div class="mini_navbar">
@@ -67,8 +69,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <div class="sorting">
         <form action="PO_impaye_tableau.php" method="get">
-            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
-            <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
+            <input type="text" name="search" placeholder="<?php /* Recherche actuelle */ if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <button type="submit"><?php /* 'Supprimer' la recherche */ if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
     </div>
 
@@ -77,7 +79,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         <select name="sort_by" id="sort_by" onchange="sortTable()">
             <option value="" disabled selected><?php
 
-                if (isset($_GET["sort_by"])) {
+                if (isset($_GET["sort_by"])) { // Si un tri est déjà sélectionné
                     $tri = $_GET["sort_by"];
                     echo match ($tri) {
                         "date_plusrecent" => "Date (plus récent)",
@@ -87,7 +89,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                         "montant" => "Montant d'impayé",
                         default => "Aucun",
                     };
-                } else {
+                } else { // Si aucun tri n'est sélectionné
                     echo "Aucun";
                 }
 
@@ -102,7 +104,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
-        $tri = match ($_GET["sort_by"]) {
+        $tri = match ($_GET["sort_by"]) { // Tri SQL à concaténer à la requête
             "date_plusrecent" => " ORDER BY date_impaye DESC",
             "date_plusancient" => " ORDER BY date_impaye ASC",
             "numero_impaye" => " ORDER BY id_impaye",
@@ -113,8 +115,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     } else {
         $tri = "";
     }
-    $req = $cnx->query("SELECT * FROM bank.impaye".$search.$tri);
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;");
+    $req = $cnx->query("SELECT * FROM bank.impaye".$search.$tri); // Requête SQL avec recherche et tri
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;"); // Requête SQL pour le montant total des impayés
     echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount()."</p>";
     ?>
@@ -167,6 +169,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 </td>
                 <td>
                     <?php
+                    // Requête pour la raison sociale
                     $join_query = $cnx->query("select compte.raison_social from compte where compte.num_siren = '".$ligne->num_siren."';");
                     $raison_social = $join_query->fetch(PDO::FETCH_OBJ);
                     echo $raison_social->raison_social; // raison sociale
@@ -180,9 +183,10 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 </td>
                 <td class="montant">
                     <?php
+                    // Requête pour la devise
                     $join_query = $cnx->query("select compte.devise from compte join impaye on compte.num_siren = impaye.num_siren WHERE impaye.num_siren='$ligne->num_siren';");
                     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
-                    switch ($devise) {
+                    switch ($devise) { // Affichage du symbole de la devise
                         case "EUR":
                             $devise = " €";
                             break;
