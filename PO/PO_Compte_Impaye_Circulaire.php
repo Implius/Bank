@@ -18,23 +18,27 @@ include('../include/verifyconnexion.inc.php');
 $onit = "Impaye";
 include("../include/User_po_navbar.inc.php"); // Navbar
 ?>
-<div class="mini_navbar">
+<div class="mini_navbar"> <!-- La petite navbar -->
     <a class="mini_link" href="PO_Compte_Impaye_tableau.php">Tableau</a>
     <a class="mini_link" href="PO_Compte_Impaye_Histo.php">Histogramme</a>
     <div class="mini_onit">Circulaire</div>
 </div>
+<!-- La partie graphique qui reprendra le script js -->
 <div class="canva">
     <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
 </div>
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
+// Preparation d'une liste qui initialise à chaque code (cle de l'array) un montant = a 0
 $code = [
     "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
 ];
+//La requete qui va chercher tout les montants de chaque code
 $sql = "SELECT code_motif,montant FROM impaye;";
 $req = $cnx->query("SELECT code_motif,montant FROM bank.impaye where num_siren='".$_SESSION['num_siren']."';");
 while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
+    //On affecte a chaque code le montant (en l'additionnant au montant deja enregistrer 0 au depart)
     $code[$ligne->code_motif] += $ligne->montant;
 }
 ?>
@@ -42,10 +46,12 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
     <button id="btn_pdf">Exporter format PDF</button>
 </div>
 <script>
+    //Toute la partie de definition des propriete du schema circulaire
     const ctx = document.getElementById('myChart').getContext('2d');
     const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
     const yValues = [<?php echo $code["01"] . "," . $code["02"] . "," . $code["03"] . "," . $code["04"] . "," . $code["05"] . "," . $code["06"] . "," . $code["07"] . "," . $code["08"]; ?>];
     function createRandomGradient() {
+        //fonction qui cree des couleurs aleatoire en format RGB
         const color1 = barColors[Math.floor(Math.random() * barColors.length)];
         const color2 = barColors[Math.floor(Math.random() * barColors.length)];
         const gradient = ctx.createLinearGradient(0, 0, 0, 400);
@@ -54,6 +60,7 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
         return gradient;
     }
     function createRadialGradient(color1, color2) {
+        //cree un degrader de deux couleur
         const gradient = ctx.createLinearGradient(200, 200, 50, 200, 200, 200);
         gradient.addColorStop(0, color1);
         gradient.addColorStop(1, color2);
@@ -83,6 +90,7 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
         "#9999FF",
         "#D699FF",
     ];
+    //Toute la definition du graphique
     new Chart(ctx, {
         type: "pie",
         data: {
@@ -130,7 +138,9 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
     });
 </script>
 <script>
+    //Script de generation du pdf
     document.getElementById('btn_pdf').addEventListener('click', () => {
+        //Prend l'element voulu (ici le graphique d'id myChart)
         const element = document.getElementById('myChart');
 
         // Obtenir les dimensions avec getBoundingClientRect
@@ -138,6 +148,7 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
         const contentWidth = rect.width;
         const contentHeight = rect.height;
 
+        // les option du pdf
         const opt = {
             margin: 0, //pas de marge
             filename: 'table.pdf',
