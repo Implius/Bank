@@ -225,10 +225,6 @@ tbody tr {
     background: linear-gradient(0deg, #2a8288 0%, #07939C 100%);
 }
 
-.sorting{
-    margin-bottom: 50px;
-    font-size: larger;
-}
 /*CSS des différents graphiques*/
 .formcrea {
     display: flex;
@@ -308,8 +304,10 @@ tbody tr {
     border-radius: 15px;
     background-color: #c1c1c1;
 }
-
-.sorting {
+/*CSS de la partie de tri des tableaux*/
+.sorting{
+    margin-bottom: 50px;
+    font-size: larger;
     background-color: #ffffff;
     padding: 10px;
     border-radius: 8px;
