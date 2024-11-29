@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérification de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -47,11 +49,11 @@ include('../include/verifyconnexion_user.inc.php');
 </head>
 <body>
 <?php
-$onit = "Impaye";
+$onit = "Impaye"; // Page actuelle
 include("../include/User_navbar.inc.php"); // Navbar
-if (!isset($_GET['search']) || $_GET['search'] == "") {
+if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     $search = "";
-} else {
+} else { // Recherche SQL à concaténer à la requête
     $search = " AND id_impaye LIKE '%".$_GET['search']."%' ";
 }
 ?>
@@ -64,7 +66,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <div class="sorting">
         <form action="User_Impaye_tableau.php" method="get">
-            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <input type="text" name="search" placeholder="<?php /* Afficher la recherche actuelle */ if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
             <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
     </div>
@@ -72,7 +74,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
-            <option value="" disabled selected><?php
+            <option value="" disabled selected><?php // Afficher le tri actuel
 
                 if (isset($_GET["sort_by"])) {
                     $tri = $_GET["sort_by"];
@@ -97,7 +99,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
-        $tri = match ($_GET["sort_by"]) {
+        $tri = match ($_GET["sort_by"]) { // Tri SQL à concaténer à la requête
             "date_plusrecent" => " ORDER BY date_impaye DESC",
             "date_plusancient" => " ORDER BY date_impaye ASC",
             "numero_impaye" => " ORDER BY id_impaye",
@@ -111,7 +113,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     if (isset($_SESSION['NumSiren'])) {
         $siren = $_SESSION['NumSiren'];
     }
-    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri);
+    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri); // Requête pour afficher les impayés du compte, en concaténant la recherche et le tri
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
     echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount();
@@ -178,6 +180,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                 </td>
                 <td class="montant">
                     <?php
+                    // Récupérer la devise du compte
                     $join_query = $cnx->query("select compte.devise from compte join impaye on compte.num_siren = impaye.num_siren WHERE impaye.num_siren='$ligne->num_siren';");
                     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
                     switch ($devise) {

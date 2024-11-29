@@ -24,7 +24,7 @@ nav {
     height: 150px;
     text-align: center;
 }
-.onit {
+.onit { /* Affichage sombre de la page actuelle */
     display: inline-block;
     width: 250px;
     height: 100px;
@@ -45,7 +45,7 @@ nav {
     transition: border-width 0.15s ease;
     font-size: xx-large;
 }
-.mini_navbar {
+.mini_navbar { /* Barre de navigation secondaire pour les impayés */
     top: 140px;
     height: 50px;
     position: sticky;
@@ -66,7 +66,7 @@ nav {
     transition: border-width 0.15s ease;
     font-size: xx-large;
 }
-.mini_onit {
+.mini_onit { /* Affichage sombre de la page d'impayés actuelle */
     display: inline-block;
     width: 220px;
     height: 50px;
@@ -140,7 +140,7 @@ a {
     align-items: center;
     gap: 150px;
 }
-.backArrow {
+.backArrow { /* Flèche de retour */
     position: fixed;
     display: flex;
     margin-top: 100px;
@@ -271,7 +271,7 @@ tr:nth-child(odd){
     margin-right: 10px;
 }
 
-.nb_lignes {
+.nb_lignes { /* Nombre de lignes du tableau */
     display: flex;
     justify-content: center;
     align-items: center;

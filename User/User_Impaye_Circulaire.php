@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérication de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -15,7 +17,7 @@ include('../include/verifyconnexion_user.inc.php');
 </head>
 <body>
 <?php
-$onit = "Impaye";
+$onit = "Impaye"; // Page actuelle
 include("../include/User_navbar.inc.php"); // Navbar
 ?>
 <div class="mini_navbar">
@@ -27,14 +29,13 @@ include("../include/User_navbar.inc.php"); // Navbar
     <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
 </div>
 <?php
-global$cnx;
-include("../include/connexion.inc.php");
+// Tous les codes de motifs possibles, associés à un montant initial de 0
 $code = [
     "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
 ];
 $sql = "SELECT code_motif,montant FROM impaye;";
 $req = $cnx->query("SELECT code_motif,montant FROM bank.impaye where num_siren='".$_SESSION['NumSiren']."';");
-while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
+while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un numéro SIREN, on ajoute le montant à la somme du code de motif
     $code[$ligne->code_motif] += $ligne->montant;
 }
 ?>

@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérication de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -35,18 +37,18 @@ include('../include/verifyconnexion_user.inc.php');
 </head>
 <body>
 <?php
-$onit = "Remise";
+$onit = "Remise"; // Page actuelle
 include("../include/User_navbar.inc.php"); // Navbar
-if (!isset($_GET['search']) || $_GET['search'] == "") {
+if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     $search = "";
 } else {
-    $search = " AND id_remise LIKE '%".$_GET['search']."%' ";
+    $search = " AND id_remise LIKE '%".$_GET['search']."%' "; // Recherche SQL à concaténer à la requête
 }
 ?>
 <div class="Compte_tableau">
     <div class="sorting">
         <form action="User_remise.php" method="get">
-            <input type="text" name="search" placeholder="<?php if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
+            <input type="text" name="search" placeholder="<?php /* Afficher la recherche actuelle */ if ($search == "") { echo "Rechercher"; } else { echo $_GET['search']; } ?>">
             <button type="submit"><?php if ($search == "") { echo "Rechercher"; } else { echo "Supprimer"; } ?></button>
         </form>
     </div>
@@ -54,7 +56,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     <div class="sorting">
         Trier par :
         <select name="sort_by" id="sort_by" onchange="sortTable()">
-            <option value="" disabled selected><?php
+            <option value="" disabled selected><?php // Afficher le tri actuel
                 if (isset($_GET["sort_by"])) {
                     $tri = $_GET["sort_by"];
                     echo match ($tri) {
@@ -98,7 +100,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         </thead>
         <tbody>
         <?php
-        if (isset($_GET["sort_by"])) {
+        if (isset($_GET["sort_by"])) { // Si un tri est demandé
             $tri = match ($_GET["sort_by"]) {
                 "date_plusrecent" => " ORDER BY date_remise DESC",
                 "date_plusancient" => " ORDER BY date_remise ASC",
@@ -112,7 +114,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
         if (isset($_SESSION['NumSiren'])){
             $numsiren = $_SESSION["NumSiren"];
         }
-        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri);
+        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri); // On concatène la recherche et le tri
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';" class="line">
@@ -139,7 +141,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     <?php
                     $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$ligne->num_siren'");
                     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
-                    switch ($devise) {
+                    switch ($devise) { // devise
                         case "EUR":
                             $devise = " €";
                             break;

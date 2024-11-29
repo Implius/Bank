@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données et vérification de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -21,7 +23,7 @@ echo "<div class=\"backArrow\" onclick=\"window.location.href='User_remise.php'\
         }
     </script>
     <script>
-        $(function(){
+        $(function(){ // Affichage des détails de la transaction
             $(".fold-table tr.view").on("click", function(){
                 $(this).toggleClass("open").next(".fold").toggleClass("open");
             });
@@ -30,6 +32,7 @@ echo "<div class=\"backArrow\" onclick=\"window.location.href='User_remise.php'\
     <style>
         @import url('https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css');
         body { padding: .2em 2em; }
+        /* Style du tableau */
         table {
             width: 100%;
             th { text-align: left; border-bottom: 1px solid #ccc;}
@@ -93,7 +96,7 @@ echo "<div class=\"backArrow\" onclick=\"window.location.href='User_remise.php'\
 </head>
 <body>
 <?php
-$onit = "Remise";
+$onit = "Remise"; // Page actuelle
 include("../include/User_navbar.inc.php"); // Navbar
 ?>
 <div class="Compte_tableau">
@@ -127,8 +130,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         </tr>
         </thead>
         <?php
-        global $cnx;
-        include("../include/connexion.inc.php");
+        // Requête pour afficher les transactions de la remise cliquée
         $remise = $_GET["id_remise"];
         $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
         $req = $cnx->query($sql);
@@ -144,7 +146,7 @@ include("../include/User_navbar.inc.php"); // Navbar
             </td>
             <td>
                 <?php $carte = $donnees->num_carte;
-                $ano = "**** **** **** ".substr($carte,-4,4);
+                $ano = "**** **** **** ".substr($carte,-4,4); // Affiche les 4 derniers chiffres de la carte
                 echo $ano;?>
             </td>
             <td>
@@ -161,11 +163,12 @@ include("../include/User_navbar.inc.php"); // Navbar
             </td>
             <td>
                 <?php
+                // Requête pour afficher le montant de la transaction
                 $join_siren = $cnx->query("SELECT compte.num_siren FROM compte join remise on compte.num_siren = remise.num_siren join transaction on remise.id_remise = transaction.id_remise WHERE transaction.id_remise = '$donnees->id_remise';");
                 $siren = $join_siren->fetch(PDO::FETCH_OBJ)->num_siren;
                 $join_query = $cnx->query("select compte.devise from compte join remise on compte.num_siren = remise.num_siren WHERE remise.num_siren='$siren';");
                 $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
-                switch ($devise) {
+                switch ($devise) { // Affiche le symbole de la devise
                     case "EUR":
                         $devise = " €";
                         break;
@@ -183,7 +186,7 @@ include("../include/User_navbar.inc.php"); // Navbar
                 $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';";
                 $reqD = $cnx->query($sql);
                 $montant = 0;
-                while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) {
+                while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) { // Affiche le montant de la transaction
                     $montant += $ligne->montant;
                 }
                 if ($donnees->sens == '-') {
@@ -211,12 +214,15 @@ include("../include/User_navbar.inc.php"); // Navbar
                         </tr>
                         </thead>
                         <tbody>
-                        <?php while ($donneesT = $reqT->fetch(PDO::FETCH_OBJ)) { ?>
+                        <?php while ($donneesT = $reqT->fetch(PDO::FETCH_OBJ)) { // Affiche les détails de la transaction
+                            ?>
                             <tr>
                                 <td><?php echo $donneesT->libelle; ?></td>
                                 <td><?php
-                                    if ($donneesT->sens == '+') {echo $donneesT->montant.$devise;}
-                                    if ($donneesT->sens == '-') {
+                                    if ($donneesT->sens == '+') { // Affiche le montant en vert si positif
+                                        echo $donneesT->montant.$devise;
+                                    }
+                                    if ($donneesT->sens == '-') { // Affiche le montant en rouge si négatif
                                         echo "<p class=\"red\">";
                                         echo '- '.$donneesT->montant.$devise;
                                     } ?></td>

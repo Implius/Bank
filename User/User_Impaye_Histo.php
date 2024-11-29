@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données, vérification de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -25,7 +27,7 @@ include('../include/verifyconnexion_user.inc.php');
 </head>
 <body>
 <?php
-$onit = "Impaye";
+$onit = "Impaye"; // Page actuelle
 include("../include/User_navbar.inc.php"); // Navbar
 if (isset($_POST["date_begin"])) { //Definition variable pour le choix des dates
     $date_begin = $_POST["date_begin"];

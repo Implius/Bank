@@ -1,4 +1,6 @@
 <?php
+// Connexion à la base de données et vérification de l'authentification
+
 global $cnx;
 include("../include/connexion.inc.php");
 include('../include/verifyconnexion_user.inc.php');
@@ -25,13 +27,13 @@ if (isset($_SESSION['NumSiren'])) {
 </head>
 <body>
 <?php
-$onit = "Tresorerie";
+$onit = "Tresorerie"; // Page active
 include("../include/User_navbar.inc.php"); // Navbar
 ?>
 <div class="Compte_title_sup">
     <div class="Compte_title">
         <h1 class="tresorerie"><?php
-            $stmt = $cnx->prepare("SELECT * FROM compte WHERE num_siren = :num_siren");
+            $stmt = $cnx->prepare("SELECT * FROM compte WHERE num_siren = :num_siren"); // Information sur le compte de l'utilisateur, avec le numéro SIREN
             $stmt->bindParam(':num_siren', $_SESSION["NumSiren"]);
             $stmt->execute();
             $ligne = $stmt->fetch(PDO::FETCH_OBJ);
@@ -45,7 +47,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         <h2 class="subtitle1">Num SIREN: <?php echo $_SESSION["NumSiren"]?></h2>
         <h2 class="subtitle2">Num Compte: <?php echo $num_compte ?></h2>
          <?php
-        if ($sens == "-") {
+        if ($sens == "-") { // Si la trésorerie est négative, affiche en rouge
             echo "<h2 class=\"titlered\">";
             echo '-'.$tresorerie;
             switch ($devise) {
@@ -63,7 +65,7 @@ include("../include/User_navbar.inc.php"); // Navbar
                     break;
             }
             echo "</h2>";
-        } else {
+        } else { // Sinon, affiche en vert
             echo "<h2 class=\"green\">";
             echo $tresorerie;
             switch ($devise) {
@@ -90,7 +92,7 @@ include("../include/User_navbar.inc.php"); // Navbar
     Trier par :
     <select name="month_by" id="month_by" onChange="sortTable()">
         <option value="" disabled selected><?php
-            if (isset($_GET["month_by"])) {
+            if (isset($_GET["month_by"])) {  // Nombre de mois à afficher
                 $tri = $_GET["month_by"];
                 echo match ($tri) {
                     "4month" => "4 months",
