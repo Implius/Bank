@@ -30,7 +30,7 @@ if (isset($_POST["Delete"])){
     $req2->bindParam(":num_siren", $num_siren, PDO::PARAM_STR);
     $req2->execute();
 
-    //Delete de tout
+    //Supprime toutes choses ayant un rapport avec l'utilisateur concerné dans la Base de données
     while ($row1 = $req2->fetch(PDO::FETCH_OBJ)) {
         $transa = $cnx->prepare("Select id_trans FROM transaction WHERE id_remise = :id_remise");
         $transa->bindParam(":id_remise", $row1->id_remise, PDO::PARAM_INT);
@@ -63,10 +63,9 @@ if (isset($_POST["Delete"])){
     $req7 = $cnx->prepare("Delete FROM utilisateur WHERE id_util = :id");
     $req7->bindParam(":id", $id, PDO::PARAM_INT);
     $req7->execute();
-
-    //$cnx->query("DELETE FROM Supression WHERE idSupression=".$_POST["Delete"]);
 }
 ?>
+    <!--Liste de compte à supprimer-->
 <div class="scrollable-section-container">
     <h1>Demande de suppression</h1>
     <div class="list-group">
@@ -83,6 +82,7 @@ if (isset($_POST["Delete"])){
         <!-- Vous pouvez ajouter d'autres éléments de la liste ici de la même manière -->
     </div>
 </div>
+    <!--Popup permettant de confirmer ou annuler la suppression-->
 <div id="confirmation-popup" class="confirmation-popup">
     <div class="popup-content">
         <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
