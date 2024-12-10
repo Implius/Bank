@@ -12,6 +12,7 @@ include('../include/verifyconnexion_user.inc.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <link rel="stylesheet" href="po_compte.css">
     <title>JeFinance</title>
 </head>
@@ -30,13 +31,36 @@ include("../include/User_navbar.inc.php"); // Navbar
 </div>
 <?php
 // Tous les codes de motifs possibles, associés à un montant initial de 0
+$req = $cnx->query("SELECT devise FROM bank.compte where num_siren='".$_SESSION['NumSiren']."';");
+$devise = $req->fetch(PDO::FETCH_OBJ)->devise;
+switch ($devise) {
+    case "EUR":
+        $devise= " € ";
+        break;
+    case "USD":
+        $devise= " $ ";
+        break;
+    case "GBP":
+        $devise= " £ ";
+        break;
+    default:
+        $devise= " ? ";
+        break;
+};
 $code = [
     "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
 ];
 $sql = "SELECT code_motif,montant FROM impaye;";
 $req = $cnx->query("SELECT code_motif,montant FROM bank.impaye where num_siren='".$_SESSION['NumSiren']."';");
+$total=0;
 while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un numéro SIREN, on ajoute le montant à la somme du code de motif
     $code[$ligne->code_motif] += $ligne->montant;
+    $total += $ligne->montant;
+}
+
+$percentages = [];
+foreach ($code as $key => $value) {
+    $percentages[$key] = ($total > 0) ? (($value / $total) * 100) : 0;
 }
 ?>
 <div class="button_tel">
@@ -44,8 +68,8 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un nu
 </div>
 <script>
     const ctx = document.getElementById('myChart').getContext('2d');
-    const xValues = ["Code 01", "Code 02", "Code 03", "Code 04", "Code 05", "Code 06", "Code 07", "Code 08"];
-    const yValues = [<?php echo $code["01"] . "," . $code["02"] . "," . $code["03"] . "," . $code["04"] . "," . $code["05"] . "," . $code["06"] . "," . $code["07"] . "," . $code["08"]; ?>];
+    const xValues = ["Fraude à la carte", "Compte à découvert", "Compte clôturé", "Compte bloqué", "Provision insuffisante", "Opération contestée par le débiteur", "Titulaire décédé", "Raison non communiquée"];
+    const yValues = [<?php echo implode(',', array_values($code)); ?>];
     function createRandomGradient() {
         const color1 = barColors[Math.floor(Math.random() * barColors.length)];
         const color2 = barColors[Math.floor(Math.random() * barColors.length)];
@@ -84,22 +108,23 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un nu
         "#9999FF",
         "#D699FF",
     ];
+    const gradients = [
+        createRadialGradient("#F44336", "#E81E63"),
+        createRadialGradient("#9c27b0", "#673ab7"),
+        createRadialGradient("#3f51b5", "#2196f3"),
+        createRadialGradient("#03a9f4", "#00bcd4"),
+        createRadialGradient("#009688", "#4caf50"),
+        createRadialGradient("#8BC34A", "#cddc39"),
+        createRadialGradient("#ffeb3b", "#ffc107"),
+        createRadialGradient("#ff9800", "#ff5722")
+    ];
     new Chart(ctx, {
         type: "pie",
         data: {
             labels: xValues,
             datasets: [{
-                backgroundColor: [
-                    createRadialGradient("#F44336", "#E81E63"),  // Coral to Light Orange to Light Yellow Orange
-                    createRadialGradient("#9c27b0", "#673ab7"),  // Light Blue to Sky Blue to Dark Blue
-                    createRadialGradient("#3f51b5", "#2196f3"),  // Purple to Light Purple to Light Pink Purple
-                    createRadialGradient("#03a9f4", "#00bcd4"),  // Light Red to Light Orange to Light Yellow Orange
-                    createRadialGradient("#009688", "#4caf50"),  // Teal to Light Teal to Light Green Teal
-                    createRadialGradient("#8BC34A", "#cddc39"),  // Light Yellow to Golden Yellow to Dark Yellow
-                    createRadialGradient("#ffeb3b", "#ffc107"),  // Indigo to Light Indigo to Dark Indigo
-                    createRadialGradient("#ff9800", "#ff5722")
-                ],
                 data: yValues,
+                backgroundColor: gradients,
                 borderWidth: 0,
             }]
         },
@@ -107,10 +132,18 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un nu
             responsive: false,
             title: {
                 display: true,
-                text: "World Wide Wine Production 2018"
+                text: "Impayé"
             },
             plugins: {
                 tooltip: {
+                    callbacks: {
+                        label: (context) => {
+                            const value = context.raw;
+                            const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
+                            const percentage = ((value / total) * 100).toFixed(1);
+                            return `${value}<?php echo $devise ?>(${percentage}%)`;
+                        }
+                    },
                     bodyFont: {
                         size: 25 // Change the font size for tooltip body
                     },
@@ -125,7 +158,7 @@ while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un nu
                             size: 19 // Change the font size for legend labels
                         }
                     }
-                }
+                },
             }
         }
     });
