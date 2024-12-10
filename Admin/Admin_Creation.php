@@ -14,8 +14,8 @@ include("../include/connexion.inc.php");
 include("../include/verifyconnexion_admin.inc.php");
 
 if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSiren']) && isset($_POST['money'])) {
-
-    // Ajoute un nouvelle utilisateur dans Utilisateur
+    
+    // Add new user in utilisateur
 
     $stmt = $cnx->query("SELECT max(id_util) as max FROM utilisateur");
     $max_id = $stmt->fetch(PDO::FETCH_OBJ)->max + 1;
@@ -29,7 +29,7 @@ if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSi
     $stmt->bindParam(':mdp', $mdp, PDO::PARAM_STR);
     $stmt->execute();
 
-    // Ajoute un nouveau compte dans Compte
+    // Add new account in compte
 
     $Raison = $_POST['Raison'];
     $NumCompte = $_POST['NumCompte'];
@@ -48,7 +48,7 @@ if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSi
     $stmt->bindParam(':id_util', $max_id, PDO::PARAM_INT);
     $stmt->execute();
 
-    // Supprime la requête dans la table Creation
+    // Delete the request from the creation table
 
     $sql = "DELETE FROM creation WHERE num_siren = :num_siren";
     $stmt = $cnx->prepare($sql);
@@ -72,7 +72,6 @@ include("../include/Admin_navbar.inc.php"); // Navbar
     }
     ?>
 </div>
-    <!--Popup permettant de voir les informations d'un compte pour sa création-->
 <div class="details-panel" id="detailsPanel">
     <div class="back-arrow" onclick="closeDetails()"><img alt="fleche" class="arrow" src="../images/backArrow.svg"/></div>
     <h3 id="accountName">Nom du compte : </h3>
@@ -80,7 +79,6 @@ include("../include/Admin_navbar.inc.php"); // Navbar
     <p id="accountNumber">Numéro du compte : </p>
     <p id="currency">Devise : </p>
 </div>
-    <!--Formularie de création-->
 <div class="form-container">
     <form action="Admin_Creation.php" method="post">
         <div class="formcrea">
@@ -88,10 +86,10 @@ include("../include/Admin_navbar.inc.php"); // Navbar
         </div>
         <div class="formcrea">
             <input class="forminput" type="text" id="NumCompte" name="NumCompte" placeholder="Numéro du compte"
-                   required maxlength="11"><br>
+                   required maxlength="11" minlength="11"><br>
         </div>
         <div class="formcrea">
-            <input class="forminput" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required maxlength="9"><br>
+            <input class="forminput" type="text" id="NumSiren" name="NumSiren" placeholder="Numéro de SIREN" required maxlength="9" minlength="9"><br>
         </div>
         <div class="devise">
             <select name="money" id="money" required>
