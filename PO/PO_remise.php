@@ -82,6 +82,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
                         "date_plusancient" => "Date (plus ancient)",
                         "numero_remise" => "Numéro de remise",
                         "Numero_SIREN" => "Numéro SIREN",
+                        "montant" => "Montant remise",
                         default => "Aucun",
                     };
                 } else {
@@ -93,6 +94,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_remise">Numéro de remise</option>
             <option value="Numero_SIREN">Numéro SIREN</option>
+            <option value="montant">Montant remise</option>
         </select>
     </div>
 
@@ -103,6 +105,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
             "date_plusancient" => " ORDER BY date_remise ASC",
             "numero_remise" => " ORDER BY id_remise",
             "Numero_SIREN" => " ORDER BY num_siren",
+            "montant" => " ORDER BY montant DESC",
             default => "",
         };
     } else {
