@@ -82,7 +82,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
                         "date_plusancient" => "Date (plus ancient)",
                         "numero_remise" => "Numéro de remise",
                         "Numero_SIREN" => "Numéro SIREN",
-                        "montant" => "Montant remise",
+                        "montant" => "Montant de remise",
                         default => "Aucun",
                     };
                 } else {
@@ -94,7 +94,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
             <option value="date_plusancient">Date (plus ancient)</option>
             <option value="numero_remise">Numéro de remise</option>
             <option value="Numero_SIREN">Numéro SIREN</option>
-            <option value="montant">Montant remise</option>
+            <option value="montant">Montant de remise</option>
         </select>
     </div>
 
