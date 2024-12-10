@@ -14,7 +14,17 @@ include("../include/connexion.inc.php");
 include("../include/verifyconnexion_admin.inc.php");
 
 if (isset($_POST['Raison']) && isset($_POST['NumCompte']) && isset($_POST['NumSiren']) && isset($_POST['money'])) {
-    
+
+    // test if numcompte or numsiren contains alphabetical
+
+    if (preg_match('/[a-zA-Z]/', $_POST['NumCompte']) || preg_match('/[a-zA-Z]/', $_POST['NumSiren'])) {
+        unset($_POST['Raison']);
+        unset($_POST['NumCompte']);
+        unset($_POST['NumSiren']);
+        unset($_POST['money']);
+        header("Location: Admin_Creation.php?error=1");
+    }
+
     // Add new user in utilisateur
 
     $stmt = $cnx->query("SELECT max(id_util) as max FROM utilisateur");
@@ -101,6 +111,11 @@ include("../include/Admin_navbar.inc.php"); // Navbar
         </div>
         <button class="buttoncreate" type="submit">Créer le compte</button>
     </form>
+    <?php
+    if (isset($_GET['error'])) {
+        echo "<p style='color: red'>Erreur : Numéro de compte ou Numéro de SIREN incorrect</p>";
+    }
+    ?>
 </div>
 <script>
     // Fonction pour afficher le panneau de détails et mettre à jour son contenu
