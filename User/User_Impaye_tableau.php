@@ -113,9 +113,25 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     if (isset($_SESSION['NumSiren'])) {
         $siren = $_SESSION['NumSiren'];
     }
+    $join_query = $cnx->query("select compte.devise from compte join impaye on compte.num_siren = impaye.num_siren WHERE impaye.num_siren='$siren';");
+    $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
     $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri); // Requête pour afficher les impayés du compte, en concaténant la recherche et le tri
     $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
-    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
+    switch ($devise) {
+        case "EUR":
+            $devise = " €";
+            break;
+        case "USD":
+            $devise = " $";
+            break;
+        case "GBP":
+            $devise = " £";
+            break;
+        default:
+            $devise = " ?";
+            break;
+    }
+    echo "Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total.$devise."<br>";
     echo "Nombre de lignes : ".$req->rowCount();
     ?>
 
