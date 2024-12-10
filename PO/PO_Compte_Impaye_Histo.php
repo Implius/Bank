@@ -157,28 +157,33 @@ if ($date_end != null){
     $month_end = substr($date_end, 5, 2);
     $day_end = substr($date_end, 8, 2);
 }
-//permet d'avoir le derniers mois enregistrer dans la bdd
-if ($date_begin == null){
-    $sql = "Select max(impaye.date_impaye) FROM bank.impaye;";
-} else if ($date_end == null){
-    $sql = "Select max(impaye.date_impaye) FROM bank.impaye WHERE date_impaye = make_timestamp($year_begin,$month_begin,$day_begin,0,0,0);";
-} else {
-    $sql = "Select max(date_impaye) FROM bank.impaye WHERE date_impaye BETWEEN make_timestamp($year_begin,$month_begin,$day_begin,0,0,0) and make_timestamp($year_end,$month_end,$day_end,0,0,0);";
+if ($date_end < $date_begin){
+    echo "You choose an end date anterior to the start date";
 }
+//permet d'avoir le derniers mois
+    if ($date_begin == null && $date_end == null){
+        $timsptamp = strtotime("now");
+    }
+    else if ($date_end == null){
+        $timsptamp = strtotime("now");
+    }
+    else if ($date_end != null){
+        $timsptamp = strtotime($date_end);
 
-$datemax = $cnx->query($sql)->fetch();
+    }
+    $datemax = date("Y-m-d",$timsptamp);
 
 //La partie qui permet d'avoir les données de départ pour commencer
 //L'initialisation en soit
-if ($datemax[0] != null) //Check si il ya des dates qui ont ete recuperer de la bdd {
-    $yearmax = substr($datemax[0], 0, 4);
+if ($date_end >= $date_begin) { //Check si il ya des dates qui ont ete recuperer de la bdd {
+    $yearmax = substr($datemax, 0, 4);
     $yearmin = $yearmax;
-    $monthend = substr($datemax[0], 5, 2);
+    $monthend = substr($datemax, 5, 2);
     $monthmin = $monthend;
     if ($date_begin == null && $date_end != null) {
-        $inter = compareMonth($monthend,$yearmax,$month_end,$year_end,$monthend,$yearmax);
+        $inter = compareMonth($monthend, $yearmax, $month_end, $year_end, $monthend, $yearmax);
     } else if ($date_begin != null && $date_end != null) {
-        $inter = compareMonth($month_begin,$year_begin,$month_end,$year_end,$monthend,$yearmax);
+        $inter = compareMonth($month_begin, $year_begin, $month_end, $year_end, $monthend, $yearmax);
     } else {
         $inter = (int)$tri;
     }
@@ -229,10 +234,10 @@ if ($datemax[0] != null) //Check si il ya des dates qui ont ete recuperer de la 
         // On augmente la borne de 1 mois
         $monthmin = $month;
         $yearmin = $year;
+        if (empty($num_siren)) {
+            array_push($num_siren, "aucun siren");
+        }
     }
-} else {
-    //En cas de probleme de donnees
-    echo "<div class='error'> There's no data to show or you selected the same date</div>";
 }
 
 ?>
@@ -248,9 +253,9 @@ if ($datemax[0] != null) //Check si il ya des dates qui ont ete recuperer de la 
         data: {
             labels: [<?php for ($m = 1; $m != $inter+1; $m++){
                 if ($m != $inter){
-                    echo '"'.monthToString(addmonth(getMonthMin($year,$monthend,$inter)[1],getMonthMin($year,$monthend,$inter)[0],$m)[0])." ".addmonth(getMonthMin($year,$monthend,$inter)[1],getMonthMin($year,$monthend,$inter)[0],$m)[1].'",';
+                    echo '"'.monthToString(addmonth(getMonthMin($yearmax,$monthend,$inter)[1],getMonthMin($yearmax,$monthend,$inter)[0],$m)[0])." ".addmonth(getMonthMin($yearmax,$monthend,$inter)[1],getMonthMin($yearmax,$monthend,$inter)[0],$m)[1].'",';
                 } else {
-                    echo '"'.monthToString(addmonth(getMonthMin($year,$monthend,$inter)[1],getMonthMin($year,$monthend,$inter)[0],$m)[0])." ".addmonth(getMonthMin($year,$monthend,$inter)[1],getMonthMin($year,$monthend,$inter)[0],$m)[1].'"';    }
+                    echo '"'.monthToString(addmonth(getMonthMin($yearmax,$monthend,$inter)[1],getMonthMin($yearmax,$monthend,$inter)[0],$m)[0])." ".addmonth(getMonthMin($yearmax,$monthend,$inter)[1],getMonthMin($yearmax,$monthend,$inter)[0],$m)[1].'"';    }
             }?>],
             datasets: [
                 //On va faire les données dans l'histogramme
