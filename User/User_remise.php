@@ -74,6 +74,26 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
             <option value="numero_remise">Numéro de remise</option>
         </select>
     </div>
+
+    <?php
+    if (isset($_GET["sort_by"])) { // Si un tri est demandé
+        $tri = match ($_GET["sort_by"]) {
+            "date_plusrecent" => " ORDER BY date_remise DESC",
+            "date_plusancient" => " ORDER BY date_remise ASC",
+            "numero_remise" => " ORDER BY id_remise",
+            "Numero_SIREN" => " ORDER BY num_siren",
+            default => "",
+        };
+    } else {
+        $tri = "";
+    }
+    if (isset($_SESSION['NumSiren'])){
+        $numsiren = $_SESSION["NumSiren"];
+    }
+    $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri); // On concatène la recherche et le tri
+    echo "<p class='nb_lignes'>Nombre de remises : ".$req->rowCount()."</p>";
+    ?>
+
     <table class="tableau" id="table">
         <thead>
         <tr>
@@ -100,21 +120,6 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
         </thead>
         <tbody>
         <?php
-        if (isset($_GET["sort_by"])) { // Si un tri est demandé
-            $tri = match ($_GET["sort_by"]) {
-                "date_plusrecent" => " ORDER BY date_remise DESC",
-                "date_plusancient" => " ORDER BY date_remise ASC",
-                "numero_remise" => " ORDER BY id_remise",
-                "Numero_SIREN" => " ORDER BY num_siren",
-                default => "",
-            };
-        } else {
-            $tri = "";
-        }
-        if (isset($_SESSION['NumSiren'])){
-            $numsiren = $_SESSION["NumSiren"];
-        }
-        $req = $cnx->query("SELECT * FROM remise WHERE num_siren='".$numsiren."'".$search.$tri); // On concatène la recherche et le tri
         while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
             <tr onclick="document.location = 'User_transaction.php?id_remise=<?php echo $ligne->id_remise; ?>';" class="line">
