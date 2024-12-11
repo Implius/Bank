@@ -85,7 +85,16 @@ include("../include/po_navbar.inc.php"); // Navbar
             unset($_POST["NumSiren"]);
             unset($_POST["money"]);
 
-            header("PO_creation.php?inserted=1");
+            // Redirection
+            echo "<script>
+                    // Function to confirm deletion
+                    function confirmDemande() {
+                        alert('Demande envoyée!');
+                        window.location.href = 'PO_creation.php'; // Redirect after confirmation
+                       }
+                    confirmDemande();
+                    </script>";
+
         }
     }
     ?>
