@@ -87,11 +87,10 @@ include("../include/User_po_navbar.inc.php"); // Navbar
         ?>
     </div>
     <div>
-        <form action="PO_Compte_Tresorerie.php" method="POST">
-            <button name="supprimer" class="buttonsup" type="submit">Supprimer</button>
-        </form>
+        <button name="supprimer" class="buttonsup" type="submit" onclick="showConfirmation()">Supprimer</button>
+
         <?php
-        if (isset($_POST["supprimer"])) {
+        if (isset($_POST["Delete"])) {
 
             // Récupération de l'ID de demande suivant
             $nextid = $cnx->query("SELECT max(id_demande) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
@@ -107,6 +106,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
             if ($count > 0) {
                 echo "Cette requête a déjà été faite.";
             } else {
+                echo $count;
                 // Récupération du nom du compte en utilisant une requête préparée
                 $stmt = $cnx->prepare("SELECT raison_social FROM compte WHERE num_siren = :num_siren");
                 $stmt->bindParam(':num_siren', $_SESSION["num_siren"]);
@@ -128,11 +128,15 @@ include("../include/User_po_navbar.inc.php"); // Navbar
                 $req->bindParam(':num_siren', $_SESSION["num_siren"], PDO::PARAM_STR);
                 $req->execute();
 
-                // Nettoyage du formulaire
-                unset($_POST["supprimer"]);
-
                 // Redirection
-                header("Location: PO_Compte_Tresorerie.php?deleted=1");
+                echo "<script>
+                    // Function to confirm deletion
+                    function confirmDelete() {
+                        alert('Demande envoyée!');
+                        window.location.href = 'PO_Compte_Tresorerie.php'; // Redirect after confirmation
+                       }
+                    confirmDelete();
+                    </script>";
 
             }
         }
@@ -351,6 +355,26 @@ for ($m = 1; $m != $inter+1; $m++){
         },
     });
 </script>
+<script>
+    function showConfirmation() {
+
+        document.getElementById("confirmation-popup").style.display = "flex";
+    }
+
+    // Fonction pour fermer le pop-up (annuler)
+    function closeConfirmation() {
+        document.getElementById("confirmation-popup").style.display = "none";
+    }
+</script>
+<div id="confirmation-popup" class="confirmation-popup">
+    <div class="popup-content">
+        <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+        <form action="PO_Compte_Tresorerie.php?deleted=1" method="post">
+            <button name="Delete" class="confirm-button" type="submit">Oui, supprimer</button>
+            <button class="cancel-button" type="button" onclick="closeConfirmation()">Annuler</button>
+        </form>
+    </div>
+</div>
 </body>
 
 </html>
