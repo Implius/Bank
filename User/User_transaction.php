@@ -132,7 +132,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         <?php
         // Requête pour afficher les transactions de la remise cliquée
         $remise = $_GET["id_remise"];
-        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+        $sql = "SELECT * FROM transaction WHERE id_remise='".$remise."';";
         $req = $cnx->query($sql);
         while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
         ?>
@@ -183,7 +183,7 @@ include("../include/User_navbar.inc.php"); // Navbar
                         break;
                 }
                 $trans = $donnees->id_trans;
-                $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';";
+                $sql = "SELECT * FROM detail WHERE id_trans='".$trans."';";
                 $reqD = $cnx->query($sql);
                 $montant = 0;
                 while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) { // Affiche le montant de la transaction
@@ -201,7 +201,7 @@ include("../include/User_navbar.inc.php"); // Navbar
         </tr>
         <tr class="fold">
             <?php //requete pour les détails de la transactions cliqué
-            $sql = "SELECT * FROM bank.detail WHERE id_trans = '".$donnees->id_trans."';";
+            $sql = "SELECT * FROM detail WHERE id_trans = '".$donnees->id_trans."';";
             $reqT = $cnx->query($sql);
             ?>
             <td colspan="7">

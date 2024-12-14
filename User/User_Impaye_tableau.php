@@ -135,8 +135,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     }
     $join_query = $cnx->query("select compte.devise from compte join impaye on compte.num_siren = impaye.num_siren WHERE impaye.num_siren='$siren';");
     $devise = $join_query->fetch(PDO::FETCH_OBJ)->devise;
-    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri); // Requête pour afficher les impayés du compte, en concaténant la recherche et le tri
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
+    $req = $cnx->query("SELECT * FROM impaye WHERE num_siren='$siren'".$search.$tri); // Requête pour afficher les impayés du compte, en concaténant la recherche et le tri
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM impaye WHERE num_siren='$siren';");
     switch ($devise) {
         case "EUR":
             $devise = " €";

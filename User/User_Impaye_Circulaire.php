@@ -31,7 +31,7 @@ include("../include/User_navbar.inc.php"); // Navbar
 </div>
 <?php
 // Tous les codes de motifs possibles, associés à un montant initial de 0
-$req = $cnx->query("SELECT devise FROM bank.compte where num_siren='".$_SESSION['NumSiren']."';");
+$req = $cnx->query("SELECT devise FROM compte where num_siren='".$_SESSION['NumSiren']."';");
 $devise = $req->fetch(PDO::FETCH_OBJ)->devise;
 switch ($devise) {
     case "EUR":
@@ -51,7 +51,7 @@ $code = [
     "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
 ];
 $sql = "SELECT code_motif,montant FROM impaye;";
-$req = $cnx->query("SELECT code_motif,montant FROM bank.impaye where num_siren='".$_SESSION['NumSiren']."';");
+$req = $cnx->query("SELECT code_motif,montant FROM impaye where num_siren='".$_SESSION['NumSiren']."';");
 $total=0;
 while ($ligne = $req->fetch(PDO::FETCH_OBJ)) { // Pour tous les impayés d'un numéro SIREN, on ajoute le montant à la somme du code de motif
     $code[$ligne->code_motif] += $ligne->montant;
