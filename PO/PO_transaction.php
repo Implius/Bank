@@ -10,7 +10,7 @@ include("../include/connexion.inc.php");
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="po.css">
+    <link rel="stylesheet" href="PO.css">
     <title>JeFinance</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
