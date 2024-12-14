@@ -81,14 +81,26 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
 
                 if (isset($_GET["sort_by"])) { // Si un tri est déjà sélectionné
                     $tri = $_GET["sort_by"];
-                    echo match ($tri) {
-                        "date_plusrecent" => "Date (plus récent)",
-                        "date_plusancient" => "Date (plus ancient)",
-                        "numero_impaye" => "Numéro d'impayé",
-                        "Numero_SIREN" => "Numéro SIREN",
-                        "montant" => "Montant d'impayé",
-                        default => "Aucun",
-                    };
+                    switch($tri) {
+                        case "date_plusrecent":
+                            echo "Date (plus récent)";
+                            break;
+                        case "date_plusancient":
+                            echo "Date (plus ancient)";
+                            break;
+                        case "numero_impaye":
+                            echo "Numéro d'impayé";
+                            break;
+                        case "Numero_SIREN":
+                            echo "Numéro SIREN";
+                            break;
+                        case "montant":
+                            echo "Montant d'impayé";
+                            break;
+                        default:
+                            echo "Aucun";
+                            break;
+                    }
                 } else { // Si aucun tri n'est sélectionné
                     echo "Aucun";
                 }
@@ -103,15 +115,27 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     </div>
 
     <?php
-    if (isset($_GET["sort_by"])) {
-        $tri = match ($_GET["sort_by"]) { // Tri SQL à concaténer à la requête
-            "date_plusrecent" => " ORDER BY date_impaye DESC",
-            "date_plusancient" => " ORDER BY date_impaye ASC",
-            "numero_impaye" => " ORDER BY id_impaye",
-            "Numero_SIREN" => " ORDER BY num_siren",
-            "montant" => " ORDER BY montant DESC",
-            default => "",
-        };
+    if (isset($_GET["sort_by"])) { // Tri SQL à concaténer à la requête
+        switch($_GET["sort_by"]) {
+            case "date_plusrecent":
+                $tri = " ORDER BY date_impaye DESC";
+                break;
+            case "date_plusancient":
+                $tri = " ORDER BY date_impaye ASC";
+                break;
+            case "numero_impaye":
+                $tri = " ORDER BY id_impaye";
+                break;
+            case "Numero_SIREN":
+                $tri = " ORDER BY num_siren";
+                break;
+            case "montant":
+                $tri = " ORDER BY montant DESC";
+                break;
+            default:
+                $tri = "";
+                break;
+        }
     } else {
         $tri = "";
     }

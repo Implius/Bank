@@ -64,14 +64,23 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
       <select name="sort_by" id="sort_by" onchange="sortTable()">
           <option value="" disabled selected><?php
               if (isset($_GET["sort_by"])) {
-                  $tri = $_GET["sort_by"];
-                  echo match ($_GET["sort_by"]) {
-                    "tresorerie" => "Montant du compte",
-                    "nb_remises" => "Nombre de remises",
-                    "nb_impayes" => "Montant des impayés",
-                    "num_siren" => "Numéro SIREN",
-                    default => "Aucun",
-                  };
+                  switch($_GET["sort_by"]) {
+                      case "tresorerie":
+                          echo "Montant du compte";
+                          break;
+                      case "nb_remises":
+                          echo "Nombre de remises";
+                          break;
+                      case "nb_impayes":
+                          echo "Montant des impayés";
+                          break;
+                      case "num_siren":
+                          echo "Numéro SIREN";
+                          break;
+                      default:
+                          echo "Aucun";
+                          break;
+                  }
             } else {
                   echo "Aucun";
             }
@@ -85,12 +94,23 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
       <?php
       if (isset($_GET["sort_by"])) {
-          $tri = match ($_GET["sort_by"]) {
-                "tresorerie" => "ORDER BY tresorerie DESC",
-                "nb_remises" => "ORDER BY (select count(*) from remise where remise.num_siren = compte.num_siren) DESC",
-                "nb_impayes" => "ORDER BY (select count(*) from impaye where impaye.num_siren = compte.num_siren) DESC",
-                "num_siren" => "ORDER BY num_siren",
-          };
+          switch($_GET["sort_by"]) {
+              case "tresorerie":
+                  $tri = "ORDER BY tresorerie DESC";
+                  break;
+              case "nb_remises":
+                  $tri = "ORDER BY (select count(*) from remise where remise.num_siren = compte.num_siren) DESC";
+                  break;
+              case "nb_impayes":
+                  $tri = "ORDER BY (select count(*) from impaye where impaye.num_siren = compte.num_siren) DESC";
+                  break;
+              case "num_siren":
+                  $tri = "ORDER BY num_siren";
+                  break;
+              default:
+                  $tri = "";
+                  break;
+          }
       } else {
           $tri = "";
       }

@@ -58,14 +58,26 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
             <option value="" disabled selected><?php
                 if (isset($_GET["sort_by"])) {
                     $tri = $_GET["sort_by"];
-                    echo match ($tri) {
-                        "date_plusrecent" => "Date (plus récent)",
-                        "date_plusancient" => "Date (plus ancient)",
-                        "numero_remise" => "Numéro de remise",
-                        "Numero_SIREN" => "Numéro SIREN",
-                        "montant" => "Montant de remise",
-                        default => "Aucun",
-                    };
+                    switch($tri) {
+                        case "date_plusrecent":
+                            echo "Date (plus récent)";
+                            break;
+                        case "date_plusancient":
+                            echo "Date (plus ancient)";
+                            break;
+                        case "numero_remise":
+                            echo "Numéro de remise";
+                            break;
+                        case "Numero_SIREN":
+                            echo "Numéro SIREN";
+                            break;
+                        case "montant":
+                            echo "Montant de remise";
+                            break;
+                        default:
+                            echo "Aucun";
+                            break;
+                    }
                 } else {
                     echo "Aucun";
                 }
@@ -80,14 +92,26 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
 
     <?php
     if (isset($_GET["sort_by"])) {
-        $tri = match ($_GET["sort_by"]) {
-            "date_plusrecent" => " ORDER BY date_remise DESC",
-            "date_plusancient" => " ORDER BY date_remise ASC",
-            "numero_remise" => " ORDER BY id_remise",
-            "Numero_SIREN" => " ORDER BY num_siren",
-            "montant" => " ORDER BY montant",
-            default => "",
-        };
+        switch($_GET["sort_by"]) {
+            case "date_plusrecent":
+                $tri = " ORDER BY date_remise DESC";
+                break;
+            case "date_plusancient":
+                $tri = " ORDER BY date_remise ASC";
+                break;
+            case "numero_remise":
+                $tri = " ORDER BY id_remise";
+                break;
+            case "Numero_SIREN":
+                $tri = " ORDER BY num_siren";
+                break;
+            case "montant":
+                $tri = " ORDER BY montant";
+                break;
+            default:
+                $tri = "";
+                break;
+        }
     } else {
         $tri = "";
     }
