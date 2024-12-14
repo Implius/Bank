@@ -37,25 +37,6 @@ include('../include/verifyconnexion.inc.php');
   <div class="canva">
     <canvas id="myChart" style="width:100%;max-width:650px;"></canvas>
   </div>
-  <?php
-  global$cnx;
-  include("../include/connexion.inc.php");
-  //initialise un tableaux contenant les codes et associe un montant (0 au depart)
-  $code = [
-          "01" => 0, "02" => 0, "03" => 0, "04" => 0, "05" => 0, "06" => 0, "07" => 0, "08" => 0,
-  ];
-
-  //recupere les montant associer aux differents codes et les ajoutes a notre tableau
-  $sql = "SELECT code_motif,montant FROM impaye;";
-  $req = $cnx->query("SELECT code_motif,montant FROM impaye;");
-  while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
-      $code[$ligne->code_motif] += $ligne->montant;
-  }
-
-  ?>
-  <div class="button_tel">
-      <button id="btn_pdf">Exporter format PDF</button>
-  </div>
  <?php
   global$cnx;
   include("../include/connexion.inc.php");
