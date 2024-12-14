@@ -213,12 +213,9 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
                     //permet de faire du montant une somme des montant des transactions
                     //Permet d'éviter tout problème de cohérence avec la bdd
                     $remise = $ligne->id_remise;
-                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';"; // Transactions de la remise
+                    $sql = "SELECT SUM(montant) as montant FROM transaction WHERE id_remise='".$remise."';"; // Transactions de la remise
                     $req2 = $cnx->query($sql);
-                    $montant = 0;
-                    while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
-                        $montant += $donnees->montant; // Calcul du montant total de la remise
-                    }
+                    $montant = intval($req2->fetch(PDO::FETCH_OBJ)->montant);
 
                     if ($ligne->sens == '-') {
                         echo "<p class=\"red\">";
