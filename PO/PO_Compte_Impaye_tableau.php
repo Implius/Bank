@@ -132,8 +132,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
     $siren = $_SESSION['num_siren'];
 
     //La requete en fonction des parametre de tri et de recherche
-    $req = $cnx->query("SELECT * FROM bank.impaye WHERE num_siren='$siren'".$search.$tri);
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye WHERE num_siren='$siren';");
+    $req = $cnx->query("SELECT * FROM impaye WHERE num_siren='$siren'".$search.$tri);
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM impaye WHERE num_siren='$siren';");
     echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount()."</p>";
     ?>

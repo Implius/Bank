@@ -132,7 +132,7 @@ include('../include/verifyconnexion.inc.php');
             $remise = $_GET["id_remise"];
 
             //recupere les transactions d'une remise precise (celle cliquee)
-            $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+            $sql = "SELECT * FROM transaction WHERE id_remise='".$remise."';";
             $req = $cnx->query($sql);
             while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
             ?>
@@ -184,7 +184,7 @@ include('../include/verifyconnexion.inc.php');
                     }
                     $trans = $donnees->id_trans;
                     // recupere les donnees des details associer a une transaction
-                    $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';";
+                    $sql = "SELECT * FROM detail WHERE id_trans='".$trans."';";
                     $reqD = $cnx->query($sql);
                     $montant = 0;
                     //Ajoute les montants des details de la transaction afin de le montant de celle-ci
@@ -204,7 +204,7 @@ include('../include/verifyconnexion.inc.php');
             <!-- La partie cacher qui represente les details (afficher des que l'on clique sur une transaction) -->
             <tr class="fold">
                 <?php //requete pour les détails de la transactions cliqué
-                $sql = "SELECT * FROM bank.detail WHERE id_trans = '".$donnees->id_trans."';";
+                $sql = "SELECT * FROM detail WHERE id_trans = '".$donnees->id_trans."';";
                 $reqT = $cnx->query($sql);
                 ?>
                 <td colspan="7">

@@ -30,7 +30,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
 <?php
 global$cnx;
 include("../include/connexion.inc.php");
-$req = $cnx->query("SELECT devise FROM bank.compte where num_siren='".$_SESSION['num_siren']."';");
+$req = $cnx->query("SELECT devise FROM compte where num_siren='".$_SESSION['num_siren']."';");
 $devise = $req->fetch(PDO::FETCH_OBJ)->devise;
 switch ($devise) {
     case "EUR":
@@ -52,7 +52,7 @@ $code = [
 ];
 //La requete qui va chercher tout les montants de chaque code
 $sql = "SELECT code_motif,montant FROM impaye;";
-$req = $cnx->query("SELECT code_motif,montant FROM bank.impaye where num_siren='".$_SESSION['num_siren']."';");
+$req = $cnx->query("SELECT code_motif,montant FROM impaye where num_siren='".$_SESSION['num_siren']."';");
 while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
     //On affecte a chaque code le montant (en l'additionnant au montant deja enregistrer 0 au depart)
     $code[$ligne->code_motif] += $ligne->montant;

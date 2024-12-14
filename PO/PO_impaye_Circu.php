@@ -47,7 +47,7 @@ include('../include/verifyconnexion.inc.php');
 
   //recupere les montant associer aux differents codes et les ajoutes a notre tableau
   $sql = "SELECT code_motif,montant FROM impaye;";
-  $req = $cnx->query("SELECT code_motif,montant FROM bank.impaye;");
+  $req = $cnx->query("SELECT code_motif,montant FROM impaye;");
   while ($ligne = $req->fetch(PDO::FETCH_OBJ)) {
       $code[$ligne->code_motif] += $ligne->montant;
   }

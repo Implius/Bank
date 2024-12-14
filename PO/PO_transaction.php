@@ -140,7 +140,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
         <?php
 
         $remise = $_GET["id_remise"];
-        $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';"; // Requête pour les transactions
+        $sql = "SELECT * FROM transaction WHERE id_remise='".$remise."';"; // Requête pour les transactions
         $req = $cnx->query($sql);
         while ($donnees = $req->fetch(PDO::FETCH_OBJ)) {
 
@@ -195,7 +195,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
                         break;
                 }
                 $trans = $donnees->id_trans;
-                $sql = "SELECT * FROM bank.detail WHERE id_trans='".$trans."';"; // Détails de la transaction
+                $sql = "SELECT * FROM detail WHERE id_trans='".$trans."';"; // Détails de la transaction
                 $reqD = $cnx->query($sql);
                 $montant = 0;
                 while ($ligne = $reqD->fetch(PDO::FETCH_OBJ)) { // Affiche le montant de la total transaction, somme des détails
@@ -213,7 +213,7 @@ include("../include/po_navbar_w_return.inc.php"); // Navbar
         </tr>
         <tr class="fold">
             <?php //requete pour les détails de la transactions cliqué
-            $sql = "SELECT * FROM bank.detail WHERE id_trans = '".$donnees->id_trans."';";
+            $sql = "SELECT * FROM detail WHERE id_trans = '".$donnees->id_trans."';";
             $reqT = $cnx->query($sql);
             ?>
             <td colspan="7">

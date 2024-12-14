@@ -139,8 +139,8 @@ if (!isset($_GET['search']) || $_GET['search'] == "") { // Si pas de recherche
     } else {
         $tri = "";
     }
-    $req = $cnx->query("SELECT * FROM bank.impaye".$search.$tri); // Requête SQL avec recherche et tri
-    $req_total = $cnx->query("SELECT sum(montant) as total FROM bank.impaye;"); // Requête SQL pour le montant total des impayés
+    $req = $cnx->query("SELECT * FROM impaye".$search.$tri); // Requête SQL avec recherche et tri
+    $req_total = $cnx->query("SELECT sum(montant) as total FROM impaye;"); // Requête SQL pour le montant total des impayés
     echo "<p class='nb_lignes'>Montant total des impayés : ".$req_total->fetch(PDO::FETCH_OBJ)->total."<br>";
     echo "Nombre de lignes : ".$req->rowCount()."</p>";
     ?>

@@ -227,7 +227,7 @@ if ($date_end < $date_begin){
             $year = $tmp2[1];
             //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
 
-            $sql = "SELECT * FROM bank.impaye WHERE date_impaye BETWEEN make_timestamp($yearmin,$monthmin,$day,$hour,$min,$sec) AND make_timestamp($year,$month,$day,$hour,$min,$sec) ORDER BY date_impaye;";
+            $sql = "SELECT * FROM impaye WHERE date_impaye BETWEEN make_timestamp($yearmin,$monthmin,$day,$hour,$min,$sec) AND make_timestamp($year,$month,$day,$hour,$min,$sec) ORDER BY date_impaye;";
             $req = $cnx->query($sql);
             $montant = 0;
             while ($row = $req->fetch(PDO::FETCH_OBJ)) {

@@ -216,7 +216,7 @@ function monthToString($month){
 }
 
 //permet d'avoir le derniers mois enregistrer dans la bdd
-$sql = "Select max(bank.remise.date_remise) FROM bank.remise;";
+$sql = "Select max(remise.date_remise) FROM remise;";
 $datemax = $cnx->query($sql)->fetch();
 
 //La partie qui permet d'avoir les données de départ pour commencer
@@ -261,7 +261,7 @@ for ($m = 1; $m != $inter+1; $m++){
 
     //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
     $numsiren = $_SESSION['num_siren'];
-    $sql = "SELECT * FROM bank.remise WHERE date_remise BETWEEN make_date($yearmin,$monthmin,$day) AND make_date($year,$month,$day) AND num_siren='$numsiren' ORDER BY date_remise;";
+    $sql = "SELECT * FROM remise WHERE date_remise BETWEEN make_date($yearmin,$monthmin,$day) AND make_date($year,$month,$day) AND num_siren='$numsiren' ORDER BY date_remise;";
     $req = $cnx->query($sql);
     $montant = 0;
     $annee[$m][$_SESSION['num_siren']] = 0;

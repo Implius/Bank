@@ -188,7 +188,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                     //permet de faire du montant une somme des montant des transactions
                     //Permet d'éviter tout problème de cohérence avec la bdd
                     $remise = $ligne->id_remise;
-                    $sql = "SELECT * FROM bank.transaction WHERE id_remise='".$remise."';";
+                    $sql = "SELECT * FROM transaction WHERE id_remise='".$remise."';";
                     $req2 = $cnx->query($sql);
                     $montant = 0;
                     while ($donnees = $req2->fetch(PDO::FETCH_OBJ)) {
