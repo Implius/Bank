@@ -58,8 +58,14 @@ include("../include/po_navbar.inc.php"); // Navbar
     if (isset($_POST["Raison"]) && isset($_POST["NumCompte"]) && isset($_POST["NumSiren"]) && isset($_POST["money"])) {
 
         //Recupere le prochaine id de la demande
-        $nextid = $cnx->query("SELECT max(cast(id_demande as int)) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
+        $nextid = $cnx->query("SELECT MAX(id_demande) as nextid from demande_compte;");
+        if ($nextid->rowCount() == 0) {
+            $nextid = 0;
+        } else {
+            $nextid = $nextid->fetch(PDO::FETCH_OBJ)->nextid;
+        }
         $nextid = $nextid + 1;
+
         $num_siren=$_POST["NumSiren"];
         $check = $cnx->prepare("SELECT COUNT(*) as count FROM creation WHERE num_siren = :num_siren;");
         $check->bindParam(':num_siren', $num_siren);
@@ -72,7 +78,9 @@ include("../include/po_navbar.inc.php"); // Navbar
         } else {
             $req = $cnx->prepare("INSERT INTO demande_compte (id_demande, date_demande, libelle_demande) VALUES (:nextid, :date_demande, :name)");
             $req->bindParam(':nextid', $nextid, PDO::PARAM_STR);
-            $req->bindParam(':date_demande', $date_demande, PDO::PARAM_STR);
+            $date = date("y-m-d");
+            $req->bindParam(':date_demande',$date, PDO::PARAM_STR);
+            $name = $_POST["Raison"];
             $req->bindParam(':name', $name, PDO::PARAM_STR);
             $req->execute();
 

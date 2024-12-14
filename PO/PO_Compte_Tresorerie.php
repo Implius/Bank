@@ -87,15 +87,19 @@ include("../include/User_po_navbar.inc.php"); // Navbar
         ?>
     </div>
     <div>
-        <button name="supprimer" class="buttonsup" type="submit" onclick="showConfirmation()">Supprimer</button>
+        <button id="delete-button" name="supprimer" class="buttonsup" type="submit">Supprimer</button>
 
         <?php
         if (isset($_POST["Delete"])) {
+            //Recupere le prochaine id de la demande
+            $nextid = $cnx->query("SELECT MAX(id_demande) as nextid from demande_compte;");
+            if ($nextid->rowCount() == 0) {
+                $nextid = 0;
+            } else {
+                $nextid = $nextid->fetch(PDO::FETCH_OBJ)->nextid;
+            }
+            $nextid = $nextid + 1;
 
-            // Récupération de l'ID de demande suivant
-            $nextid = $cnx->query("SELECT max(id_demande) as nextid from demande_compte;")->fetch(PDO::FETCH_OBJ)->nextid;
-            $nextid = (int)$nextid + 2;
-            $nextid = (string)$nextid;
             $num_siren = $_SESSION["num_siren"];
             $check = $cnx->prepare("SELECT COUNT(*) as count FROM suppression WHERE num_siren = :num_siren");
             $check->bindParam(':num_siren', $_SESSION["num_siren"]);
@@ -114,6 +118,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
                 $name = $stmt->fetch(PDO::FETCH_OBJ)->raison_social;
 
                 $date_demande = date('Y-m-d');
+                echo $nextid.":".$name.":".$date_demande;
 
                 // Insertion dans la table `demande_compte`
                 $req = $cnx->prepare("INSERT INTO demande_compte (id_demande, date_demande, libelle_demande) VALUES (:nextid, :date_demande, :name)");
@@ -363,17 +368,6 @@ for ($m = 1; $m != $inter+1; $m++){
         },
     });
 </script>
-<script>
-    function showConfirmation() {
-
-        document.getElementById("confirmation-popup").style.display = "flex";
-    }
-
-    // Fonction pour fermer le pop-up (annuler)
-    function closeConfirmation() {
-        document.getElementById("confirmation-popup").style.display = "none";
-    }
-</script>
 <div id="confirmation-popup" class="confirmation-popup">
     <div class="popup-content">
         <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
@@ -383,6 +377,18 @@ for ($m = 1; $m != $inter+1; $m++){
         </form>
     </div>
 </div>
+<script>
+    document.getElementById("delete-button").addEventListener("click",showConfirmation);
+
+    function showConfirmation() {
+        document.getElementById("confirmation-popup").style.display = "flex";
+    }
+
+    // Fonction pour fermer le pop-up (annuler)
+    function closeConfirmation() {
+        document.getElementById("confirmation-popup").style.display = "none";
+    }
+</script>
 </body>
 
 </html>
