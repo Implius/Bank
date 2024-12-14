@@ -94,12 +94,20 @@ include("../include/User_navbar.inc.php"); // Navbar
         <option value="" disabled selected><?php
             if (isset($_GET["month_by"])) {  // Nombre de mois à afficher
                 $tri = $_GET["month_by"];
-                echo match ($tri) {
-                    "4month" => "4 months",
-                    "6month" => "6 months",
-                    "12month" => "12 months",
-                    default => "$tri months",
-                };
+                switch($tri) {
+                    case "4month":
+                        echo "4 months";
+                        break;
+                    case "6month":
+                        echo "6 months";
+                        break;
+                    case "12month":
+                        echo "12 months";
+                        break;
+                    default:
+                        echo "$tri months";
+                        break;
+                }
             } else {
                 echo "6 months";
                 $tri = "6";
