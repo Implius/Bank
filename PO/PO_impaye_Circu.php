@@ -152,7 +152,7 @@ include('../include/verifyconnexion.inc.php');
                             const value = context.raw;
                             const total = context.dataset.data.reduce((sum, val) => sum + val, 0);
                             const percentage = ((value / total) * 100).toFixed(1);
-                            return `${value}<?php echo $devise ?>(${percentage}%)`;
+                            return `${value}<?php echo $devise ?>" "(${percentage}%)`;
                         }
                     },
                     bodyFont: {
