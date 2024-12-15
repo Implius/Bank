@@ -51,7 +51,7 @@ include("../include/User_navbar.inc.php"); // Navbar
          <?php
         if ($sens == "-") { // Si la trésorerie est négative, affiche en rouge
             echo "<h2 class=\"titlered\">";
-            echo '-'.$tresorerie;
+            echo $tresorerie;
             switch ($devise) {
                 case "EUR":
                     echo " €";

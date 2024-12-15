@@ -52,7 +52,7 @@ include("../include/User_po_navbar.inc.php"); // Navbar
         <?php
         if($sens == '-') {
             echo "<h2 class=\"titlered\">";
-            echo '-'.$tresorerie;
+            echo $tresorerie;
             switch ($devise) {
                 case "EUR":
                     echo " €";
