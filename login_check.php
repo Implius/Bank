@@ -21,9 +21,7 @@ if (isset($_POST['NumSiren']) && isset($_POST['password'])) {
 
     if ($ligne) {
 
-        if (isset($_COOKIE['tentatives'])) {
-            unset($_COOKIE['tentatives']);
-        }
+        setcookie('tentatives', 0, time() + 60*60*60, '/');
 
         $req_po = $cnx->query("SELECT COUNT(*) as res FROM po WHERE id_util = $ligne->id_util"); // Verifier si c'est un po
         $res=$req_po->fetch(PDO::FETCH_OBJ);
