@@ -6,7 +6,7 @@
 $user =  '';
 $pass =  '';
 try {
-    $cnx = new PDO('pgsql:host=localhost;dbname=achirecesei', $user, $pass) ;
+    $cnx = new PDO('pgsql:host=localhost;dbname=', $user, $pass) ;
     $cnx->exec("SET search_path TO bank");
 }
 catch (PDOException $e) {
