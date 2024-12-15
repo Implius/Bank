@@ -219,7 +219,7 @@ if ($date_end < $date_begin){
         if (isset($_SESSION['NumSiren'])) {
             $numsiren = $_SESSION['NumSiren'];
         }
-        $sql = "SELECT * FROM impaye WHERE date_impaye BETWEEN make_timestamp($yearmin,$monthmin,$day,$hour,$min,$sec) AND make_timestamp($year,$month,$day,$hour,$min,$sec) AND num_siren='$numsiren' ORDER BY date_impaye;";
+        $sql = "SELECT * FROM impaye WHERE date_impaye BETWEEN STR_TO_DATE('$yearmin-$monthmin-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('$year-$month-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') ORDER BY date_impaye;";
         $req = $cnx->query($sql);
         $montant = 0;
         while ($row = $req->fetch(PDO::FETCH_OBJ)) {
