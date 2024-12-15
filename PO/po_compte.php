@@ -37,7 +37,6 @@ if (isset($_SESSION['num_siren'])) {
         }
     </script>
 </head>
-²
 <body>
 
 <?php
@@ -169,7 +168,7 @@ if (!isset($_GET['search']) || $_GET['search'] == "") {
                             break;
                     }
                     if ($ligne->sens=='-'){
-                        echo "<p class='red'>$ligne->tresorerie $devise</p>";
+                        echo "<p class='red'>- $ligne->tresorerie $devise</p>";
                     } else {
                     echo "<p>$ligne->tresorerie $devise</p>"; }?>
                 </td>
