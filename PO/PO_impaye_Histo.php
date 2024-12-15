@@ -227,7 +227,6 @@ if ($date_end < $date_begin){
             $year = $tmp2[1];
             //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
             $sql = "SELECT * FROM impaye WHERE date_impaye BETWEEN STR_TO_DATE('$yearmin-$monthmin-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('$year-$month-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') ORDER BY date_impaye;";
-            echo $sql;
             $req = $cnx->query($sql);
             $montant = 0;
             while ($row = $req->fetch(PDO::FETCH_OBJ)) {
