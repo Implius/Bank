@@ -31,7 +31,8 @@ include("../include/User_po_navbar.inc.php"); // Navbar
 ?>
 <div class="Compte_title_sup">
     <div class="Compte_title">
-        <h1 class="tresorerie"><?php
+        <h1 class="tresorerie">
+            <?php
             //On recupere les infos du compte cliquer par le PO
             $stmt = $cnx->prepare("SELECT * FROM compte WHERE num_siren = :num_siren");
             $stmt->bindParam(':num_siren', $_SESSION["num_siren"]);
@@ -152,7 +153,8 @@ include("../include/User_po_navbar.inc.php"); // Navbar
     <div class="sorting">
     Trier par :
     <select name="month_by" id="month_by" onChange="sortTable()">
-        <option value="" disabled selected><?php
+        <option value="" disabled selected>
+            <?php
             if (isset($_GET["month_by"])) {
                 //Affiche la parti selectionner en fonction de la variable tri
                 $tri = $_GET["month_by"];
@@ -186,6 +188,27 @@ include("../include/User_po_navbar.inc.php"); // Navbar
 <div class="canva">
     <canvas id="mixedChart" style="width:100%;max-width:1200px;background-color: rgb(252, 248, 244);"></canvas>
 </div>
+<div id="confirmation-popup" class="confirmation-popup">
+    <div class="popup-content">
+        <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
+        <form action="PO_Compte_Tresorerie.php?deleted=1" method="post">
+            <button name="Delete" class="confirm-button" type="submit">Oui, supprimer</button>
+            <button class="cancel-button" type="button" onclick="closeConfirmation()">Annuler</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("delete-button").addEventListener("click",showConfirmation);
+
+    function showConfirmation() {
+        document.getElementById("confirmation-popup").style.display = "flex";
+    }
+
+    // Fonction pour fermer le pop-up (annuler)
+    function closeConfirmation() {
+        document.getElementById("confirmation-popup").style.display = "none";
+    }
+</script>
 <?php
 function addMonth($year,$month,$nb){
     //Ajoute $nb aux mois et 1 à l'année si elle est passé en ajoutant le mois
@@ -367,27 +390,6 @@ for ($m = 1; $m != $inter+1; $m++){
             }
         },
     });
-</script>
-<div id="confirmation-popup" class="confirmation-popup">
-    <div class="popup-content">
-        <p>Êtes-vous sûr de vouloir supprimer cet élément ?</p>
-        <form action="PO_Compte_Tresorerie.php?deleted=1" method="post">
-            <button name="Delete" class="confirm-button" type="submit">Oui, supprimer</button>
-            <button class="cancel-button" type="button" onclick="closeConfirmation()">Annuler</button>
-        </form>
-    </div>
-</div>
-<script>
-    document.getElementById("delete-button").addEventListener("click",showConfirmation);
-
-    function showConfirmation() {
-        document.getElementById("confirmation-popup").style.display = "flex";
-    }
-
-    // Fonction pour fermer le pop-up (annuler)
-    function closeConfirmation() {
-        document.getElementById("confirmation-popup").style.display = "none";
-    }
 </script>
 </body>
 
