@@ -5,6 +5,8 @@ include('../include/verifyconnexion.inc.php');
 if (isset($_GET['num_siren'])) {
     $_SESSION["num_siren"] = $_GET["num_siren"];
 }
+$date_end = NULL;
+$date_begin = NULL;
 ?>
 <!doctype html>
 <html lang="en">
@@ -214,72 +216,107 @@ function monthToString($month){
     $months = ["Jan","Feb","March","Avr","May","June","July","Aout","Sep","Oct","Nov","Dec"];
     return $months[$month-1];
 }
+function compareMonth($monthA,$yearA,$monthB,$yearB,$monthmax,$yearmax) : int
+{
+    $count = 0;
+    if ($yearmax < $yearB || ($yearB == $yearmax && $monthmax < $monthB)) {
+        $monthB = $monthmax;
+    }
+    while ($monthA != $monthB) {
+        $count++;
+        $monthA = addMonth($yearA,$monthA,1)[0];
+    }
+    return $count + 1 ;
+}
 
-//permet d'avoir le derniers mois enregistrer dans la bdd
-$sql = "Select max(remise.date_remise) FROM remise;";
-$datemax = $cnx->query($sql)->fetch();
+if ($date_begin != null){
+    $date_begin = (string)$date_begin;
+    $year_begin = substr($date_begin, 0, 4);
+    $month_begin = substr($date_begin, 5, 2);
+    $day_begin = substr($date_begin, 8, 2);
+}
+if ($date_end != null){
+    $date_end = (string)$date_end;
+    $year_end = substr($date_end, 0, 4);
+    $month_end = substr($date_end, 5, 2);
+    $day_end = substr($date_end, 8, 2);
+}
+if ($date_end < $date_begin){
+    echo "You choose an end date anterior to the start date";
+}
+
+//permet d'avoir le derniers mois
+if ($date_begin == null && $date_end == null){
+    $timsptamp = strtotime("now");
+}
+else if ($date_end == null){
+    $timsptamp = strtotime("now");
+}
+else if ($date_end != null){
+    $timsptamp = strtotime($date_end);
+
+}
+$datemax = date("Y-m-d",$timsptamp);
 
 //La partie qui permet d'avoir les données de départ pour commencer
-//L'initialisation en soit
-if ($datemax[0]===null){
-    echo "<center>";
-    echo "Vous n'avez pas de remise";
-    echo "</center>";
-} else {
-$yearmax = substr($datemax[0],0,4);
-$yearmin = $yearmax;
-$monthend = substr($datemax[0],5,2);
-$monthmin = $monthend;
-$inter = (int)$tri;
-$tmp = getMonthMin($yearmax,$monthend,$inter-1);
-$monthmin = $tmp[0];
-$yearmin = $tmp[1];
-$year = $yearmin;
-$day = 1;
-$hour = 0;
-$min = 0;
-$sec = 0;
+//L'initialisation en gros
+if ($date_end >= $date_begin){
+    $yearmax = substr($datemax, 0, 4);
+    $yearmin = $yearmax;
+    $monthend = substr($datemax, 5, 2);
+    $monthmin = $monthend;
+    if ($date_begin == null && $date_end != null) {
+        $inter = compareMonth($monthend,$yearmax,$month_end,$year_end,$monthend,$yearmax);
+    } else if ($date_begin != null && $date_end != null) {
+        $inter = compareMonth($month_begin,$year_begin,$month_end,$year_end,$monthend,$yearmax);
+    } else {
+        $inter = (int)$tri;
+    }
+    $tmp = getMonthMin($yearmax, $monthend, $inter - 1);
+    $monthmin = $tmp[0];
+    $yearmin = $tmp[1];
+    $year = $yearmin;
+    $day = 1;
+    $hour = 0;
+    $min = 0;
+    $sec = 0;
 
 //Début du traitement des infos
 
 //Initialisation d'un tableau qui contiendra les num siren et leur valeurs associé le tout associer à un mois (1 les premiers, 2 le deuxième, etc...)
-$annee = [];
-for ($i = 1; $i <= $inter; $i++) {
-    $annee[$i] = [];
-}
+    $annee = [];
+    for ($i = 1; $i <= $inter; $i++) {
+        $annee[$i] = [];
+    }
 
 //On initialise un tableau qui gardera en mémoire les différents siren sur les derniers mois
-$num_siren = array();
+    $num_siren = array();
 
 //traitement
-for ($m = 1; $m != $inter+1; $m++){
-    //permet la borne entre le premiers mois et le suivant pour la requête sql
-    $tmp2 = addMonth($year,$monthmin,1);
-
-    $month = $tmp2[0];
-    $year = $tmp2[1];
-
-    //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
-    $numsiren = $_SESSION['num_siren'];
-    $sql = "SELECT * FROM remise WHERE date_remise BETWEEN make_date($yearmin,$monthmin,$day) AND make_date($year,$month,$day) AND num_siren='$numsiren' ORDER BY date_remise;";
-    $req = $cnx->query($sql);
-    $montant = 0;
-    $annee[$m][$_SESSION['num_siren']] = 0;
-    while ($row = $req->fetch(PDO::FETCH_OBJ)) {
-        $siren = $row->num_siren;
-        $sens = $row->sens;
-        if ($sens=="+") {
-            $annee[$m][$siren] += $row->montant; //Ajoute le montant
-        } else {
-            $annee[$m][$siren] -= $row->montant;
+    for ($m = 1; $m != $inter + 1; $m++) {
+        if (isset($_SESSION["num_siren"])) {
+            $numsiren = $_SESSION["num_siren"];
+            $siren = $numsiren;
         }
-        //Prend le siren associer à ce montant
-        if (!in_array($siren,$num_siren)) {array_push($num_siren,$siren);} //Ajoute le siren dans liste des sirens (si il y est pas déjà)
+        $annee[$m][$siren] = 0;
+        //permet la borne entre le premiers mois et le suivant pour la requête sql
+        $tmp2 = addMonth($year, $monthmin, 1);
+
+        $month = $tmp2[0];
+        $year = $tmp2[1];
+
+        //requête sql (utilisant make_timestamp pour pourvoir faire un between en utilisant des type timestamp)
+
+        $sql = "SELECT * FROM remise WHERE date_remise BETWEEN STR_TO_DATE('$yearmin-$monthmin-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') AND STR_TO_DATE('$year-$month-$day $hour:$min:$sec', '%Y-%m-%d %H:%i:%s') AND num_siren = '$numsiren' ORDER BY date_remise;";
+        $req = $cnx->query($sql);
+        $montant = 0;
+        while ($row = $req->fetch(PDO::FETCH_OBJ)) {
+            $annee[$m][$siren] += $row->montant; //Ajoute le montant
+        }
+        // On augmente la borne de 1 mois
+        $monthmin = $month;
+        $yearmin = $year;
     }
-    // On augmente la borne de 1 mois
-    $monthmin = $month;
-    $yearmin = $year;
-}
 }
 ?>
 <script>
