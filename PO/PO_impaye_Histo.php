@@ -169,7 +169,7 @@ if ($date_end != null){
     $day_end = substr($date_end, 8, 2);
 }
 if ($date_end < $date_begin){
-    echo "<center> You choose an end date anterior to the start date </center>";
+    echo "<center> You choosed an end date anterior to the start date </center>";
 }
     //permet d'avoir le derniers mois
     if ($date_begin == null && $date_end == null){
